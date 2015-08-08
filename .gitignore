@@ -36,5 +36,10 @@ nosetests.xml
 
 # PyCharm
 
+*.toc
+*.trm
+*.pst
+*.seg
 .idea
 venv/
+whooshee/
