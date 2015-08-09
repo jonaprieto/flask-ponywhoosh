@@ -182,27 +182,29 @@ class Whoosh(object):
 
             def operation(model, op):
                 writer = mwh.index.writer(timeout=self.writer_timeout)
-                if self.debug:
-                    print 'writer>', writer
-                    print model,  '/' * 30, model._status_
-                    print 'model>', model
-                    print 'cantidad>', mwh.index.doc_count()
 
                 attrs = {primary: model.get_pk()}
                 for f in schema_attrs.keys():
                     attrs[f] = getattr(model, f)
                    # if not isinstance(attrs[f], int):
                     #    if sys.version < '3':
-                     #       attrs[f] = unicode(attrs[f])
-                      #  else:
-                       #     attrs[f] = str(attrs[f])
-                print 'attrs>', attrs
+                    #       attrs[f] = unicode(attrs[f])
+                    #  else:
+                    #     attrs[f] = str(attrs[f])
+
+                if self.debug:
+                    print 'writer>', writer
+                    print model,  '/' * 30, model._status_
+                    print 'model>', model
+                    print 'cantidad>', mwh.index.doc_count()
+                    print 'attrs>', attrs
+
                 if op == 'inserted':
                     writer.add_document(**attrs)
                 elif op == 'updated':
                     writer.update_document(**attrs)
-                elif op == 'deleted':
-                    pass
+                elif op in set(['marked_to_delete', 'deleted', 'cancelled']):
+                    writer.delete_by_term(primary, attrs[primary])
 
                 writer.commit(optimize=True)
                 if self.debug:
@@ -216,6 +218,11 @@ class Whoosh(object):
                         print e
                 return obj._after_save_
 
+            def tri(obj, dependent_objects=None):
+                print 'obj>', obj._status_
+                return obj._save_
+
+            model._save_ = tri
             model._after_save_ = my_after_save
             model._whoosheer_ = mwh
         #     model.whoosh_search = mwh.search

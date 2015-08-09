@@ -46,6 +46,13 @@ def update1():
     u.name = "malosito"
     return to_json(u)
 
+@app.route("/delete/<id>")
+def delete(id):
+  with db_session:
+    u = User.get(id = id)
+    u.delete()    
+    return 'OK'
+
 @app.route("/")
 @db_session
 def hello():
