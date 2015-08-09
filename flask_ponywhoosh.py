@@ -189,7 +189,10 @@ class Whoosh(object):
             model._whoosh_index_ = mwh.index
             model._whoosh_search_ = mwh.search
             mwh.model = model
-
            
             return model
         return inner
+
+
+def search(model, *arg, **kw):
+    return model._whoosh_search_(*arg, **kw)

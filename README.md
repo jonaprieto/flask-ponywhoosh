@@ -19,6 +19,17 @@ After that, you could visit the following urls.
 -   `http://localhost:5000/update`
 -   `http://localhost:5000/` to see the entities from database.
 
+
+## Searching 
+
+```python
+    >>> from entidades import *
+    >>> from flask_ponywhoosh import search
+    >>> search(User, 'jona')
+    <Top 2 Results for Or([<_NullQuery>, Wildcard('name', u'*jona*')]) runtime=0.003
+22508811951>
+```
+
 ##Future
 
 We are going to structure the package for `pip` with appropriate tests.
