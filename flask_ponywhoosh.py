@@ -194,12 +194,18 @@ class Whoosh(object):
 
                 writer.commit(optimize=True)
                 return obj._after_save_
+            
+            self.register_whoosheer(mwh)
+            
+            def search():
+                pass
 
             model._after_save_ = _middle_save_
             model._whoosheer_ = mwh
-            model.whoosh_index = mwh.index
-            model.whoosh_search = mwh.search
+            #model.whoosh_index = mwh.index
+            #model.whoosh_search = mwh.search
             mwh.model = model
-            self.register_whoosheer(mwh)
+
+           
             return model
         return inner
