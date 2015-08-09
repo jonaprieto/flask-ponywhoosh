@@ -10,14 +10,14 @@ db = Database()
 class User(db.Entity):
     _table_ = 'User'
     id = PrimaryKey(int, auto=True)
-    name = Required(str)
-    tipo = Optional(str)
+    name = Required(unicode)
+    tipo = Optional(unicode)
     entries = Set("Entry")
 
 class Entry(db.Entity):
     id = PrimaryKey(int, auto=True)
-    title = Optional(str)
-    content = Optional(str)
+    title = Optional(unicode)
+    content = Optional(unicode)
     user = Optional("User")
 
 
