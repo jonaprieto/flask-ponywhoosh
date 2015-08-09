@@ -126,8 +126,7 @@ class Whoosh(object):
 
         self.__class__.whoosheers.append(wh)
         self.create_index(wh)
-        # for model in wh.models:
-        #     model.query_class = WhoosheeQuery
+        # wh.model.query_class = WhoosheeQuery
         return wh
 
     def register_model(self, *index_fields, **kw):
@@ -140,25 +139,19 @@ class Whoosh(object):
 
         if self.debug:
             print 'ModelWhoosheer created'
-        if self.debug:
             print 'index_fields', index_fields
-        if self.debug:
             print 'kw', kw
+
         mwh = ModelWhoosheer
 
         def inner(model):
-            if self.debug:
-                print '>>> inner'
             mwh.index_subdir = model._table_
             if not mwh.index_subdir:
                 mwh.index_subdir = model.__name__
 
-            mwh.models = [model]
-            if self.debug:
-                print '>>> table:', mwh.index_subdir
-
             schema_attrs = {}
             primary = None
+
             for field in model._attrs_:
                 if field == model._pk_:
                     primary = field.name
@@ -178,53 +171,35 @@ class Whoosh(object):
             if self.debug:
                 print '>> schema_attrs:', schema_attrs
 
-            self.register_whoosheer(mwh)
 
-            def operation(model, op):
+            def _middle_save_(obj, status):
                 writer = mwh.index.writer(timeout=self.writer_timeout)
 
-                attrs = {primary: model.get_pk()}
+                attrs = {primary: obj.get_pk()}
                 for f in schema_attrs.keys():
-                    attrs[f] = getattr(model, f)
-                   # if not isinstance(attrs[f], int):
-                    #    if sys.version < '3':
-                    #       attrs[f] = unicode(attrs[f])
-                    #  else:
-                    #     attrs[f] = str(attrs[f])
+                    attrs[f] = getattr(obj, f)
 
+                if status == 'inserted':
+                    writer.add_document(**attrs)
+                elif status == 'updated':
+                    writer.update_document(**attrs)
+                elif status in set(['marked_to_delete', 'deleted', 'cancelled']):
+                    writer.delete_by_term(primary, attrs[primary])
+                
                 if self.debug:
                     print 'writer>', writer
-                    print model,  '/' * 30, model._status_
-                    print 'model>', model
+                    print 'obj>', obj,  '/' * 30, obj._status_
                     print 'cantidad>', mwh.index.doc_count()
                     print 'attrs>', attrs
 
-                if op == 'inserted':
-                    writer.add_document(**attrs)
-                elif op == 'updated':
-                    writer.update_document(**attrs)
-                elif op in set(['marked_to_delete', 'deleted', 'cancelled']):
-                    writer.delete_by_term(primary, attrs[primary])
-
                 writer.commit(optimize=True)
-                if self.debug:
-                    print '>>>@ ', attrs
-
-            def my_after_save(obj, status):
-                try:
-                    operation(obj, status)
-                except Exception, e:
-                    if self.debug:
-                        print e
                 return obj._after_save_
 
-            def tri(obj, dependent_objects=None):
-                print 'obj>', obj._status_
-                return obj._save_
-
-            model._save_ = tri
-            model._after_save_ = my_after_save
+            model._after_save_ = _middle_save_
             model._whoosheer_ = mwh
-        #     model.whoosh_search = mwh.search
+            model.whoosh_index = mwh.index
+            model.whoosh_search = mwh.search
+            mwh.model = model
+            self.register_whoosheer(mwh)
             return model
         return inner
