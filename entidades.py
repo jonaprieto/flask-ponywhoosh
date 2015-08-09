@@ -1,5 +1,5 @@
 from pony.orm import *
-from flask_whooshpony import Whoosh
+from flask_ponywhoosh import Whoosh
 import sys
 from types import MethodType
 

@@ -190,11 +190,11 @@ class Whoosh(object):
                 attrs = {primary: model._pk_}
                 for f in schema_attrs.keys():
                     attrs[f] = getattr(model, f)
-                    if not isinstance(attrs[f], int):
-                        if sys.version < '3':
-                            attrs[f] = unicode(attrs[f])
-                        else:
-                            attrs[f] = str(attrs[f])
+                   # if not isinstance(attrs[f], int):
+                    #    if sys.version < '3':
+                     #       attrs[f] = unicode(attrs[f])
+                      #  else:
+                       #     attrs[f] = str(attrs[f])
 
                 if op == 'created':
                     writer.add_document(**attrs)
