@@ -7,10 +7,9 @@ from pony.orm import *
 import whoosh
 from whoosh import qparser
 
+class Whoosheer(object):
 
-class AbstractWhoosheer(object):
-
-    """A superclass for all whoosheers.
+    """
 
     Whoosheer is basically a unit of fulltext search. It represents either of:
 
@@ -18,8 +17,7 @@ class AbstractWhoosheer(object):
     * More tables, in which case all given fields of all the tables are searched.
     """
 
-    @classmethod
-    def search(cls, search_string, values_of='', group=qparser.OrGroup, match_substrings=True, limit=None):
+    def search(self, search_string, values_of='', group=qparser.OrGroup, match_substrings=True, limit=None):
         """Actually searches the fields for given search_string.
 
         Args:
@@ -34,35 +32,29 @@ class AbstractWhoosheer(object):
         Returns:
             Found records if 'not values_of', else values of given column
         """
-        prepped_string = cls.prep_search_string(
+        prepped_string = self.prep_search_string(
             search_string, match_substrings)
-        with cls.index.searcher() as searcher:
+        with self.index.searcher() as searcher:
             parser = whoosh.qparser.MultifieldParser(
-                cls.schema.names(), cls.index.schema, group=group)
+                self.schema.names(), self.index.schema, group=group)
             query = parser.parse(prepped_string)
             results = searcher.search(query, limit=limit)
             if values_of:
                 return [x[values_of] for x in results]
             return results
 
-    @classmethod
-    def prep_search_string(cls, search_string, match_substrings):
+    def prep_search_string(self, search_string, match_substrings):
         """Prepares search string as a proper whoosh search string."""
         s = search_string.strip()
         # we don't want stars from user
         s = s.replace('*', '')
-        if len(s) < cls.search_string_min_len:
+        if len(s) < self.search_string_min_len:
             raise ValueError('Search string must have at least {} characters'.format(
-                cls.search_string_min_len))
-        # replace multiple with star space star
+                self.search_string_min_len))
+
         if match_substrings:
             s = u'*{0}*'.format(re.sub('[\s]+', '* *', s))
-        # TODO: some sanitization
         return s
-
-AbstractWhoosheerMeta = abc.ABCMeta(
-    'AbstractWhoosheer', (AbstractWhoosheer,), {})
-
 
 class Whoosh(object):
 
@@ -89,8 +81,6 @@ class Whoosh(object):
         self.search_string_min_len = app.config.get(
             'WHOSHEE_MIN_STRING_LEN', 3)
         self.writer_timeout = app.config.get('WHOOSHEE_WRITER_TIMEOUT', 2)
-
-        # models_committed.connect(self.on_commit, sender=app)
 
     def create_index(self, wh):
         """Creates and opens index for given whoosheer.
@@ -126,23 +116,20 @@ class Whoosh(object):
 
         self.__class__.whoosheers.append(wh)
         self.create_index(wh)
-        # wh.model.query_class = WhoosheeQuery
         return wh
 
     def register_model(self, *index_fields, **kw):
         """Registers a single model for fulltext search. This basically creates
         a simple Whoosheer for the model and calls self.register_whoosheer on it.
         """
-        # construct subclass of AbstractWhoosheer for a model
-        class ModelWhoosheer(AbstractWhoosheerMeta):
-            pass
 
         if self.debug:
             print 'ModelWhoosheer created'
             print 'index_fields', index_fields
             print 'kw', kw
 
-        mwh = ModelWhoosheer
+        mwh = Whoosheer()
+        # print "*"*100, mwh.searhc
 
         def inner(model):
             mwh.index_subdir = model._table_
@@ -196,14 +183,11 @@ class Whoosh(object):
                 return obj._after_save_
             
             self.register_whoosheer(mwh)
-            
-            def search():
-                pass
 
             model._after_save_ = _middle_save_
             model._whoosheer_ = mwh
-            #model.whoosh_index = mwh.index
-            #model.whoosh_search = mwh.search
+            model._whoosh_index_ = mwh.index
+            model._whoosh_search_ = mwh.search
             mwh.model = model
 
            
