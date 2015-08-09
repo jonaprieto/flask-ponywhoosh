@@ -14,6 +14,7 @@ class User(db.Entity):
     tipo = Optional(unicode)
     entries = Set("Entry")
 
+
 class Entry(db.Entity):
     id = PrimaryKey(int, auto=True)
     title = Optional(unicode)

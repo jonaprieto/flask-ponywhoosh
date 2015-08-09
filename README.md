@@ -9,11 +9,12 @@ Nowadays, you should download the repository and where you locate in the directo
     pip install virtualenv
     virtualenv --no-site-packages venv
     source venv/bin/activate
+    pip install -r requirements.txt
     python app.py runserver
 
 ```
 
-After that, you could visit 
+After that, you could visit the following urls.
 -   `http://localhost:5000/llenar`
 -   `http://localhost:5000/update`
 -   `http://localhost:5000/` to see the entities from database.

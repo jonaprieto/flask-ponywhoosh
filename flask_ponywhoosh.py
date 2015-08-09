@@ -186,8 +186,9 @@ class Whoosh(object):
                     print 'writer>', writer
                     print model,  '/' * 30, model._status_
                     print 'model>', model
+                    print 'cantidad>', mwh.index.doc_count()
 
-                attrs = {primary: model._pk_}
+                attrs = {primary: model.get_pk()}
                 for f in schema_attrs.keys():
                     attrs[f] = getattr(model, f)
                    # if not isinstance(attrs[f], int):
@@ -195,28 +196,27 @@ class Whoosh(object):
                      #       attrs[f] = unicode(attrs[f])
                       #  else:
                        #     attrs[f] = str(attrs[f])
-
-                if op == 'created':
+                print 'attrs>', attrs
+                if op == 'inserted':
                     writer.add_document(**attrs)
-                elif op == 'modified':
+                elif op == 'updated':
                     writer.update_document(**attrs)
-                elif op == 'mark_to_delete':
+                elif op == 'deleted':
                     pass
 
                 writer.commit(optimize=True)
                 if self.debug:
                     print '>>>@ ', attrs
 
-            def saving(obj):
-                status = obj._status_
+            def my_after_save(obj, status):
                 try:
                     operation(obj, status)
                 except Exception, e:
                     if self.debug:
                         print e
-                return obj._before_save_
+                return obj._after_save_
 
-            model._before_save_ = saving
+            model._after_save_ = my_after_save
             model._whoosheer_ = mwh
         #     model.whoosh_search = mwh.search
             return model
