@@ -6,6 +6,8 @@ from pony.orm import *
 
 import whoosh
 from whoosh import qparser
+from whoosh import fields, index
+
 
 class Whoosheer(object):
 
@@ -55,6 +57,7 @@ class Whoosheer(object):
         if match_substrings:
             s = u'*{0}*'.format(re.sub('[\s]+', '* *', s))
         return s
+
 
 class Whoosh(object):
 
@@ -149,15 +152,23 @@ class Whoosh(object):
                         schema_attrs[field.name] = whoosh.fields.TEXT(
                             stored=True)
                 else:
+
                     if field.name in index_fields:
+
                         schema_attrs[field.name] = whoosh.fields.TEXT(**kw)
+
+                     #   if isinstance(field.py_type, type(int)):
+                      #      schema_attrs[field.name] = whoosh.fields.NUMERIC(
+                       #         stored=True, unique=True, sortable=True)
+                        # else:
+                        #   schema_attrs[field.name] = whoosh.fields.TEXT(
+                        #      stored=True, unique=True)
 
             mwh.schema = whoosh.fields.Schema(**schema_attrs)
             mwh._is_model_whoosheer = True
 
             if self.debug:
                 print '>> schema_attrs:', schema_attrs
-
 
             def _middle_save_(obj, status):
                 writer = mwh.index.writer(timeout=self.writer_timeout)
@@ -172,7 +183,7 @@ class Whoosh(object):
                     writer.update_document(**attrs)
                 elif status in set(['marked_to_delete', 'deleted', 'cancelled']):
                     writer.delete_by_term(primary, attrs[primary])
-                
+
                 if self.debug:
                     print 'writer>', writer
                     print 'obj>', obj,  '/' * 30, obj._status_
@@ -181,7 +192,7 @@ class Whoosh(object):
 
                 writer.commit(optimize=True)
                 return obj._after_save_
-            
+
             self.register_whoosheer(mwh)
 
             model._after_save_ = _middle_save_
@@ -189,7 +200,7 @@ class Whoosh(object):
             model._whoosh_index_ = mwh.index
             model._whoosh_search_ = mwh.search
             mwh.model = model
-           
+
             return model
         return inner
 
