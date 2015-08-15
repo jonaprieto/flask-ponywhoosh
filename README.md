@@ -1,5 +1,5 @@
 # Flask-PonyWhoosh
-This is a package to integrate the amazing power of `Whoosh` with `Pony ORM` inside the `Flask`.
+This package integrate the amazing power of `Whoosh` with `Pony ORM` inside  `Flask`.
 
 ## Installation
 
@@ -15,7 +15,7 @@ Import the library where you define your Entities.
     from flask_ponywhoosh import Whoosh
     wh = Whoosh()
 ```
-And for each entity wrapped it with the decorator `@wh.register_model(*args,**kw)` like the following example:
+And for each entity wrapped it with the decorator `@wh.register_model(*args,**kw)`. like the following example:
 
 
 ```python
@@ -30,7 +30,7 @@ class User(db.Entity):
     atributos = Set("Atributos")
 ```
 
-As you see from above example, you should write as strings the fields that they are going to be searchables, and you can add the parameters for fields.
+As you  appreciate in the previous example, you should declare  as strings the fields where you want whoosh to index (the searcheables), at the same time you might  add several parameters for fields. (sortable, stored, scored, etc.)
 
 ### Parameters for Flask Settings
 
@@ -60,6 +60,17 @@ To execute a search, choose the entity of interest and then, try something like 
     >>>
 
 ```
+In case that you want the results to be ordered by some specific field, you can write something like, 
+```python
+    >>> from entidades import *
+    >>> from flask_ponywhoosh import search
+    >>> search(User,"harol", sortedby="edad")
+    {'runtime': 0.0026960372924804688, 'results': [User[20], User[13], User[6], User[21], User[14], Us
+    er[7]]}
+    >>>
+
+```
+All the atributes for the class whoosh.searching.search() are available. You only need to separate by comma and add as many atributes as you need. 
 
 ## Usage from Example:
 
