@@ -30,12 +30,13 @@ from entidades import User, Entry, Atributos
 @app.route("/llenar")
 def llenar():
     with db_session:
-        u1 = User(name=u'chuck', edad=u'13', tipo='cliente')
-        u2 = User(name=u'arnold', edad=u'16', tipo='proveedor')
-        u3 = User(name=u'silvester', edad=u'17', tipo='admin')
-        u4 = User(name=u'jonathan', edad=u'15', tipo='cliente')
-        u5 = User(name=u'felipe', edad=u'19', tipo='proveedor')
+        u1 = User(name=u'chuck', edad=u'13', tipo=u'cliente')
+        u2 = User(name=u'arnold', edad=u'16', tipo=u'proveedor')
+        u3 = User(name=u'silvester', edad=u'17', tipo=u'admin')
+        u4 = User(name=u'jonathan', edad=u'15', tipo=u'cliente')
+        u5 = User(name=u'felipe', edad=u'19', tipo=u'proveedor')
         u6 = User(name=u'harol', edad=u'16')
+        u4= User(name=u'harol',edad=u'17')
         e1 = Entry(
             title=u'chuck nr. 1 article', content=u'blah blah blah', user=u1)
         e2 = Entry(
@@ -43,12 +44,12 @@ def llenar():
         e3 = Entry(title=u'arnold blah', content=u'spam is cool', user=u2)
         e4 = Entry(
             title=u'the less dangerous', content=u'chuck is better', user=u3)
-        a1 = Atributos(user=u1, peso=75, deporte=u'tejo')
-        a2 = Atributos(user=u2,  peso=80, deporte=u'lucha de gallinas')
-        a3 = Atributos(user=u3,  peso=65, deporte=u'futbol shaulin')
-        a4 = Atributos(user=u4,  peso=60, deporte=u'caza de marranos')
-        a5 = Atributos(user=u5,  peso=70, deporte=u'lanzamiento de chulo')
-        a6 = Atributos(user=u6,  peso=71, deporte=u'rasking ball')
+        # a1 = Atributos(user=u1, peso=75, deporte=u'tejo')
+        # a2 = Atributos(user=u2,  peso=80, deporte=u'lucha de gallinas')
+        # a3 = Atributos(user=u3,  peso=65, deporte=u'futbol shaulin')
+        # a4 = Atributos(user=u4,  peso=60, deporte=u'caza de marranos')
+        # a5 = Atributos(user=u5,  peso=70, deporte=u'lanzamiento de chulo')
+        # a6 = Atributos(user=u6,  peso=71, deporte=u'rasking ball')
 
     return 'base de datos.'
 
@@ -60,6 +61,8 @@ def update1():
         u.name = "malosito"
         return to_json(u)
 
+#@app.rout ("/buscador")
+#def buscar():
 
 #@app.route("/Indice")
 #def indice():

@@ -2,8 +2,7 @@ import sys
 import os
 import re
 import abc
-from pony.orm import *
-
+from pony import orm
 import whoosh
 from whoosh import qparser
 from whoosh import fields, index
@@ -41,9 +40,33 @@ class Whoosheer(object):
                 self.schema.names(), self.index.schema, group=group)
             query = parser.parse(prepped_string)
             results = searcher.search(query, limit=limit)
-            if values_of:
-                return [x[values_of] for x in results]
-            return results
+            result_set = set()
+            result_ranks = {}
+            print results[:]
+            print self.primary
+            for rank, result in enumerate(results):
+                  pk = result[self.primary]
+                  result_set.add(pk)
+                  result_ranks[pk] = rank
+
+            with orm.db_session:
+                print result_set
+                f = []
+                # The following code even thought is long, 
+                #is the only one that works, because the 
+                #shorcuts from pony allways raise errors. 
+                for ent in self.model.select():
+                    if ent.get_pk() in result_set:
+                        f.append(ent)
+                f.sort(key=lambda x: result_ranks[x.get_pk()])
+               
+
+                return f 
+            
+            return  
+
+
+        
 
     def prep_search_string(self, search_string, match_substrings):
         """Prepares search string as a proper whoosh search string."""
@@ -140,29 +163,25 @@ class Whoosh(object):
                 mwh.index_subdir = model.__name__
 
             schema_attrs = {}
-            primary = None
-
+            mwh.primary = None
+    
             for field in model._attrs_:
                 if field == model._pk_:
-                    primary = field.name
-                    if isinstance(field.py_type, type(int)):
+                    mwh.primary = field.name
+
+                    if isinstance(field.py_type, 
+                    ( orm.unicode, orm.LongUnicode, orm.LongStr, str)):
+                        schema_attrs[field.name] = whoosh.fields.ID(
+                            stored=True, unique=True)
+                    else: 
                         schema_attrs[field.name] = whoosh.fields.NUMERIC(
                             stored=True, unique=True)
-                    else:
-                        schema_attrs[field.name] = whoosh.fields.TEXT(
-                            stored=True)
-                else:
 
-                    if field.name in index_fields:
 
-                        schema_attrs[field.name] = whoosh.fields.TEXT(**kw)
+                elif field.name in index_fields and isinstance(field.py_type, 
+                    ( type(orm.unicode), type(orm.LongUnicode), type(orm.LongStr), type(str))):
 
-                     #   if isinstance(field.py_type, type(int)):
-                      #      schema_attrs[field.name] = whoosh.fields.NUMERIC(
-                       #         stored=True, unique=True, sortable=True)
-                        # else:
-                        #   schema_attrs[field.name] = whoosh.fields.TEXT(
-                        #      stored=True, unique=True)
+                    schema_attrs[field.name] = whoosh.fields.TEXT(**kw)
 
             mwh.schema = whoosh.fields.Schema(**schema_attrs)
             mwh._is_model_whoosheer = True
@@ -173,7 +192,7 @@ class Whoosh(object):
             def _middle_save_(obj, status):
                 writer = mwh.index.writer(timeout=self.writer_timeout)
 
-                attrs = {primary: obj.get_pk()}
+                attrs = {mwh.primary: obj.get_pk()}
                 for f in schema_attrs.keys():
                     attrs[f] = getattr(obj, f)
 
