@@ -1,0 +1,17 @@
+graft src
+
+
+include *.komodoproject
+include .bumpversion.cfg
+include .coveragerc
+include .isort.cfg
+include .pylintrc
+
+include AUTHORS.rst
+include CHANGELOG.rst
+include LICENSE
+include README.rst
+
+include tox.ini 
+
+global-exclude *.py[co] __pycache__ *.so *.pyd
