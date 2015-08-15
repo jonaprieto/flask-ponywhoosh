@@ -17,7 +17,7 @@ class User(db.Entity):
     entries = Set("Entry")
     atributos = Set("Atributos")
 
-
+@wh.register_model('deporte', stored = True)
 class Atributos(db.Entity):
     _table_ = 'Atributos'
     id = PrimaryKey(int, auto=True)
