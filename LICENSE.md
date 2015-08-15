@@ -1,4 +1,4 @@
-Copyright (c) 2011, Karl Gyllstrom
+Copyright (c) 2011, Jonathan S. Prieto & Ivan Felipe Rodriguez
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
