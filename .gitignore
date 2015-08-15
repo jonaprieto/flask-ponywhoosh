@@ -40,6 +40,8 @@ nosetests.xml
 *.trm
 *.pst
 *.seg
+
+*.sqlite
 .idea
 venv/
 whooshee/

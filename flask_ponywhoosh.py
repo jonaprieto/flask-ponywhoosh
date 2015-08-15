@@ -37,12 +37,10 @@ class Whoosheer(object):
             results = searcher.search(query, **search_opts)
             result_set = set()
             result_ranks = {}
-
             for rank, result in enumerate(results):
                 pk = result[self.primary]
                 result_set.add(pk)
                 result_ranks[pk] = rank
-
             dic = {'runtime': results.runtime}
 
             with orm.db_session:
@@ -51,9 +49,9 @@ class Whoosheer(object):
                 # is the only one that works, because the
                 # shorcuts from pony always raise errors.
                 for ent in self.model.select():
-                    if ent.get_pk() in result_set:
+                    if unicode(ent.get_pk()) in result_set:
                         rs.append(ent)
-                rs.sort(key=lambda x: result_ranks[x.get_pk()])
+                rs.sort(key=lambda x: result_ranks[unicode(x.get_pk())])
                 dic['results'] = rs
                 return dic
             return dic
@@ -157,25 +155,17 @@ class Whoosh(object):
 
             schema_attrs = {}
             mwh.primary = None
+            mwh.primary_type = int
 
             for field in model._attrs_:
                 if field == model._pk_:
                     mwh.primary = field.name
+                    mwh.primary_type = field.py_type
 
-                    if isinstance(field.py_type,
-                                  (type(orm.unicode), type(orm.LongUnicode), type(orm.LongStr), type(str))):
-                        schema_attrs[field.name] = whoosh.fields.ID(
-                            stored=True, unique=True)
-                    else:
-                        schema_attrs[field.name] = whoosh.fields.NUMERIC(
-                            stored=True, unique=True)
-
-                elif field.name in index_fields:
-                    if isinstance(field.py_type,
-                                  (type(orm.unicode), type(orm.LongUnicode), type(orm.LongStr), type(str))):
-                        schema_attrs[field.name] = whoosh.fields.TEXT(**kw)
-                    elif isinstance(field.py_type, (type(int), type(float), type(long))):
-                        schema_attrs[field.name] = whoosh.fields.NUMERIC(**kw)
+                    schema_attrs[field.name] = whoosh.fields.ID(
+                        stored=True, unique=True)
+                if field.name in index_fields:
+                    schema_attrs[field.name] = whoosh.fields.TEXT(**kw)
 
             mwh.schema = whoosh.fields.Schema(**schema_attrs)
             mwh._is_model_whoosheer = True

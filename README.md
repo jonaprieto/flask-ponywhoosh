@@ -97,5 +97,7 @@ Try something like the following sentences:
 ```python
     >>> from entidades import User
     >>> from flask_ponywhoosh import search
-    >>> search(User, 'jona')
+    >>> search(User, 'harol')
+    {'runtime': 0.006242990493774414, 'results': [User[49], User[48], User[35], User[34], User[28], User[
+27], User[21], User[20], User[14], User[13]]}
 ```
