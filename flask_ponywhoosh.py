@@ -34,7 +34,7 @@ class Whoosheer(object):
                 if o in parameters:
                     search_opts[o] = opt[o]
 
-            results = searcher.search(**search_opts)
+            results = searcher.search(query, **search_opts)
             result_set = set()
             result_ranks = {}
 

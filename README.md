@@ -37,11 +37,10 @@ Start a session of a shell.
     python app.py shell
 ```
 
-Inside it, code the following:
+Try something like the following sentences:
 
 ```python
     >>> from entidades import User
     >>> from flask_ponywhoosh import search
     >>> search(User, 'jona')
-    
 ```
