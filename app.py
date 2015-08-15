@@ -30,13 +30,13 @@ from entidades import User, Entry, Atributos
 @app.route("/llenar")
 def llenar():
     with db_session:
-        u1 = User(name=u'chuck', edad=u'13', tipo=u'cliente')
-        u2 = User(name=u'arnold', edad=u'16', tipo=u'proveedor')
-        u3 = User(name=u'silvester', edad=u'17', tipo=u'admin')
-        u4 = User(name=u'jonathan', edad=u'15', tipo=u'cliente')
-        u5 = User(name=u'felipe', edad=u'19', tipo=u'proveedor')
-        u6 = User(name=u'harol', edad=u'16')
-        u4= User(name=u'harol',edad=u'17')
+        u1 = User(name=u'chuck', edad=13, tipo=u'cliente')
+        u2 = User(name=u'arnold', edad=16, tipo=u'proveedor')
+        u3 = User(name=u'silvester', edad=17, tipo=u'admin')
+        u4 = User(name=u'jonathan', edad=15, tipo=u'cliente')
+        u5 = User(name=u'felipe', edad=19, tipo=u'proveedor')
+        u6 = User(name=u'harol', edad=16)
+        u4= User(name=u'harol',edad=17)
         e1 = Entry(
             title=u'chuck nr. 1 article', content=u'blah blah blah', user=u1)
         e2 = Entry(

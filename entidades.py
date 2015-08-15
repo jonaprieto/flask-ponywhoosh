@@ -13,7 +13,7 @@ class User(db.Entity):
     id = PrimaryKey(int, auto=True)
     name = Required(unicode)
     tipo = Optional(unicode)
-    edad = Optional(unicode)
+    edad = Optional(int)
     entries = Set("Entry")
     atributos = Set("Atributos")
 

@@ -163,7 +163,7 @@ class Whoosh(object):
                     mwh.primary = field.name
 
                     if isinstance(field.py_type,
-                                  (orm.unicode, orm.LongUnicode, orm.LongStr, str)):
+                                  (type(orm.unicode), type(orm.LongUnicode), type(orm.LongStr), type(str))):
                         schema_attrs[field.name] = whoosh.fields.ID(
                             stored=True, unique=True)
                     else:
@@ -173,7 +173,6 @@ class Whoosh(object):
                 elif field.name in index_fields:
                     if isinstance(field.py_type,
                                   (type(orm.unicode), type(orm.LongUnicode), type(orm.LongStr), type(str))):
-
                         schema_attrs[field.name] = whoosh.fields.TEXT(**kw)
                     elif isinstance(field.py_type, (type(int), type(float), type(long))):
                         schema_attrs[field.name] = whoosh.fields.NUMERIC(**kw)
@@ -190,6 +189,10 @@ class Whoosh(object):
                 attrs = {mwh.primary: obj.get_pk()}
                 for f in schema_attrs.keys():
                     attrs[f] = getattr(obj, f)
+                    try:
+                        attrs[f] = unicode(attrs[f])
+                    except:
+                        pass
 
                 if status == 'inserted':
                     writer.add_document(**attrs)
