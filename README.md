@@ -29,8 +29,3 @@ After that, you could visit the following urls.
     <Top 2 Results for Or([<_NullQuery>, Wildcard('name', u'*jona*')]) runtime=0.003
 22508811951>
 ```
-
-##Future
-
-We are going to structure the package for `pip` with appropriate tests.
-Add documentation and example of usages.
