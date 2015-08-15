@@ -17,18 +17,7 @@ class Whoosheer(object):
     * One table, in which case all given fields of the model is searched.
     * More tables, in which case all given fields of all the tables are searched.
     """
-# >>> from entidades import *
-# >>> User._whoosh_search_("felipe")
-# {'runtime': 0.002643108367919922, 'results': [User[12], User[5]]}
-# >>> from flask_ponywhoosh import search
-# >>> search(User,"felipe")
-# {'runtime': 0.0016570091247558594, 'results': [User[12], User[5]]}
-# >>> search(User,"felipe",sortedby="edad")
-# {'runtime': 0.0015339851379394531, 'results': [User[12], User[5]]}
-# >>> search(User,"harol",sortedby="edad")
-# {'runtime': 0.0038590431213378906, 'results': [User[13], User[6], User
-# [14], User[7]]}
-# >>>
+
     def search(self, search_string, **opt):
         prepped_string = self.prep_search_string(search_string)
         with self.index.searcher() as searcher:
