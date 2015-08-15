@@ -1,9 +1,18 @@
 # Flask-PonyWhoosh
 This is a package to integrate the amazing power of `Whoosh` with `Pony ORM` inside the `Flask`.
 
+## Installation
 
-## Running the App
-Nowadays, you should download the repository and where you locate in the directory. See inside the `app.py` and `entidades.py` how it works.
+```python
+
+    pip install flask-ponywhoosh
+```
+
+## Usage
+Let look at example: `app.py` for running the flask app, and `entidades.py` where we defined the entities of database for `PonyORM`.
+
+### Running the App
+
 
 ```bash
     pip install virtualenv
@@ -15,17 +24,24 @@ Nowadays, you should download the repository and where you locate in the directo
 ```
 
 After that, you could visit the following urls.
--   `http://localhost:5000/llenar`
--   `http://localhost:5000/update`
+-   `http://localhost:5000/llenar` to create entries for database, examples.
+-   `http://localhost:5000/update` to perform an update in an entity with `id=1`.
 -   `http://localhost:5000/` to see the entities from database.
 
 
-## Searching 
+### Using the example
+
+Start a session of a shell.
+
+```bash
+    python app.py shell
+```
+
+Inside it, code the following:
 
 ```python
-    >>> from entidades import *
+    >>> from entidades import User
     >>> from flask_ponywhoosh import search
     >>> search(User, 'jona')
-    <Top 2 Results for Or([<_NullQuery>, Wildcard('name', u'*jona*')]) runtime=0.003
-22508811951>
+    
 ```

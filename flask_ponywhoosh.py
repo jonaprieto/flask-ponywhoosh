@@ -18,67 +18,60 @@ class Whoosheer(object):
     * More tables, in which case all given fields of all the tables are searched.
     """
 
-    def search(self, search_string, values_of='', group=qparser.OrGroup, match_substrings=True, limit=None):
-        """Actually searches the fields for given search_string.
-
-        Args:
-            search_string: string to search for
-            values_of: if given, the method will not return the whole records, but only values
-                       of given column (defaults to returning whole records)
-            group: whoosh group to use for searching, defaults to OrGroup (searches for all
-                   words in all columns)
-            match_substrings: True if you want to match substrings, False otherwise
-            limit: number of the top records to be returned, default None returns all records
-
-        Returns:
-            Found records if 'not values_of', else values of given column
-        """
-        prepped_string = self.prep_search_string(
-            search_string, match_substrings)
+    def search(self, search_string, **opt):
+        prepped_string = self.prep_search_string(search_string)
         with self.index.searcher() as searcher:
             parser = whoosh.qparser.MultifieldParser(
-                self.schema.names(), self.index.schema, group=group)
+                self.schema.names(), self.index.schema,
+                group=opt.get('group', qparser.OrGroup))
             query = parser.parse(prepped_string)
-            results = searcher.search(query, limit=limit)
+
+            search_opts = {'query': query}
+            parameters = ['query', 'limit', 'scored', 'sortedby',
+                          'reverse', 'groupedby', 'optimize', 'filter', 'mask', 'terms', 'maptype', 'collapse', 'collapse_limit', 'collapse_order']
+
+            for o in opt.keys():
+                if o in parameters:
+                    search_opts[o] = opt[o]
+
+            results = searcher.search(**search_opts)
             result_set = set()
             result_ranks = {}
-            print results[:]
-            print self.primary
+
             for rank, result in enumerate(results):
-                  pk = result[self.primary]
-                  result_set.add(pk)
-                  result_ranks[pk] = rank
+                pk = result[self.primary]
+                result_set.add(pk)
+                result_ranks[pk] = rank
+
+            dic = {'runtime': results.runtime}
 
             with orm.db_session:
-                print result_set
-                f = []
-                # The following code even thought is long, 
-                #is the only one that works, because the 
-                #shorcuts from pony allways raise errors. 
+                rs = []
+                # The following code even thought is long,
+                # is the only one that works, because the
+                # shorcuts from pony always raise errors.
                 for ent in self.model.select():
                     if ent.get_pk() in result_set:
-                        f.append(ent)
-                f.sort(key=lambda x: result_ranks[x.get_pk()])
-               
+                        rs.append(ent)
+                rs.sort(key=lambda x: result_ranks[x.get_pk()])
+                dic['results'] = rs
+                return dic
+            return dic
 
-                return f 
-            
-            return  
-
-
-        
-
-    def prep_search_string(self, search_string, match_substrings):
+    def prep_search_string(self, search_string):
         """Prepares search string as a proper whoosh search string."""
         s = search_string.strip()
+        try:
+            s = unicode(s)
+        except:
+            pass
         # we don't want stars from user
         s = s.replace('*', '')
         if len(s) < self.search_string_min_len:
             raise ValueError('Search string must have at least {} characters'.format(
                 self.search_string_min_len))
 
-        if match_substrings:
-            s = u'*{0}*'.format(re.sub('[\s]+', '* *', s))
+        # s = u'*{0}*'.format(re.sub('[\s]+', '* *', s))
         return s
 
 
@@ -164,24 +157,26 @@ class Whoosh(object):
 
             schema_attrs = {}
             mwh.primary = None
-    
+
             for field in model._attrs_:
                 if field == model._pk_:
                     mwh.primary = field.name
 
-                    if isinstance(field.py_type, 
-                    ( orm.unicode, orm.LongUnicode, orm.LongStr, str)):
+                    if isinstance(field.py_type,
+                                  (orm.unicode, orm.LongUnicode, orm.LongStr, str)):
                         schema_attrs[field.name] = whoosh.fields.ID(
                             stored=True, unique=True)
-                    else: 
+                    else:
                         schema_attrs[field.name] = whoosh.fields.NUMERIC(
                             stored=True, unique=True)
 
+                elif field.name in index_fields:
+                    if isinstance(field.py_type,
+                                  (type(orm.unicode), type(orm.LongUnicode), type(orm.LongStr), type(str))):
 
-                elif field.name in index_fields and isinstance(field.py_type, 
-                    ( type(orm.unicode), type(orm.LongUnicode), type(orm.LongStr), type(str))):
-
-                    schema_attrs[field.name] = whoosh.fields.TEXT(**kw)
+                        schema_attrs[field.name] = whoosh.fields.TEXT(**kw)
+                    elif isinstance(field.py_type, (type(int), type(float), type(long))):
+                        schema_attrs[field.name] = whoosh.fields.NUMERIC(**kw)
 
             mwh.schema = whoosh.fields.Schema(**schema_attrs)
             mwh._is_model_whoosheer = True
