@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Welcome to Flask-PonyWhoosh’s documentation! &mdash; Flask-PonyWhoosh 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/flasky.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Flask-PonyWhoosh 0.1.1 documentation" href="#" /> 
+  </head>
+  <body role="document">
+  
+  
+  <div class=indexwrapper>
+  
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="welcome-to-flask-ponywhoosh-s-documentation">
+<h1>Welcome to Flask-PonyWhoosh&#8217;s documentation!<a class="headerlink" href="#welcome-to-flask-ponywhoosh-s-documentation" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="https://pypi.python.org/pypi/Flask-PonyWhoosh"><img alt="PyPI Package latest release" src="http://img.shields.io/pypi/v/Flask-PonyWhoosh.png?style=flat" /></a> <a class="reference external" href="https://pypi.python.org/pypi/Flask-PonyWhoosh"><img alt="PyPI Package monthly downloads" src="http://img.shields.io/pypi/dm/Flask-PonyWhoosh.png?style=flat" /></a></p>
+<p>This package integrate the amazing power of <code class="docutils literal"><span class="pre">Whoosh</span></code> with <code class="docutils literal"><span class="pre">Pony</span> <span class="pre">ORM</span></code>
+inside <code class="docutils literal"><span class="pre">Flask</span></code>. Source code and issue tracking at
+<a class="reference external" href="http://github.com/piperod/Flask-PonyWhoosh">http://github.com/piperod/Flask-PonyWhoosh</a>.</p>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<div class="code python highlight-python"><div class="highlight"><pre>pip install flask-ponywhoosh
+</pre></div>
+</div>
+<p>or</p>
+<div class="code bash highlight-python"><div class="highlight"><pre>git clone https://github.com/piperod/Flask-PonyWhoosh.git
+</pre></div>
+</div>
+</div>
+<div class="section" id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>Import the library where you define your Entities.</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">flask_ponywhoosh</span> <span class="kn">import</span> <span class="n">Whoosh</span>
+<span class="n">wh</span> <span class="o">=</span> <span class="n">Whoosh</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>And for each entity wrapped it with the decorator
+<code class="docutils literal"><span class="pre">&#64;wh.register_model(*args,**kw)</span></code>. like the following example:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="nd">@wh.register_model</span><span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">,</span><span class="s">&#39;edad&#39;</span><span class="p">,</span><span class="n">sortable</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>  <span class="n">stored</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">Entity</span><span class="p">):</span>
+    <span class="n">_table_</span> <span class="o">=</span> <span class="s">&#39;User&#39;</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">PrimaryKey</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">auto</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">Required</span><span class="p">(</span><span class="nb">unicode</span><span class="p">)</span>
+    <span class="n">tipo</span> <span class="o">=</span> <span class="n">Optional</span><span class="p">(</span><span class="nb">unicode</span><span class="p">)</span>
+    <span class="n">edad</span> <span class="o">=</span> <span class="n">Optional</span><span class="p">(</span><span class="nb">unicode</span><span class="p">)</span>
+    <span class="n">entries</span> <span class="o">=</span> <span class="n">Set</span><span class="p">(</span><span class="s">&quot;Entry&quot;</span><span class="p">)</span>
+    <span class="n">atributos</span> <span class="o">=</span> <span class="n">Set</span><span class="p">(</span><span class="s">&quot;Atributos&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>As you coudl see in the previous example, you should declare as strings
+the fields where you want whoosh to index (the searcheables), at the
+same time you might add several parameters for fields: sortable, stored,
+scored, etc. Refer to
+<a class="reference external" href="http://pythonhosted.org/Whoosh/searching.html#scoring-and-sorting">http://pythonhosted.org/Whoosh/searching.html#scoring-and-sorting</a> for
+further explanations.</p>
+<div class="section" id="flask-settings">
+<h3>Flask Settings<a class="headerlink" href="#flask-settings" title="Permalink to this headline">¶</a></h3>
+<p>From flask configuration, you could add option for whoosh:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;WHOOSHEE_DIR&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;whooshes&#39;</span>
+<span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;WHOSHEE_MIN_STRING_LEN&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;WHOOSHEE_WRITER_TIMEOUT&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="searching">
+<h3>Searching<a class="headerlink" href="#searching" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">PonyModel._whoosh_search_(query,</span> <span class="pre">**kwargs)</span></code>.</p>
+<p>To execute a search, choose the entity of interest and then, try
+something like the following code over a view function, or even from the
+shell.</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">entidades</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">User</span><span class="o">.</span><span class="n">_whoosh_search_</span><span class="p">(</span><span class="s">&quot;felipe&quot;</span><span class="p">)</span>
+<span class="go">{&#39;runtime&#39;: 0.002643108367919922, &#39;results&#39;: [User[12], User[5]]}</span>
+
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Or, if you prefer to only use the function search(),</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">flask_ponywhoosh</span> <span class="kn">import</span> <span class="n">search</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">search</span><span class="p">(</span><span class="n">User</span><span class="p">,</span><span class="s">&quot;felipe&quot;</span><span class="p">)</span>
+<span class="go">{&#39;runtime&#39;: 0.0016570091247558594, &#39;results&#39;: [User[12], User[5]]}</span>
+</pre></div>
+</div>
+<p>In case that you want the results to be ordered by some specific field,
+you will have to indicate so by adding the argument sortedby=&#8221;field&#8221;.
+(As is shown in the following example). Please note that in order for
+one field to be sortable, you must indicate so when you are registering
+the model.(Refer to the Usage section above)</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">entidades</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">flask_ponywhoosh</span> <span class="kn">import</span> <span class="n">search</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">search</span><span class="p">(</span><span class="n">User</span><span class="p">,</span><span class="s">&quot;harol&quot;</span><span class="p">,</span> <span class="n">sortedby</span><span class="o">=</span><span class="s">&quot;edad&quot;</span><span class="p">)</span>
+<span class="go">{&#39;runtime&#39;: 0.0026960372924804688, &#39;results&#39;: [User[20], User[13], User[6], User[21], User[14], Us</span>
+<span class="go">er[7]]}</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>All the atributes for the class whoosh.searching.search() are available.
+You only need to separate by comma and add as many as you need.</p>
+</div>
+</div>
+<div class="section" id="app-full-example">
+<h2>App Full Example:<a class="headerlink" href="#app-full-example" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">app.py</span></code> for running the flask app.</li>
+<li><code class="docutils literal"><span class="pre">entidades.py</span></code> where we defined the entities of database for
+<code class="docutils literal"><span class="pre">PonyORM</span></code>.</li>
+</ul>
+<div class="section" id="running-the-app">
+<h3>Running the App<a class="headerlink" href="#running-the-app" title="Permalink to this headline">¶</a></h3>
+<div class="code bash highlight-python"><div class="highlight"><pre>pip install virtualenv
+virtualenv --no-site-packages venv
+source venv/bin/activate
+pip install -r requirements.txt
+python app.py runserver
+</pre></div>
+</div>
+<p>After that, you could visit the following urls.</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">http://localhost:5000/llenar</span></code> to create entries for database,</li>
+</ul>
+<p>examples.</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">http://localhost:5000/update</span></code> to perform an update in an entity</li>
+</ul>
+<p>with <code class="docutils literal"><span class="pre">id=1</span></code>.</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">http://localhost:5000/</span></code> to see the entities from database.</li>
+</ul>
+</div>
+<div class="section" id="running-the-app-example">
+<h3>Running the app example<a class="headerlink" href="#running-the-app-example" title="Permalink to this headline">¶</a></h3>
+<p>Start a session of a shell.</p>
+<div class="code bash highlight-python"><div class="highlight"><pre>python app.py shell
+</pre></div>
+</div>
+<p>Try something like the following sentences:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">entidades</span> <span class="kn">import</span> <span class="n">User</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">flask_ponywhoosh</span> <span class="kn">import</span> <span class="n">search</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">search</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="s">&#39;harol&#39;</span><span class="p">)</span>
+<span class="go">{&#39;runtime&#39;: 0.006242990493774414, &#39;results&#39;: [User[49], User[48], User[35], User[34], User[28], User[</span>
+
+<span class="go">27], User[21], User[20], User[14], User[13]]}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  
+    <a href="http://github.com/piperod/Flask-PonyWhoosh"><img style="position: fixed; top: 0; right: 0; border: 0;"
+    src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+  
+
+  
+  </div>
+  
+
+  </body>
+</html>
