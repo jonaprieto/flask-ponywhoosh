@@ -1,21 +1,34 @@
-import sys
+'''
+
+    flask_ponywhoosh extension
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    Adds capabilities to perform text search over your modules of Pony ORM
+    for flask applications.
+
+    :copyright: (c) 2015 by Jonathan S. Prieto & Ivan Felipe Rodriguez.
+    :license: BSD (see LICENSE.md)
+
+'''
+
+import abc
 import os
 import re
-import abc
+import sys
+
 from pony import orm
-import whoosh
-from whoosh import qparser
 from whoosh import fields, index
+from whoosh import qparser
+import whoosh
+
 
 
 class Whoosheer(object):
 
     """
 
-    Whoosheer is basically a unit of fulltext search. It represents either of:
+    Whoosheer is basically a unit of fulltext search.
 
-    * One table, in which case all given fields of the model is searched.
-    * More tables, in which case all given fields of all the tables are searched.
     """
 
     def search(self, search_string, **opt):
@@ -146,7 +159,6 @@ class Whoosh(object):
             print 'kw', kw
 
         mwh = Whoosheer()
-        # print "*"*100, mwh.searhc
 
         def inner(model):
             mwh.index_subdir = model._table_
