@@ -22,7 +22,6 @@ from whoosh import qparser
 import whoosh
 
 
-
 class Whoosheer(object):
 
     """
@@ -84,6 +83,25 @@ class Whoosheer(object):
 
         # s = u'*{0}*'.format(re.sub('[\s]+', '* *', s))
         return s
+
+    @orm.db_session
+    def _charge_data_(self):
+        ix = self.model._whoosh_index_
+        doc_count = ix.doc_count()
+        objs = orm.count(e for e in self.model)
+        print 'charge_data() ', '-' * 50
+        print 'doc_count =', doc_count
+        print 'objs = ', objs
+
+        if doc_count == 0 and objs > 0:
+            writer = self.index.writer()
+            for obj in orm.select(e for e in self.model):
+                attrs = {self.primary: obj.get_pk()}
+                for f in self.schema_attrs.keys():
+                    attrs[f] = unicode(getattr(obj, f))
+                writer.add_document(**attrs)
+
+            writer.commit(optimize=True)
 
 
 class Whoosh(object):
@@ -165,7 +183,7 @@ class Whoosh(object):
             if not mwh.index_subdir:
                 mwh.index_subdir = model.__name__
 
-            schema_attrs = {}
+            mwh.schema_attrs = {}
             mwh.primary = None
             mwh.primary_type = int
 
@@ -174,22 +192,22 @@ class Whoosh(object):
                     mwh.primary = field.name
                     mwh.primary_type = field.py_type
 
-                    schema_attrs[field.name] = whoosh.fields.ID(
+                    mwh.schema_attrs[field.name] = whoosh.fields.ID(
                         stored=True, unique=True)
                 if field.name in index_fields:
-                    schema_attrs[field.name] = whoosh.fields.TEXT(**kw)
+                    mwh.schema_attrs[field.name] = whoosh.fields.TEXT(**kw)
 
-            mwh.schema = whoosh.fields.Schema(**schema_attrs)
+            mwh.schema = whoosh.fields.Schema(**mwh.schema_attrs)
             mwh._is_model_whoosheer = True
 
             if self.debug:
-                print '>> schema_attrs:', schema_attrs
+                print '>> mwh.schema_attrs:', mwh.schema_attrs
 
             def _middle_save_(obj, status):
                 writer = mwh.index.writer(timeout=self.writer_timeout)
 
                 attrs = {mwh.primary: obj.get_pk()}
-                for f in schema_attrs.keys():
+                for f in mwh.schema_attrs.keys():
                     attrs[f] = getattr(obj, f)
                     try:
                         attrs[f] = unicode(attrs[f])
@@ -218,6 +236,7 @@ class Whoosh(object):
             model._whoosheer_ = mwh
             model._whoosh_index_ = mwh.index
             model._whoosh_search_ = mwh.search
+            model._whoosh_charge_data_ = mwh._charge_data_
             mwh.model = model
 
             return model
