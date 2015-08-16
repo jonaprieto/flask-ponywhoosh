@@ -29,7 +29,7 @@ def read(*names, **kwargs):
 
 setup(
     name='Flask-PonyWhoosh',
-    version='0.1.0',
+    version='0.1.1',
     url='https://github.com/piperod/Flask-PonyWhoosh',
     license='BSD',
     author='Jonathan S. Prieto. & Ivan Felipe Rodriguez',
@@ -53,7 +53,9 @@ setup(
         'Programming Language :: Python',
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
         'Topic :: Software Development :: Libraries :: Python Modules'
-    ]
+    ],
+    tests_require=['Flask-Testing'],
+    test_suite='test.test_all'
 )
 
 # pandoc --from=rst --to=rst --output=README.rst README.rst
