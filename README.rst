@@ -126,12 +126,10 @@ Running the App
 
 After that, you could visit the following urls.
 
-- ``http://localhost:5000/llenar`` to create entries for database,
-examples.
-
-- ``http://localhost:5000/update`` to perform an update in an entity
-with ``id=1``.
-
+-  ``http://localhost:5000/llenar`` to create entries for database
+   examples.
+-  ``http://localhost:5000/update`` to perform an update in an entity
+   with ``id=1``.
 -  ``http://localhost:5000/`` to see the entities from database.
 
 Running the app example

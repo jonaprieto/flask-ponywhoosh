@@ -29,7 +29,7 @@ def read(*names, **kwargs):
 
 setup(
     name='Flask-PonyWhoosh',
-    version='0.1.1',
+    version='0.1.2',
     url='https://github.com/piperod/Flask-PonyWhoosh',
     license='BSD',
     author='Jonathan S. Prieto. & Ivan Felipe Rodriguez',
