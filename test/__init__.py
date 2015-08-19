@@ -1,1 +1,0 @@
-all = ['test_all']

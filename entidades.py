@@ -1,5 +1,5 @@
 from pony.orm import *
-from flask_ponywhoosh import Whoosh
+from flask_ponywhoosh import Whoosh , search
 import sys
 from types import MethodType
 
@@ -17,7 +17,7 @@ class User(db.Entity):
     entries = Set("Entry")
     atributos = Set("Atributos")
 
-@wh.register_model('deporte', stored = True)
+@wh.register_model('peso','deporte', stored = True, sortable=True)
 class Atributos(db.Entity):
     _table_ = 'Atributos'
     id = PrimaryKey(int, auto=True)

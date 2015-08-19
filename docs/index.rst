@@ -45,7 +45,7 @@ And for each entity wrapped it with the decorator
         entries = Set("Entry")
         atributos = Set("Atributos")
 
-As you coudl see in the previous example, you should declare as strings
+As you could see in the previous example, you should declare as strings
 the fields where you want whoosh to index (the searcheables), at the
 same time you might add several parameters for fields: sortable, stored,
 scored, etc. Refer to
@@ -55,7 +55,7 @@ further explanations.
 Flask Settings
 ~~~~~~~~~~~~~~
 
-From flask configuration, you could add option for whoosh:
+From flask configuration, you could add options for whoosh:
 
 .. code:: python
 
@@ -89,9 +89,9 @@ Or, if you prefer to only use the function search(),
     {'runtime': 0.0016570091247558594, 'results': [User[12], User[5]]}
 
 In case that you want the results to be ordered by some specific field,
-you will have to indicate so by adding the argument sortedby="field".
+you will have to indicate so, by adding the argument ``sortedby="field"``.
 (As is shown in the following example). Please note that in order for
-one field to be sortable, you must indicate so when you are registering
+one field to be sortable, you must indicate it when you are registering
 the model.(Refer to the Usage section above)
 
 .. code:: python
@@ -103,8 +103,7 @@ the model.(Refer to the Usage section above)
     er[7]]}
     >>>
 
-All the atributes for the class whoosh.searching.search() are available.
-You only need to separate by comma and add as many as you need.
+All the atributes for the ``class whoosh.searching.search()`` are available. You only need to separate by comma and add as many as you need.
 
 App Full Example:
 -----------------

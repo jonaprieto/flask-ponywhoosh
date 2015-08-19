@@ -102,6 +102,14 @@ class Whoosheer(object):
                 writer.add_document(**attrs)
 
             writer.commit(optimize=True)
+    def _delete_index_(self):
+
+        ix = self.model._whoosh_index_
+        sch = ix.schema 
+        field_name=sch.names()
+        for s in field_name:
+            del_name= s
+            ix.remove_field(del_name)
 
 
 class Whoosh(object):
@@ -136,6 +144,7 @@ class Whoosh(object):
         If the index already exists, it just opens it, otherwise it creates it first.
         """
         index_path = os.path.join(self.index_path_root, wh.index_subdir)
+        
         if whoosh.index.exists_in(index_path):
             if self.debug:
                 print 'existe el indice para whoosh'
@@ -147,6 +156,7 @@ class Whoosh(object):
                 os.makedirs(index_path)
             index = whoosh.index.create_in(index_path, wh.schema)
         wh.index = index
+    
 
     def register_whoosheer(self, wh):
         """Registers a given whoosheer:
@@ -237,6 +247,7 @@ class Whoosh(object):
             model._whoosh_index_ = mwh.index
             model._whoosh_search_ = mwh.search
             model._whoosh_charge_data_ = mwh._charge_data_
+            model._whoosh_delete_index_ =mwh._delete_index_
             mwh.model = model
 
             return model
