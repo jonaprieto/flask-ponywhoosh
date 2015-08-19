@@ -110,6 +110,11 @@ class Whoosheer(object):
         for s in field_name:
             del_name= s
             ix.remove_field(del_name)
+    def _delete_index_by_field_(self,field_name):
+        ix = self.model._whoosh_index_
+        t=field_name.strip()
+        ix.remove_field(t)
+        return ix.schema
 
 
 class Whoosh(object):
@@ -248,6 +253,7 @@ class Whoosh(object):
             model._whoosh_search_ = mwh.search
             model._whoosh_charge_data_ = mwh._charge_data_
             model._whoosh_delete_index_ =mwh._delete_index_
+            model._whoosh_delete_index_by_field_=mwh._delete_index_by_field_
             mwh.model = model
 
             return model
@@ -256,3 +262,6 @@ class Whoosh(object):
 
 def search(model, *arg, **kw):
     return model._whoosh_search_(*arg, **kw)
+def delete(model,*arg):
+    return model._whoosh_delete_index_by_field_(*arg)
+
