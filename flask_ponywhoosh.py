@@ -46,14 +46,18 @@ class Whoosheer(object):
                 if o in parameters:
                     search_opts[o] = opt[o]
 
-            results = searcher.search(query, **search_opts)
+            results = searcher.search(query, terms=True, **search_opts)
             result_set = set()
             result_ranks = {}
             for rank, result in enumerate(results):
                 pk = result[self.primary]
                 result_set.add(pk)
                 result_ranks[pk] = rank
-            dic = {'runtime': results.runtime}
+            dic = {'runtime':results.runtime,'results':results.docs(),
+                        'cant_results':results.estimated_length(),
+                            'matched_terms':results.matched_terms(),
+                            'facet_names':results.facet_names(), 'score':list(results.items())}
+            
 
             with orm.db_session:
                 rs = []
@@ -67,6 +71,9 @@ class Whoosheer(object):
                 dic['results'] = rs
                 return dic
             return dic
+
+
+
 
     def prep_search_string(self, search_string):
         """Prepares search string as a proper whoosh search string."""
@@ -100,8 +107,9 @@ class Whoosheer(object):
                 for f in self.schema_attrs.keys():
                     attrs[f] = unicode(getattr(obj, f))
                 writer.add_document(**attrs)
-
             writer.commit(optimize=True)
+
+
     def _delete_index_(self):
 
         ix = self.model._whoosh_index_
@@ -255,6 +263,7 @@ class Whoosh(object):
             model._whoosh_delete_index_ =mwh._delete_index_
             model._whoosh_delete_index_by_field_=mwh._delete_index_by_field_
             mwh.model = model
+        
 
             return model
         return inner
@@ -265,3 +274,12 @@ def search(model, *arg, **kw):
 def delete(model,*arg):
     return model._whoosh_delete_index_by_field_(*arg)
 
+def full_search(ind,*arg,**kw):
+    full_results={'results':[],'matched_terms':[]}
+
+    for whoosher in ind.whoosheers: 
+        resul = whoosher.search(arg[0])
+        full_results['results'].extend(resul['results'])
+        full_results['matched_terms'].extend(resul['matched_terms'])
+    
+    return full_results
