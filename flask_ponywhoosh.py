@@ -68,7 +68,7 @@ class Whoosheer(object):
                 writer.add_document(**attrs)
             writer.commit(optimize=True)
         else:
-            update_documents()
+            self.update_documents()
 
     def update_documents(self):
         self.delete_documents()
@@ -250,15 +250,15 @@ class Whoosh(object):
             return model
         return inner
 
-
+@orm.db_session
 def search(model, *arg, **kw):
     return model._wh_.search(*arg, **kw)
 
-
+@orm.db_session
 def delete_field(model, *arg):
     return model._wh_.delete_field(*arg)
 
-
+@orm.db_session
 def full_search(wh, *arg, **kw):
     full_results = {'runtime':0,
                     'results': {},
