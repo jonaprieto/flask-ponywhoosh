@@ -255,7 +255,6 @@ def search(model, *arg, **kw):
 def delete_field(model, *arg):
     return model._wh_.delete_field(*arg)
 
-full_search(wh, 'harols', models=[Atributos])
 
 def full_search(wh, *arg, **kw):
     full_results = {'runtime':0,
