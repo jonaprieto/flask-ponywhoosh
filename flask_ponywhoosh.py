@@ -19,6 +19,8 @@ from pony import orm
 from whoosh import fields, index
 from whoosh import qparser
 import whoosh
+from collections import defaultdict
+
 
 
 class Whoosheer(object):
@@ -258,9 +260,9 @@ def delete_field(model, *arg):
 
 def full_search(wh, *arg, **kw):
     full_results = {'runtime':0,
-                    'results': [],
-                    'matched_terms': []}
-    
+                    'results': {},
+                    'matched_terms': defaultdict(set)
+                    }    
     whoosheers = wh.whoosheers
     if 'models' in kw:
         models = kw['models']
@@ -276,8 +278,17 @@ def full_search(wh, *arg, **kw):
     for whoosher in whoosheers:
         resul = whoosher.search(*arg, **kw)
         runtime += resul['runtime']
-        full_results['results'][whoosher.__name__] = resul['results']
-        # full_results['results'].extend(resul['results'])
-        full_results['matched_terms'].extend(resul['matched_terms'])
+        
+        mterms = defaultdict(set)
+        for f,v in resul['matched_terms']:
+            mterms[f].add(v)
+            full_results['matched_terms'][f].add(v)
 
+        full_results['results'][whoosher.index_subdir] = {
+            'items' : resul['results'],
+            'matched_terms' : {k: list(v) for k,v in mterms.items()}
+        }
+        # full_results['results'].extend(resul['results'])
+    full_results['runtime']=runtime
+    full_results['matched_terms'] = {k: list(v) for k,v in full_results['matched_terms'].items()}
     return full_results

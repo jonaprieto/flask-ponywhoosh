@@ -5,8 +5,7 @@ from types import MethodType
 
 wh = Whoosh(debug=True)
 db = Database()
-
-
+wh.search_string_min_len=1
 @wh.register_model('name','edad',sortable=True,  stored=True)
 class User(db.Entity):
     _table_ = 'User'
