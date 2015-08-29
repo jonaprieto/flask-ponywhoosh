@@ -33,6 +33,7 @@ if not os.path.exists('test.sqlite'):
 
 db = Database()
 
+
 @wh.register_model('name', 'age', sortable=True, stored=True)
 class User(db.Entity):
     _table_ = 'User'
@@ -42,10 +43,11 @@ class User(db.Entity):
     attrs = Set("Attribute")
 
 
-@wh.register_model('weight', 'sport', stored=True, sortable=True)
+@wh.register_model('weight', 'name', 'sport', stored=True, sortable=True)
 class Attribute(db.Entity):
     _table_ = 'Attribute'
     id = PrimaryKey(int, auto=True)
+    name = Optional(unicode)
     user = Optional("User")
     weight = Optional(int)
     sport = Optional(unicode)
@@ -54,6 +56,7 @@ db.bind('sqlite', 'test.sqlite', create_db=True)
 db.generate_mapping(create_tables=True)
 
 #   /fixtures populate the database
+
 
 @app.route("/fixtures")
 @db_session
@@ -66,12 +69,14 @@ def fixtures():
     u6 = User(name=u'harol', age=u'16')
     u7 = User(name=u'harol', age=u'17')
 
-    a1 = Attribute(user=u1, weight=75, sport=u'tejo')
-    a2 = Attribute(user=u2, weight=80, sport=u'lucha de gallinas')
-    a3 = Attribute(user=u3, weight=65, sport=u'futbol shaulin')
-    a4 = Attribute(user=u4, weight=60, sport=u'caza de marranos')
-    a5 = Attribute(user=u5, weight=70, sport=u'lanzamiento de chulo')
-    a6 = Attribute(user=u6, weight=71, sport=u'rasking ball')
+    a1 = Attribute(name=u'tejo', user=u1, weight=75, sport=u'tejo')
+    a2 = Attribute(
+        name=u'gallo', user=u2, weight=80, sport=u'lucha de gallinas')
+    a3 = Attribute(name=u'ejote', user=u3, weight=65, sport=u'futbol shaulin')
+    a4 = Attribute(name=u'ball', user=u4, weight=60, sport=u'caza de marranos')
+    a5 = Attribute(
+        name=u'marrano', user=u5, weight=70, sport=u'lanzamiento de chulo')
+    a6 = Attribute(name=u'lanza', user=u6, weight=71, sport=u'rasking ball')
 
     return '0k', 200
 

@@ -74,11 +74,17 @@ class Whoosheer(object):
 
     @orm.db_session
     def search(self, search_string, **opt):
-        prepped_string = self.prep_search_string(search_string)
+        prepped_string = self.prep_search_string(search_string, opt.get('add_wildcards', False))
         with self.index.searcher() as searcher:
-            parser = whoosh.qparser.MultifieldParser(
-                self.schema.names(), self.index.schema,
-                group=opt.get('group', qparser.OrGroup))
+            if 'field' in opt:
+                parser = whoosh.qparser.QueryParser(opt['field'], self.index.schema)
+            else:
+                parser = whoosh.qparser.MultifieldParser(
+                            self.schema.names(), 
+                            self.index.schema,
+                            group=opt.get('group', qparser.OrGroup)
+                        )
+
             query = parser.parse(prepped_string)
 
             search_opts = {}
@@ -127,9 +133,14 @@ class Whoosheer(object):
                     rs += [(ent, score[pk])]
             rs.sort(key=lambda x: -x[1])
             dic['results'] = rs
+
+            if dic['cant_results'] == 0 and opt.get('something', False):
+                opt['add_wildcards'] = True
+                opt['something'] = False
+                return self.search(search_string, **opt)
             return dic
 
-    def prep_search_string(self, search_string):
+    def prep_search_string(self, search_string, add_wildcards=False):
         """Prepares search string as a proper whoosh search string."""
         s = search_string.strip()
         try:
@@ -140,7 +151,8 @@ class Whoosheer(object):
         if len(s) < self.search_string_min_len:
             raise ValueError('Search string must have at least {} characters'.format(
                 self.search_string_min_len))
-        s = u'*{0}*'.format(re.sub('[\s]+', '* *', s))
+        if  add_wildcards:
+            s = u'*{0}*'.format(re.sub('[\s]+', '* *', s))
         return s
 
 

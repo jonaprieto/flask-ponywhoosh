@@ -8,6 +8,21 @@ from pony import *
 
 from flask_ponywhoosh import Whoosh, search
 
+# from flask_ponywhoosh import *
+# from pprint import pprint
+# from app import *
+# User._wh_.charge_documents()
+# User._wh_.counts()
+# Attribute._wh_.charge_documents()
+# Attribute._wh_.counts()
+# search(User, "har")
+# search(User, "har", add_wildcards=True)
+# search(User, "har", something = True)
+# full_search(wh, "har")
+# full_search(wh, "har", something=True)
+# search(Attribute, 'marrano')
+# search(Attribute, 'marrano', add_wildcards=True)
+# search(Attribute, 'marrano', add_wildcards=True, field='name')
 
 class BaseTestCases(object):
 
