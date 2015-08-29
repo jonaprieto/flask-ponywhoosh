@@ -289,7 +289,7 @@ def full_search(wh, *arg, **kw):
 
         full_results['results'][whoosher.index_subdir] = {
             'items': resul['results'],
-            'matched_terms': {k: list(v) for k, v in mterms.items()}
+            'matched_terms': {k: list(v) for k, v in mterms.items()},
             'score' : resul['score']
         }
 
