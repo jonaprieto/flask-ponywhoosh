@@ -52,7 +52,7 @@ class Whoosheer(object):
         doc_count = self.index.doc_count()
         objs = orm.count(e for e in self.model)
 
-        field_names = set(self.model.schema_attrs.keys())
+        field_names = set(self.schema_attrs.keys())
         missings = set(self.index.schema.names())
 
         for f in list(field_names - missings):
