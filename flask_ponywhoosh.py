@@ -198,7 +198,7 @@ class Whoosh(object):
         a simple Whoosheer for the model and calls self.register_whoosheer on it.
         """
 
-        mwh = Whoosheer(debug=self.debug)
+        mwh = Whoosheer()
         mwh.kw = kw
 
         def inner(model):
