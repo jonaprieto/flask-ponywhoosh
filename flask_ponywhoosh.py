@@ -46,6 +46,9 @@ class Whoosheer(object):
                 doc_pk = unicode(doc[pk])
                 self.index.delete_by_term(pk, doc_pk)
 
+    def counts(self):
+        return self.index.doc_count()
+        
     @orm.db_session
     def charge_documents(self):
         doc_count = self.index.doc_count()
@@ -288,7 +291,7 @@ def full_search(wh, *arg, **kw):
             'items' : resul['results'],
             'matched_terms' : {k: list(v) for k,v in mterms.items()}
         }
-        # full_results['results'].extend(resul['results'])
+
     full_results['runtime']=runtime
     full_results['matched_terms'] = {k: list(v) for k,v in full_results['matched_terms'].items()}
     return full_results
