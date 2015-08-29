@@ -29,7 +29,7 @@ class Whoosheer(object):
 
     """
 
-    def __init__(self):
+    # def __init__(self):
         # .. construir el indice..
 
     def add_field(self, fieldname, fieldspec):
@@ -97,7 +97,7 @@ class Whoosheer(object):
             result_ranks = {}
 
             for rank, result in enumerate(results):
-                pk = result[self.primary]
+                pk = result[unicode(self.primary)]
                 result_set.add(pk)
                 result_ranks[pk] = rank
 
