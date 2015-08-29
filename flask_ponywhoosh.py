@@ -11,7 +11,6 @@
 
 '''
 
-import abc
 import os
 import re
 import sys
@@ -30,6 +29,50 @@ class Whoosheer(object):
 
     """
 
+    def __init__(self):
+        # .. construir el indice..
+
+    def add_field(self, fieldname, fieldspec):
+        self.index.add_field(fieldname, fieldspec)
+        return self.index.schema
+
+    def delete_field(self, field_name):
+        self.index.remove_field(field_name.strip())
+        return self.index.schema
+
+    def delete_documents(self):
+        pk = unicode(self.primary)
+        for doc in self.index.searcher().documents():
+            if pk in doc:
+                doc_pk = unicode(doc[pk])
+                self.index.delete_by_term(pk, doc_pk)
+
+    @orm.db_session
+    def charge_documents(self):
+        doc_count = self.index.doc_count()
+        objs = orm.count(e for e in self.model)
+
+        field_names = set(self.model.schema_attrs.keys())
+        missings = set(self.index.schema.names())
+
+        for f in list(field_names - missings):
+            self.add_field(f, fields.TEXT(self.kw))
+
+        if doc_count == 0 and objs > 0:
+            writer = self.index.writer()
+            for obj in orm.select(e for e in self.model):
+                attrs = {self.primary: obj.get_pk()}
+                for f in self.schema_attrs.keys():
+                    attrs[f] = unicode(getattr(obj, f))
+                writer.add_document(**attrs)
+            writer.commit(optimize=True)
+        else:
+            update_documents()
+
+    def update_documents(self):
+        self.delete_documents()
+        self.charge_documents()
+
     def search(self, search_string, **opt):
         prepped_string = self.prep_search_string(search_string)
         with self.index.searcher() as searcher:
@@ -39,8 +82,11 @@ class Whoosheer(object):
             query = parser.parse(prepped_string)
 
             search_opts = {}
-            parameters = ['limit', 'scored', 'sortedby',
-                          'reverse', 'groupedby', 'optimize', 'filter', 'mask', 'terms', 'maptype', 'collapse', 'collapse_limit', 'collapse_order']
+            parameters = [
+                'collapse', 'collapse_limit', 'collapse_order',
+                'filter', 'groupedby', 'limit', 'maptype', 'mask',
+                'optimize', 'reverse', 'scored', 'sortedby', 'terms'
+            ]
 
             for o in opt.keys():
                 if o in parameters:
@@ -49,15 +95,20 @@ class Whoosheer(object):
             results = searcher.search(query, terms=True, **search_opts)
             result_set = set()
             result_ranks = {}
+
             for rank, result in enumerate(results):
                 pk = result[self.primary]
                 result_set.add(pk)
                 result_ranks[pk] = rank
-            dic = {'runtime':results.runtime,'results':results.docs(),
-                        'cant_results':results.estimated_length(),
-                            'matched_terms':results.matched_terms(),
-                            'facet_names':results.facet_names(), 'score':list(results.items())}
-            
+
+            dic = {
+                'runtime': results.runtime,
+                'results': results.docs(),
+                'cant_results': results.estimated_length(),
+                'matched_terms': results.matched_terms(),
+                'facet_names': results.facet_names(),
+                'score': list(results.items())
+            }
 
             with orm.db_session:
                 rs = []
@@ -72,9 +123,6 @@ class Whoosheer(object):
                 return dic
             return dic
 
-
-
-
     def prep_search_string(self, search_string):
         """Prepares search string as a proper whoosh search string."""
         s = search_string.strip()
@@ -82,47 +130,12 @@ class Whoosheer(object):
             s = unicode(s)
         except:
             pass
-        # we don't want stars from user
         s = s.replace('*', '')
         if len(s) < self.search_string_min_len:
             raise ValueError('Search string must have at least {} characters'.format(
                 self.search_string_min_len))
-
-        # s = u'*{0}*'.format(re.sub('[\s]+', '* *', s))
+        s = u'*{0}*'.format(re.sub('[\s]+', '* *', s))
         return s
-
-    @orm.db_session
-    def _charge_data_(self):
-        ix = self.model._whoosh_index_
-        doc_count = ix.doc_count()
-        objs = orm.count(e for e in self.model)
-        print 'charge_data() ', '-' * 50
-        print 'doc_count =', doc_count
-        print 'objs = ', objs
-
-        if doc_count == 0 and objs > 0:
-            writer = self.index.writer()
-            for obj in orm.select(e for e in self.model):
-                attrs = {self.primary: obj.get_pk()}
-                for f in self.schema_attrs.keys():
-                    attrs[f] = unicode(getattr(obj, f))
-                writer.add_document(**attrs)
-            writer.commit(optimize=True)
-
-
-    def _delete_index_(self):
-
-        ix = self.model._whoosh_index_
-        sch = ix.schema 
-        field_name=sch.names()
-        for s in field_name:
-            del_name= s
-            ix.remove_field(del_name)
-    def _delete_index_by_field_(self,field_name):
-        ix = self.model._whoosh_index_
-        t=field_name.strip()
-        ix.remove_field(t)
-        return ix.schema
 
 
 class Whoosh(object):
@@ -133,8 +146,6 @@ class Whoosh(object):
     index_path_root = 'whooshee'
     search_string_min_len = 3
     writer_timeout = 2
-
-    debug = False
 
     def __init__(self, app=None, debug=False):
 
@@ -157,19 +168,14 @@ class Whoosh(object):
         If the index already exists, it just opens it, otherwise it creates it first.
         """
         index_path = os.path.join(self.index_path_root, wh.index_subdir)
-        
+
         if whoosh.index.exists_in(index_path):
-            if self.debug:
-                print 'existe el indice para whoosh'
             index = whoosh.index.open_dir(index_path)
         else:
-            if self.debug:
-                print 'se creo el indice para whoosh'
             if not os.path.exists(index_path):
                 os.makedirs(index_path)
             index = whoosh.index.create_in(index_path, wh.schema)
         wh.index = index
-    
 
     def register_whoosheer(self, wh):
         """Registers a given whoosheer:
@@ -178,8 +184,6 @@ class Whoosh(object):
         * Sets some default values on it (unless they're already set)
         * Replaces query class of every whoosheer's model by WhoosheeQuery
         """
-        if self.debug:
-            print 'register_whoosheer'
         if not hasattr(wh, 'search_string_min_len'):
             wh.search_string_min_len = self.search_string_min_len
         if not hasattr(wh, 'index_subdir'):
@@ -194,12 +198,8 @@ class Whoosh(object):
         a simple Whoosheer for the model and calls self.register_whoosheer on it.
         """
 
-        if self.debug:
-            print 'ModelWhoosheer created'
-            print 'index_fields', index_fields
-            print 'kw', kw
-
-        mwh = Whoosheer()
+        mwh = Whoosheer(debug=self.debug)
+        mwh.kw = kw
 
         def inner(model):
             mwh.index_subdir = model._table_
@@ -221,10 +221,7 @@ class Whoosh(object):
                     mwh.schema_attrs[field.name] = whoosh.fields.TEXT(**kw)
 
             mwh.schema = whoosh.fields.Schema(**mwh.schema_attrs)
-            mwh._is_model_whoosheer = True
-
-            if self.debug:
-                print '>> mwh.schema_attrs:', mwh.schema_attrs
+            self.register_whoosheer(mwh)
 
             def _middle_save_(obj, status):
                 writer = mwh.index.writer(timeout=self.writer_timeout)
@@ -244,42 +241,30 @@ class Whoosh(object):
                 elif status in set(['marked_to_delete', 'deleted', 'cancelled']):
                     writer.delete_by_term(primary, attrs[primary])
 
-                if self.debug:
-                    print 'writer>', writer
-                    print 'obj>', obj,  '/' * 30, obj._status_
-                    print 'cantidad>', mwh.index.doc_count()
-                    print 'attrs>', attrs
-
                 writer.commit(optimize=True)
                 return obj._after_save_
 
-            self.register_whoosheer(mwh)
-
             model._after_save_ = _middle_save_
-            model._whoosheer_ = mwh
-            model._whoosh_index_ = mwh.index
-            model._whoosh_search_ = mwh.search
-            model._whoosh_charge_data_ = mwh._charge_data_
-            model._whoosh_delete_index_ =mwh._delete_index_
-            model._whoosh_delete_index_by_field_=mwh._delete_index_by_field_
+            model._wh_ = mwh
             mwh.model = model
-        
-
             return model
         return inner
 
 
 def search(model, *arg, **kw):
-    return model._whoosh_search_(*arg, **kw)
-def delete(model,*arg):
-    return model._whoosh_delete_index_by_field_(*arg)
+    return model._wh_.search(*arg, **kw)
 
-def full_search(ind,*arg,**kw):
-    full_results={'results':[],'matched_terms':[]}
 
-    for whoosher in ind.whoosheers: 
+def delete_field(model, *arg):
+    return model._wh_.delete_field(*arg)
+
+
+def full_search(ind, *arg, **kw):
+    full_results = {'results': [], 'matched_terms': []}
+
+    for whoosher in ind.whoosheers:
         resul = whoosher.search(arg[0])
         full_results['results'].extend(resul['results'])
         full_results['matched_terms'].extend(resul['matched_terms'])
-    
+
     return full_results
