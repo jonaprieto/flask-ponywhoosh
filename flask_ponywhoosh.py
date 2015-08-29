@@ -22,7 +22,6 @@ import whoosh
 from collections import defaultdict
 
 
-
 class Whoosheer(object):
 
     """
@@ -48,7 +47,7 @@ class Whoosheer(object):
 
     def counts(self):
         return self.index.doc_count()
-        
+
     @orm.db_session
     def charge_documents(self):
         doc_count = self.index.doc_count()
@@ -75,6 +74,7 @@ class Whoosheer(object):
         self.delete_documents()
         self.charge_documents()
 
+    @orm.db_session
     def search(self, search_string, **opt):
         prepped_string = self.prep_search_string(search_string)
         with self.index.searcher() as searcher:
@@ -112,17 +112,15 @@ class Whoosheer(object):
                 'score': list(results.items())
             }
 
-            with orm.db_session:
-                rs = []
-                # The following code even thought is long,
-                # is the only one that works, because the
-                # shorcuts from pony always raise errors.
-                for ent in self.model.select():
-                    if unicode(ent.get_pk()) in result_set:
-                        rs.append(ent)
-                rs.sort(key=lambda x: result_ranks[unicode(x.get_pk())])
-                dic['results'] = rs
-                return dic
+            rs = []
+            # The following code even thought is long,
+            # is the only one that works, because the
+            # shorcuts from pony always raise errors.
+            for ent in self.model.select():
+                if unicode(ent.get_pk()) in result_set:
+                    rs.append(ent)
+            rs.sort(key=lambda x: result_ranks[unicode(x.get_pk())])
+            dic['results'] = rs
             return dic
 
     def prep_search_string(self, search_string):
@@ -264,8 +262,9 @@ def delete_field(model, *arg):
 def full_search(wh, *arg, **kw):
     full_results = {'runtime':0,
                     'results': {},
-                    'matched_terms': defaultdict(set)
-                    }    
+                    'matched_terms': defaultdict(set),
+                    'cant_results' : 0
+                    }
     whoosheers = wh.whoosheers
     if 'models' in kw:
         models = kw['models']
@@ -278,20 +277,24 @@ def full_search(wh, *arg, **kw):
         return full_results
 
     runtime = 0
+    cant = 0
     for whoosher in whoosheers:
         resul = whoosher.search(*arg, **kw)
         runtime += resul['runtime']
-        
+        cant += resul['cant_results']
         mterms = defaultdict(set)
-        for f,v in resul['matched_terms']:
+        for f, v in resul['matched_terms']:
             mterms[f].add(v)
             full_results['matched_terms'][f].add(v)
 
         full_results['results'][whoosher.index_subdir] = {
-            'items' : resul['results'],
-            'matched_terms' : {k: list(v) for k,v in mterms.items()}
+            'items': resul['results'],
+            'matched_terms': {k: list(v) for k, v in mterms.items()}
+            'score' : resul['score']
         }
 
-    full_results['runtime']=runtime
-    full_results['matched_terms'] = {k: list(v) for k,v in full_results['matched_terms'].items()}
+    full_results['runtime'] = runtime
+    full_results['matched_terms'] = {
+        k: list(v) for k, v in full_results['matched_terms'].items()}
+    full_results['cant_results'] = cant
     return full_results
