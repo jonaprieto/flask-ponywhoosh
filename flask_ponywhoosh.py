@@ -29,7 +29,7 @@ class Whoosheer(object):
 
     """
 
-    def add_field(self, fieldname, fieldspec=fields.TEXT(self.kw)):
+    def add_field(self, fieldname, fieldspec=fields.TEXT):
         self.index.add_field(fieldname, fieldspec)
         return self.index.schema
 
