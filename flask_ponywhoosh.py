@@ -29,10 +29,7 @@ class Whoosheer(object):
 
     """
 
-    # def __init__(self):
-        # .. construir el indice..
-
-    def add_field(self, fieldname, fieldspec):
+    def add_field(self, fieldname, fieldspec=fields.TEXT(self.kw)):
         self.index.add_field(fieldname, fieldspec)
         return self.index.schema
 
@@ -258,13 +255,30 @@ def search(model, *arg, **kw):
 def delete_field(model, *arg):
     return model._wh_.delete_field(*arg)
 
+full_search(wh, 'harols', models=[Atributos])
 
-def full_search(ind, *arg, **kw):
-    full_results = {'results': [], 'matched_terms': []}
+def full_search(wh, *arg, **kw):
+    full_results = {'runtime':0,
+                    'results': [],
+                    'matched_terms': []}
+    
+    whoosheers = wh.whoosheers
+    if 'models' in kw:
+        models = kw['models']
+        whoosheers = []
+        for model in models:
+            if hasattr(model, '_wh_'):
+                whoosheers.append(model._wh_)
 
-    for whoosher in ind.whoosheers:
-        resul = whoosher.search(arg[0])
-        full_results['results'].extend(resul['results'])
+    if whoosheers == []:
+        return full_results
+
+    runtime = 0
+    for whoosher in whoosheers:
+        resul = whoosher.search(*arg, **kw)
+        runtime += resul['runtime']
+        full_results['results'][whoosher.__name__] = resul['results']
+        # full_results['results'].extend(resul['results'])
         full_results['matched_terms'].extend(resul['matched_terms'])
 
     return full_results
