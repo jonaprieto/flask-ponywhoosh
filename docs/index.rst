@@ -7,8 +7,9 @@ This package integrate the amazing power of ``Whoosh`` with ``Pony ORM``
 inside ``Flask``. Source code and issue tracking at
 http://github.com/piperod/Flask-PonyWhoosh.
 
+============
 Installation
-------------
+============
 
 .. code:: python
 
@@ -20,8 +21,9 @@ or
 
     git clone https://github.com/piperod/Flask-PonyWhoosh.git
 
+=====
 Usage
------
+=====
 
 Import the library where you define your Entities.
 
@@ -30,8 +32,8 @@ Import the library where you define your Entities.
     from flask_ponywhoosh import Whoosh
     wh = Whoosh()
 
-And for each entity wrapped it with the decorator
-``@wh.register_model(*args,**kw)``. like the following example:
+And for each entity wrap it up with the decorator
+*@wh.register_model(*args,**kw)*. like the following example:
 
 .. code:: python
 
@@ -52,8 +54,9 @@ scored, etc. Refer to
 http://pythonhosted.org/Whoosh/searching.html#scoring-and-sorting for
 further explanations.
 
+==============
 Flask Settings
-~~~~~~~~~~~~~~
+==============
 
 From flask configuration, you could add options for whoosh:
 
@@ -63,10 +66,11 @@ From flask configuration, you could add options for whoosh:
     app.config['WHOSHEE_MIN_STRING_LEN'] = 3
     app.config['WHOOSHEE_WRITER_TIMEOUT'] = 2
 
+=========
 Searching
-~~~~~~~~~
+=========
 
-``PonyModel._whoosh_search_(query, **kwargs)``.
+*PonyModel._wh_search_(query, **kwargs).*
 
 To execute a search, choose the entity of interest and then, try
 something like the following code over a view function, or even from the
@@ -75,12 +79,12 @@ shell.
 .. code:: python
 
     >>> from entidades import *
-    >>> User._whoosh_search_("felipe")
+    >>> User._wh_search_("felipe")
     {'runtime': 0.002643108367919922, 'results': [User[12], User[5]]}
 
     >>>
 
-Or, if you prefer to only use the function search(),
+Or, if you prefer to only use the function *search()*,
 
 .. code:: python
 
@@ -103,7 +107,75 @@ the model.(Refer to the Usage section above)
     er[7]]}
     >>>
 
-All the atributes for the ``class whoosh.searching.search()`` are available. You only need to separate by comma and add as many as you need.
+All the atributes for the ``class whoosh.searching.search()`` are available. You only need to separate by comma and add as many as you need. Searching is by default set up to add wildcards before and after a query term, helping the user to search for related terms and not limiting the results to exact term search. 
+
+=====================
+Full Search Function:
+=====================
+
+This function allows you to search in every model instead of searching in one by one. ``full_search`` takes three arguments: 
+``wh`` is by default the whoosheers where the indexes of  models from the database are stored. *arg is where you type your query, and the last arguments  are the options just as were described before,  with the new feature for ``models``(this is explained later in this section). 
+
+.. code:: python
+
+    >>> from entidades import *
+    >>> from flask_ponywhoosh import full_search
+    >>> full_search(wh,"ch")
+    { 'matched_terms': {'name': ['chuck'], 
+                        'deporte': ['chulo', 'lucha']}, 
+      'runtime': 0.0033812522888183594  
+      'results': {'User': {'items': [User[15], User[8], 
+                    User[1]],     
+      'matched_terms': {'name': ['chuck']}}, 
+      'Atributos': {'items': [Atributos[17], Atributos[14],         
+                    Atributos[11], Atributos[8], 
+                    Atributos[5], Atributos[2]],
+     'matched_terms': {'deporte': ['chulo', 'lucha']}}
+                 }
+    }
+    >>>
+The results object is a dictionary containing 'runtime': The sum of the runtime for the search in every field. 'matched_terms': another dictionary that stores the field where the query matched and a list with the results obtained. 'results': A dictionary with the location of every result listed by the field. 
+
+
+If you would rather prefer, you can indicate specifically in which models are you interested on searching, by indicating in the arguments of the function ``full_search(wh,"search_string", models=[list with the models])``. For example:
+
+.. code:: python
+
+        >>> from entidades import *
+        >>> from flask_ponywhoosh import full_search
+        >>> full_search(wh,"ch",modelos=[User,Atributos])
+        
+        {'matched_terms': 
+            {'name': ['chuck'], 'deporte':['chulo','lucha']}, 
+             'runtime': 0.005049705505371094, 
+             'results': 
+                    {'User': {'items': [User[15], User[8],  
+                                            User[1]
+             'matched_terms': {'name': ['chuck']}}, 
+                     'Atrib utos': {'items': [Atributos[17],
+                                Atributos[14], Atributos[11] Atributos[8], Atributos[5], Atributos[2]],
+             'matched_terms': {'deporte': ['chulo', 'lucha']}}}
+        }
+        >>>
+===========================
+The method *model._wh_.*:
+===========================
+
+There are some special features avalaible for models from the database: 
+
+
+* *add_field*: This function is to add a desired field in the index. 
+* *charge_documents*: This function let you charge an index from an  existing database. 
+* *delete_documents*: This function deletes all the documents stored in certain whoosh index. 
+* *delete_field*: This function works in case that you want to erase a determined field from a schema. 
+* *update_documents*: This function deletes all the documents and recharges them again. 
+* *counts*: This function counts all the documents existing in an indexes. 
+
+
+
+
+
+
 
 App Full Example:
 -----------------
@@ -125,7 +197,7 @@ Running the App
 
 After that, you could visit the following urls.
 
--  ``http://localhost:5000/llenar`` to create entries for database
+-  ``http://localhost:5000/fixtures`` to create entries for database
    examples.
 -  ``http://localhost:5000/update`` to perform an update in an entity
    with ``id=1``.
