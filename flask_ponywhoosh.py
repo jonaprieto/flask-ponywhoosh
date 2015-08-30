@@ -78,12 +78,27 @@ class Whoosheer(object):
         with self.index.searcher() as searcher:
             if 'field' in opt:
                 parser = whoosh.qparser.QueryParser(opt['field'], self.index.schema)
+            
+
+            elif 'fields' in opt:
+                schema_names=self.schema.names()
+                fields=opt['fields']
+                whoosheers=[]
+                for field in fields:
+                    if field in schema_names:
+                        whoosheers.append(field)
+
+                parser=whoosh.qparser.MultifieldParser(
+                            whoosheers,self.index.schema,
+                            group=opt.get('group', qparser.OrGroup))
+            
             else:
                 parser = whoosh.qparser.MultifieldParser(
                             self.schema.names(), 
                             self.index.schema,
                             group=opt.get('group', qparser.OrGroup)
                         )
+            
 
             query = parser.parse(prepped_string)
 
