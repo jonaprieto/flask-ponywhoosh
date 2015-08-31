@@ -20,6 +20,7 @@ from flask_ponywhoosh import Whoosh, search
 # pprint(search(User, "har", something = True))
 # pprint(full_search(wh, "har"))
 # pprint(full_search(wh, "har", something=True))
+# pprint(wh.search("har", something=True))
 # pprint(search(Attribute, 'marrano'))
 # pprint(search(Attribute, 'marrano', add_wildcards=True))
 # pprint(search(Attribute, 'marrano', add_wildcards=True, field='name'))

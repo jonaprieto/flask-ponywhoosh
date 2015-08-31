@@ -268,6 +268,44 @@ class Whoosh(object):
             return model
         return inner
 
+    @orm.db_session
+    def search(self, *arg, **kw):
+        full_results = {'runtime': 0,
+                        'results': {},
+                        'matched_terms': defaultdict(set),
+                        'cant_results': 0
+                        }
+        whoosheers = self.whoosheers()
+        if 'models' in kw:
+            models = kw['models']
+            whoosheers = []
+            for model in models:
+                if hasattr(model, '_wh_'):
+                    whoosheers.append(model._wh_)
+
+        if whoosheers == []:
+            return full_results
+
+        runtime, cant = 0, 0
+
+        ma = defaultdict(set)
+        for whoosher in whoosheers:
+            output = whoosher.search(*arg, **kw)
+            runtime += output['runtime']
+            cant += output['cant_results']
+
+            full_results['results'][whoosher.index_subdir] = {
+                'items': output['results'],
+                'matched_terms': output['matched_terms']
+            }
+            for k, ts in output['matched_terms'].items():
+                for t in ts:
+                    ma[k].add(t)
+
+        full_results['runtime'] = runtime
+        full_results['matched_terms'] = {k: list(v) for k, v in ma.items()}
+        full_results['cant_results'] = cant
+        return full_results
 
 @orm.db_session
 def search(model, *arg, **kw):
@@ -278,42 +316,5 @@ def search(model, *arg, **kw):
 def delete_field(model, *arg):
     return model._wh_.delete_field(*arg)
 
-
-@orm.db_session
 def full_search(wh, *arg, **kw):
-    full_results = {'runtime': 0,
-                    'results': {},
-                    'matched_terms': defaultdict(set),
-                    'cant_results': 0
-                    }
-    whoosheers = wh.whoosheers()
-    if 'models' in kw:
-        models = kw['models']
-        whoosheers = []
-        for model in models:
-            if hasattr(model, '_wh_'):
-                whoosheers.append(model._wh_)
-
-    if whoosheers == []:
-        return full_results
-
-    runtime = 0
-    cant = 0
-    ma = defaultdict(set)
-    for whoosher in whoosheers:
-        output = whoosher.search(*arg, **kw)
-        runtime += output['runtime']
-        cant += output['cant_results']
-
-        full_results['results'][whoosher.index_subdir] = {
-            'items': output['results'],
-            'matched_terms': output['matched_terms']
-        }
-        for k, ts in output['matched_terms'].items():
-            for t in ts:
-                ma[k].add(t)
-
-    full_results['runtime'] = runtime
-    full_results['matched_terms'] = {k: list(v) for k, v in ma.items()}
-    full_results['cant_results'] = cant
-    return full_results
+    return wh.search(*arg, **kw)
