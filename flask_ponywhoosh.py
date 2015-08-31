@@ -3,8 +3,8 @@
     flask_ponywhoosh extension
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    Adds capabilities to perform text search over your modules of Pony ORM
-    for flask applications.
+    Adds capabilities to perform full-text search over your modules of Pony ORM
+    for flask applications. Enjoy it! 
 
     :copyright: (c) 2015 by Jonathan S. Prieto & Ivan Felipe Rodriguez.
     :license: BSD (see LICENSE.md)
@@ -307,6 +307,7 @@ class Whoosh(object):
         full_results['cant_results'] = cant
         return full_results
 
+
 @orm.db_session
 def search(model, *arg, **kw):
     return model._wh_.search(*arg, **kw)
@@ -315,6 +316,7 @@ def search(model, *arg, **kw):
 @orm.db_session
 def delete_field(model, *arg):
     return model._wh_.delete_field(*arg)
+
 
 def full_search(wh, *arg, **kw):
     return wh.search(*arg, **kw)
