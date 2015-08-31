@@ -74,57 +74,39 @@ class Whoosheer(object):
 
     @orm.db_session
     def search(self, search_string, **opt):
-        prepped_string = self.prep_search_string(search_string, opt.get('add_wildcards', False))
+        prepped_string = self.prep_search_string(
+            search_string, opt.get('add_wildcards', False))
         with self.index.searcher() as searcher:
+            parser = whoosh.qparser.MultifieldParser(
+                self.schema.names(), self.index.schema,
+                group=opt.get('group', qparser.OrGroup))
+
             if 'field' in opt:
-                parser = whoosh.qparser.QueryParser(opt['field'], self.index.schema)
-            
+                if isinstance(opt['field'], str) or isinstance(opt['field'], unicode):
+                    parser = whoosh.qparser.QueryParser(
+                        opt['field'], self.index.schema)
+                elif isinstance(opt['field'], list):
+                    opt['fields'] = opt.get('fields', []) + opt['field']
 
-            elif 'fields' in opt:
-                schema_names=self.schema.names()
-                fields=opt['fields']
-                whoosheers=[]
-                for field in fields:
-                    if field in schema_names:
-                        whoosheers.append(field)
+            if 'fields' in opt:
+                fields_parser = opt.get('fields', self.schema.names())
+                fields_parser = list(
+                    set(opt['fields']) & set(self.schema.names()))
 
-                parser=whoosh.qparser.MultifieldParser(
-                            whoosheers,self.index.schema,
-                            group=opt.get('group', qparser.OrGroup))
-            
-            else:
                 parser = whoosh.qparser.MultifieldParser(
-                            self.schema.names(), 
-                            self.index.schema,
-                            group=opt.get('group', qparser.OrGroup)
-                        )
-            
+                    fields_parser, self.index.schema,
+                    group=opt.get('group', qparser.OrGroup))
 
             query = parser.parse(prepped_string)
 
-            search_opts = {}
             parameters = [
                 'collapse', 'collapse_limit', 'collapse_order',
                 'filter', 'groupedby', 'limit', 'maptype', 'mask',
                 'optimize', 'reverse', 'scored', 'sortedby', 'terms'
             ]
 
-            for o in opt.keys():
-                if o in parameters:
-                    search_opts[o] = opt[o]
-
+            search_opts = {k: v for k, v in opt.items() if k in parameters}
             results = searcher.search(query, terms=True, **search_opts)
-
-            result_set = set()
-            result_ranks = {}
-            scores = [x[1] for x in results.items()]
-            score = {}
-
-            for rank, result in enumerate(results):
-                pk = result[unicode(self.primary)]
-                result_set.add(pk)
-                result_ranks[pk] = rank
-                score[pk] = scores[rank]
 
             ma = defaultdict(set)
             for f, term in results.matched_terms():
@@ -136,17 +118,18 @@ class Whoosheer(object):
                 'matched_terms': {k: list(v) for k, v in ma.items()},
                 'facet_names': results.facet_names(),
             }
-
-            results = results.docs()
             rs = []
-            # The following code even thought is long,
-            # is the only one that works, because the
-            # shorcuts from pony always raise errors.
-            for ent in self.model.select():
-                pk = unicode(ent.get_pk())
-                if pk in result_set:
-                    rs += [(ent, score[pk])]
-            rs.sort(key=lambda x: -x[1])
+            pk = unicode(self.primary)
+            for r in results:
+                parms = {pk: r[pk]}
+                entity = self.model.get(**parms)
+                ans = {
+                    'result': entity,
+                    'rank': r.rank,
+                    'score': r.score,
+                    'docnum': r.docnum
+                }
+                rs.append(ans)
             dic['results'] = rs
 
             if dic['cant_results'] == 0 and opt.get('something', False):
@@ -166,7 +149,7 @@ class Whoosheer(object):
         if len(s) < self.search_string_min_len:
             raise ValueError('Search string must have at least {} characters'.format(
                 self.search_string_min_len))
-        if  add_wildcards:
+        if add_wildcards:
             s = u'*{0}*'.format(re.sub('[\s]+', '* *', s))
         return s
 
@@ -223,7 +206,7 @@ class Whoosh(object):
             wh.search_string_min_len = self.search_string_min_len
         if not hasattr(wh, 'index_subdir'):
             wh.index_subdir = wh.__name__
-            
+
         self._whoosheers[wh.index_subdir] = wh
         self.create_index(wh)
         return wh
