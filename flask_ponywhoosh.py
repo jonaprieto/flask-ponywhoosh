@@ -20,8 +20,8 @@ from whoosh import fields, index
 from whoosh import qparser
 import whoosh
 from collections import defaultdict
-
-
+from __version__ import __version__
+__version__="0.1.3"
 class Whoosheer(object):
 
     """
@@ -176,6 +176,9 @@ class Whoosh(object):
         self.search_string_min_len = app.config.get(
             'WHOSHEE_MIN_STRING_LEN', 3)
         self.writer_timeout = app.config.get('WHOOSHEE_WRITER_TIMEOUT', 2)
+
+    def delete_whoosheers(self):
+        self._whoosheers = {}
 
     def whoosheers(self):
         return [v for k, v in self._whoosheers.items()]

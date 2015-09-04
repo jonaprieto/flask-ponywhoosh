@@ -16,7 +16,7 @@ from os.path import dirname
 from os.path import join
 from os.path import relpath
 from os.path import splitext
-
+from __version__ import __version__
 from setuptools import find_packages
 from setuptools import setup
 
@@ -29,7 +29,7 @@ def read(*names, **kwargs):
 
 setup(
     name='Flask-PonyWhoosh',
-    version='0.1.3',
+    version=__version__,
     url='https://github.com/piperod/Flask-PonyWhoosh',
     license='BSD',
     author='Jonathan S. Prieto. & Ivan Felipe Rodriguez',

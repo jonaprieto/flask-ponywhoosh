@@ -14,20 +14,20 @@ Please refer to the official up to date documentation in  the following link:
 
 ## contributing
 
-We wrote this inspired by other awesome packages available, and we are trying to go more beyond for you and for us `:P`. 
+We wrote this package inspired by other awesome packages available,  we are trying to go beyond for you and for us `:P`. 
 
-These are:
+These  were:
 - `flask_whooshalchemy`
 - `flask-whooshee`
 
-So if you have ideas or want to fix something, make a pull-requests. We're going to appreciate it for sure.
+So if you have new ideas or want to fix something, make a pull-requests. We're going to appreciate it for sure.
 
-Somethings that we need to complete this software are:
+Some stuff  we need to complete for  this software, are:
 
 - tests for searching over models 
 - tests for searching over Whoosh objects
 - tests for searching over all these types of search that Whoosh allow to us.
-- improve the documentation, to make more clear and accurate.
+- improve the documentation, to make it  more clear and accurate.
 
 ## meta
 
