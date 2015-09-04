@@ -8,7 +8,7 @@ from flask import Flask
 from pony.orm import *
 from pprint import pprint
 
-from flask_ponywhoosh import Whoosh, search
+from flask_ponywhoosh import Whoosh, search, full_search
 
 # from flask_ponywhoosh import *
 # from pprint import pprint
@@ -19,7 +19,7 @@ from flask_ponywhoosh import Whoosh, search
 # Attribute._wh_.counts()
 # pprint(search(User, "har"))
 # pprint(search(User, "har", add_wildcards=True))
-# pprint(search(User, "har", something = True))
+# pprint(search(User, /"har", something = True))
 # pprint(full_search(wh, "har"))
 # pprint(full_search(wh, "har", something=True))
 # pprint(wh.search("har", something=True))
@@ -51,7 +51,7 @@ class BaseTestCases(object):
                 age = Optional(int)
                 attributes = Set('Attribute')
 
-            @self.wh.register_model('weight','sport',stored= True, sortable=True)
+            @self.wh.register_model('weight','sport', 'name',stored= True, sortable=True)
             class Attribute(self.db.Entity):
                 _table_='Attribute'
                 id = PrimaryKey(int, auto=True)
@@ -70,8 +70,8 @@ class BaseTestCases(object):
             self.u1 = self.User(name=u'jonathan', age=u'15')
             self.u2 = self.User(name=u'felipe', age=u'19')
             self.u3 = self.User(name=u'harol', age=u'16')
-            self.a1 = self.Attribute(name=u'tejo', user=self.u1, weight=u'75', sport=u'tejo')
-            self.a2 = self.Attribute(name=u'gallo', user=self.u2, weight=u'80', sport=u'lucha de gallinas')
+            self.a1 = self.Attribute(name=u'felun', user=self.u1, weight=u'80', sport=u'tejo')
+            self.a2 = self.Attribute(name=u'galun', user=self.u2, weight=u'75', sport=u'lucha de felinas')
             self.a3 = self.Attribute(name=u'ejote', user=self.u3, weight=u'65', sport=u'futbol shaulin')
         
       
@@ -85,16 +85,41 @@ class BaseTestCases(object):
          # ideally, there should be a separate class for model whoosheer and custom whoosheer
          # but we also want to test how they coexist
         
-        def test_mw_result_in_different_fields(self):
+        def test_search(self):
             self.fixtures()
 
             found = self.User._wh_.search('harol')
-            pprint(found)
             self.assertEqual(found['cant_results'], 1)
             self.assertEqual(self.u3.id, found['results'][0]['result'].id)
+        def test_search_something(self):
+            self.fixtures()
+            found= self.User._wh_.search('har', something=True)
+            self.assertEqual(found['cant_results'],1)
 
+        def test_search_sortedby(self):
+            self.fixtures()
+            found= self.Attribute._wh_.search('lun',add_wildcards=True, sortedby="weight")
+            self.assertEqual(self.a2.id, found['results'][0]['result'].id)
+            self.assertEqual(self.a1.id, found['results'][1]['result'].id)
+        def test_full_search_without_wildcards(self):
+            self.fixtures()
 
+            found=full_search(self.wh,"fel")
+            self.assertEqual(found['cant_results'], 0)
+        
+        def test_full_search_with_wildcards(self):
+            self.fixtures()
 
+            found=full_search(self.wh,"fel",add_wildcards=True)
+            self.assertEqual(found['cant_results'], 3)
+        # def test_full_search_by_whoosheeer(self):
+        #     self.fixtures()
+
+        #     found=full_search(self.wh,"felipe",add_wildcards=True,modelos=["User"])
+        #     pprint(found)
+        #     self.assertEqual(len(found['results']['Attribute']['items']), 0)
+        #     self.assertEqual(len(found['results']['User']['items']), 1)
+        #     self.assertEqual(self.a2.id, found['results']['User']['result'].id)
 
 class TestsWithApp(BaseTestCases.BaseTest):
 
