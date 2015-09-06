@@ -79,6 +79,7 @@ class Whoosheer(object):
     def search(self, search_string, **opt):
         prepped_string = self.prep_search_string(
             search_string, opt.get('add_wildcards', False))
+        
         with self.index.searcher() as searcher:
             parser = whoosh.qparser.MultifieldParser(
                 self.schema.names(), self.index.schema,
@@ -125,9 +126,10 @@ class Whoosheer(object):
             pk = unicode(self.primary)
             for r in results:
                 parms = {pk: r[pk]}
-                entity = self.model.get(**parms)
+                entity = self.model.name.entity.get(**parms)
                 ans = {
-                    'result': entity,
+                    'result': parms,
+                    'entity': entity,
                     'rank': r.rank,
                     'score': r.score,
                     'docnum': r.docnum
