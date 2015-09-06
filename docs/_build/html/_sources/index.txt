@@ -47,10 +47,10 @@ And for each entity wrap it up with the decorator
         entries = Set("Entry")
         attributes = Set("Attributes")
 
-As you could see in the previous example, you should declare as strings these fields where you want whoosh to store the searcheables. All the parameters from whoosh are available you just have to listed separating them with commas: sortable, stored, scored, etc. Refer to
-http://pythonhosted.org/Whoosh/searching.html#scoring-and-sorting for
+As you could see in the previous example, you should declare as strings these fields where you want whoosh to store the searcheables. All the parameters from whoosh are available you just have to listed separating them with commas: sortable, stored, scored, etc. Refer to whoosh_documentation_ for
 further explanations on the application of these parameters. 
-
+ 
+.. _documentation: http://pythonhosted.org/Whoosh/searching.html#scoring-and-sorting for
 ==============
 Flask Settings
 ==============
@@ -67,31 +67,55 @@ From flask configuration, you could add options for whoosh:
 Searching
 =========
 
-*PonyModel._wh_search_(query, **kwargs).*
+.. code :: python
+    
+   PonyModel._wh_.search(query, **kwargs)
 
-There are several options for performing a search with flask_ponywhoosh. For instance, to execute a  simple search, choose the entity where you want to perform the search and  try
-something like the following code over a view function, or even from the shell.
+There are several options to perform a search with flask_ponywhoosh. For instance, to execute a  simple search, choose the entity where you want to perform the search and then  try
+something like the following code over a view function, or even from the shell,
 
 .. code:: python
 
     >>> from app import *
     >>> User._wh_.search("felipe")
-    {'runtime': 0.002643108367919922, 'results': [User[12], User[5]]}
-    >>>
+    {'cant_results': 2,
+     'facet_names': [],
+     'matched_terms': {'name': ['felipe']},
+     'results': [{'docnum': 4L,
+                  'rank': 0,
+                  'result': {u'id': u'5'},
+                  'score': 2.540445040947149},
+                 {'docnum': 11L,
+                  'rank': 1,
+                  'result': {u'id': u'12'},
+                  'score': 2.540445040947149}],
+     'runtime': 0.001981973648071289}
 
-Or, if you prefer to only use the function *search()*,
+If you prefer you may use the function *search()*,  which will run the same function but is quite more handy when writing
 
 .. code:: python
 
     >>> from flask_ponywhoosh import search
+    >>> from app import *
     >>> search(User,"felipe") 
-    {'runtime': 0.0016570091247558594, 'results': [User[12], User[5]]}
+    {'cant_results': 2,
+     'facet_names': [],
+     'matched_terms': {'name': ['felipe']},
+     'results': [{'docnum': 4L,
+                  'rank': 0,
+                  'result': {u'id': u'5'},
+                  'score': 2.540445040947149},
+                 {'docnum': 11L,
+                  'rank': 1,
+                  'result': {u'id': u'12'},
+                  'score': 2.540445040947149}],
+     'runtime': 0.001981973648071289}
 
-The function *search()* takes three arguments. 1. A ponymodel, where you want to perform the search. 2. The search_string, what  you are looking for; and, 3. Some additional options for more refined searching.
+The function *search()* takes three arguments. 1. A ponymodel, the databse entity where you want to perform the search. 2. The search_string, what  you are looking for; and, 3. The arguments, Some additional options for more refined searching.
 
-For example if  you would like the results to be ordered by some specific field,
-you will have to indicate so, by adding the argument ``sortedby="field"``.
-(As is shown in the following example). Please note that in order for
+For example if  you would like the results to be sorted by some specific searcheable field,
+you have to indicate so, by adding the argument *sortedby="field"*.
+In this case the search results object would show as a score the value of the item you choose for sorting. Please note that in order for
 one field to be sortable, you must indicate it when you are registering
 the model.(Refer to the Usage section above)
 
@@ -100,19 +124,28 @@ the model.(Refer to the Usage section above)
     >>> from app import *
     >>> from flask_ponywhoosh import search
     >>> search(User,"harol", sortedby="age")
-    {'runtime': 0.0026960372924804688, 'results': [User[20], User[13], User[6], User[21], User[14], Us
-    er[7]]}
-    >>>
+    {'cant_results': 2,
+     'facet_names': [],
+     'matched_terms': {'name': ['felipe']},
+     'results': [{'docnum': 4L,
+                  'rank': 0,
+                  'result': {u'id': u'5'},
+                  'score': '19'},
+                 {'docnum': 11L,
+                  'rank': 1,
+                  'result': {u'id': u'12'},
+                  'score': '19'}],
+     'runtime': 0.0012810230255126953}
 
 In synthesis, the options available are : 
 
-``sortedby=``,  ``groupedby"``,``filter``,``scored``,``collapse``, ``collapse_limit``, ``collapse_order``,``filter``, ``groupedby``, ``limit``, ``maptype``, ``mask``, ``optimize``, ``reverse``, ``scored``, ``sortedby``, ``terms``. Which are widely described in the whoosh documentation cited in the previous section. 
+*sortedby*, *groupedby*,*filter*,*scored*,*collapse*, *collapse_limit*, *collapse_order*,*filter*, *groupedby*, *limit*, *maptype*, *mask*, *optimize*, *reverse*, *scored*, *terms*. Which are widely described in the whoosh_documentation_.
 
 Searching by field:
 *******************
 
-By default the function ``search()`` performs a multifield parser query, i.e. that you will be searching in all the fields you have declared when you registered the model. However, sometimes you would like to perform searching in just one or some of all the fields.
-For these reasons we implemented the following extra options: The first one is refered as ``field`` all you have to do is indicate in which field you want to search. The output would be a results object containing only the information founded in that field. And ``fields``where you should write a list with all the fields you want to search. 
+By default the function *search()* performs a multifield parser query, i.e. that you will be searching in all the fields you have declared when you registered the model. However, sometimes you would like to perform searching in just one or some of all the fields.
+For these reasons we implemented the following extra options: The first one is refered as ``field`` all you have to do is indicate in which field you want to search. The output would be a results object containing only the information found in that field. And ``fields``where you should write a list with all the fields you want to search. 
 
 .. code:: python 
 
@@ -134,41 +167,89 @@ For these reasons we implemented the following extra options: The first one is r
          'runtime': 0.001619100570678711}
     >>>
 
-add_wildcards & something
-*************************
+The arguments add_wildcards & something
+***************************************
 
-Whoosh by default sets a wildcard * to perform search for inexact terms, however sometimes  is desirable to search by exact terms instead. For this reason we added two more options. ``add_wildcards=True`` is the value by default, but  the user can turn it off, and then the search would be for exact terms. For example, if you want to search "harol" when add_wildcards=False, and you search by "har" the results would be 0. But if add_wildcards=True "har" would be fair enough to get the result "harol"  because searching was performed in this way "*har*". 
+Whoosh  sets a wildcard '*,?,!' by default to perform search for inexact terms, however sometimes  is desirable to search by exact terms instead. For this reason we added two more options: *add_wildcards* and *something*. 
+
+*add_wildcards* (by default False)  is a boolean argument that tells the searcher wheter it should or not include wild cards. For example, if you want to search "harol" when add_wildcards=False, and you search by "har" the results would be 0. If *add_wildcards=True*, then "har" would be fair enough to get the result "harol"  because searching was performed in this way "* har *". 
 
 .. code:: python
+        >>> search(User, "har", add_wildcards=False)
+        {'cant_results': 0,
+         'facet_names': [],
+         'matched_terms': {},
+         'results': [],
+         'runtime': 0.0003230571746826172
+         }
 
         >>> search(User, "har", add_wildcards=True)
-        {'cant_results': 4, 'facet_names': [], 'runtime': 0.00
-        32210350036621094, 'results': [(User[6], 2.02961941718
-        11583), (User[7], 2.0296194171811583), (User[13], 2.02
-        96194171811583), (User[14], 2.0296194171811583)], 'mat
-        ched_terms': {'name': ['harol']}}
+        {'cant_results': 4,
+         'facet_names': [],
+         'matched_terms': {'name': ['harol']},
+         'results': [{'docnum': 5L,
+                      'rank': 0,
+                      'result': {u'id': u'6'},
+                      'score': 2.0296194171811583},
+                     {'docnum': 6L,
+                      'rank': 1,
+                      'result': {u'id': u'7'},
+                      'score': 2.0296194171811583},
+                     {'docnum': 12L,
+                      'rank': 2,
+                      'result': {u'id': u'13'},
+                      'score': 2.0296194171811583},
+                     {'docnum': 13L,
+                      'rank': 3,
+                      'result': {u'id': u'14'},
+                      'score': 2.0296194171811583}],
+         'runtime': 0.0018298625946044922
+         }
 
-        >>> search(User, "har", add_wildcards=False)
-        {'cant_results': 0, 'facet_names': [], 'runtime': 0.00
-        05280971527099609, 'results': [], 'matched_terms': {}}
 
-
-
-The `something=True`` option, would run first a search with add_wildcards=False value, but in case results are empty it would automatically run a search adding wildcards to the result. 
+The *something=True* option, would run first a search with *add_wildcards=False* value, but in case results are empty it would automatically run a search adding wildcards to the result. 
 
 .. code:: python 
 
     >>> search(Attribute, "tejo", something = True)
-        {'cant_results': 4, 'facet_names': [], 'runtime': 0.00
-        11301040649414062, 'results': [(Attribute[1], 5.500610
-        730717037), (Attribute[7], 5.500610730717037)], 'match
-        ed_terms': {'sport': ['tejo'], 'name': ['tejo']}}
+        {'cant_results': 4,
+         'facet_names': [],
+         'matched_terms': {'name': ['tejo'], 'sport': ['tejo']},
+         'results': [{'docnum': 0L,
+                      'rank': 0,
+                      'result': {u'id': u'1'},
+                      'score': 5.500610730717037},
+                     {'docnum': 6L,
+                      'rank': 1,
+                      'result': {u'id': u'7'},
+                      'score': 5.500610730717037}],
+         'runtime': 0.0014259815216064453
+         }
   
+======================
+The results dictionary
+======================
+
+The *search()* function returns a dictionary with selected information. 
 
 
-=====================
-Full Search Function:
-=====================
+*'cant_results': is the total number of documents collected by the searcher. 
+
+*'facet_names' is useful when the option 'groupedby' is used, because it returns the item used to group the results. 
+
+*'matched_terms' is a dictionary that saves the searcheables field and the match given by the query. 
+
+*'results' is  a dictionary's list of the individual results. i.e. a dictionary for every single result containing: 
+  *'rank': the position of the result, 
+
+  *'result': indicating the primary key and the correspond value of the item, 
+
+  *'score' the score for the item in the search, and 
+  'runtime': how much time the searcher took to find it.   
+
+====================
+Full Search Function
+====================
 
 This function allows you to search in every model instead of searching in one by one. ``full_search`` takes three arguments: 
 ``wh`` is by default the whoosheers where the indexes of  models from the database are stored. *arg is where you type your query, and the last arguments  are the options just as were described before,  with the new feature for ``models``(this is explained later in this section). 
@@ -191,7 +272,7 @@ This function allows you to search in every model instead of searching in one by
      'matched_terms': {'deporte': ['chulo', 'lucha']}}
                  }
     }
-    >>>
+    
 The results object is a dictionary containing 'runtime': The sum of the runtime for the search in every field. 'matched_terms': another dictionary that stores the field where the query matched and a list with the results obtained. 'results': A dictionary with the location of every result listed by the field. 
 
 
@@ -201,7 +282,7 @@ If you would rather prefer, you can indicate specifically in which models are yo
 
         >>> from app import *
         >>> from flask_ponywhoosh import full_search
-        >>> full_search(wh,"ch",modelos=[User,Attributes])
+        >>> full_search(wh,"ch",models=[User,Attributes])
         
         {'matched_terms': 
             {'name': ['chuck'], 'deporte':['chulo','lucha']}, 
@@ -229,7 +310,26 @@ There are some special features avalaible for models from the database:
 * *update_documents*: This function deletes all the documents and recharges them again. 
 * *counts*: This function counts all the documents existing in an indexes. 
 
+========
+Testing:
+========
 
+Currently we have implemented 10 tests, primary over the *search()* and *full_search()* functions. You can find them in the file test.py.
+
+In the terminal you have to write the following commands to run the tests:
+
+.. code::bash 
+    
+    python -m unittest test
+
+This option  runs all the test and display 'OK', if all of them were satisfied, the time taken to run all of them and how many were there . 
+
+.. code::bash 
+
+    python -m unittest -v test
+
+This option displays every test. 
+    
 
 
 =================

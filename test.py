@@ -10,9 +10,8 @@ from pprint import pprint
 
 from flask_ponywhoosh import Whoosh, search, full_search
 
-# from flask_ponywhoosh import *
-# from pprint import pprint
-# from app import *
+from flask_ponywhoosh import *
+
 # User._wh_.charge_documents()
 # User._wh_.counts()
 # Attribute._wh_.charge_documents()
@@ -24,9 +23,8 @@ from flask_ponywhoosh import Whoosh, search, full_search
 # pprint(full_search(wh, "har", something=True))
 # pprint(wh.search("har", something=True))
 # pprint(search(Attribute, 'marrano'))
-# pprint(search(Attribute, 'marrano', add_wildcards=True))
 # pprint(search(Attribute, 'marrano', add_wildcards=True, field='name'))
-# pprint(search(Attribute, 'tejo', sortedby='weight'))
+
 
 
 
@@ -90,7 +88,7 @@ class BaseTestCases(object):
 
             found = self.User._wh_.search('harol')
             self.assertEqual(found['cant_results'], 1)
-            self.assertEqual(self.u3.id, found['results'][0]['result'].id)
+            self.assertEqual(self.u3.id, found['results'][0]['entity'].id)
         def test_search_something(self):
             self.fixtures()
             found= self.User._wh_.search('har', something=True)
@@ -99,8 +97,8 @@ class BaseTestCases(object):
         def test_search_sortedby(self):
             self.fixtures()
             found= self.Attribute._wh_.search('lun',add_wildcards=True, sortedby="weight")
-            self.assertEqual(self.a2.id, found['results'][0]['result'].id)
-            self.assertEqual(self.a1.id, found['results'][1]['result'].id)
+            self.assertEqual(self.a2.id, found['results'][0]['entity'].id)
+            self.assertEqual(self.a1.id, found['results'][1]['entity'].id)
         def test_full_search_without_wildcards(self):
             self.fixtures()
 
@@ -112,14 +110,14 @@ class BaseTestCases(object):
 
             found=full_search(self.wh,"fel",add_wildcards=True)
             self.assertEqual(found['cant_results'], 3)
-        # def test_full_search_by_whoosheeer(self):
-        #     self.fixtures()
-
-        #     found=full_search(self.wh,"felipe",add_wildcards=True,modelos=["User"])
-        #     pprint(found)
-        #     self.assertEqual(len(found['results']['Attribute']['items']), 0)
-        #     self.assertEqual(len(found['results']['User']['items']), 1)
-        #     self.assertEqual(self.a2.id, found['results']['User']['result'].id)
+       
+        #def test_full_search_by_whoosheeer(self):
+        #    self.fixtures(
+        #    found=full_search(self.wh,"felipe",add_wildcards=True,modelos=["User"])
+        #    
+        #    self.assertEqual(len(found['results']['Attribute']['items']), 0)
+        #    self.assertEqual(len(found['results']['User']['items']), 1)
+            #self.assertEqual(self.a2.id, found['results']['User']['result'].id)
 
 class TestsWithApp(BaseTestCases.BaseTest):
 
