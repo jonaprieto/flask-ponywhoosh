@@ -245,16 +245,16 @@ The *search()* function returns a dictionary with selected information.
 
 * 'matched_terms': is a dictionary that saves the searcheable field and the match given by the query. 
 
-* *runtime*: how much time the searcher took to find it.   
+* 'runtime': how much time the searcher took to find it.   
 
 
-* 'results' is  a dictionary's list for the individual results. i.e. a dictionary for every single result, containing: 
+* 'results': is  a dictionary's list for the individual results. i.e. a dictionary for every single result, containing: 
 
   * 'rank': the position of the result, 
 
   * 'result': indicating the primary key and the correspond value of the item, 
 
-  * 'score the score for the item in the search, and 
+  * 'score': the score for the item in the search, and 
   
 ====================
 Full Search Function
