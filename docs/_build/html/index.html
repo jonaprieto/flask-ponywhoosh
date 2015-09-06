@@ -73,7 +73,7 @@ inside <code class="docutils literal"><span class="pre">Flask</span></code>. Sou
     <span class="n">attributes</span> <span class="o">=</span> <span class="n">Set</span><span class="p">(</span><span class="s">&quot;Attributes&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>As you could see in the previous example, you should declare as strings these fields where you want whoosh to store the searcheables. All the parameters from whoosh are available you just have to listed separating them with commas: sortable, stored, scored, etc. Refer to <a href="#id23"><span class="problematic" id="id24">whoosh_documentation_</span></a> for
+<p>As you could see in the previous example, you should declare as strings these fields where you want whoosh to store the searcheables. All the parameters from whoosh are available you just have to listed separating them with commas: sortable, stored, scored, etc. Refer to <a href="#id9"><span class="problematic" id="id10">whoosh_documentation_</span></a> for
 further explanations on the application of these parameters.</p>
 </div>
 <div class="section" id="flask-settings">
@@ -150,7 +150,7 @@ the model.(Refer to the Usage section above)</p>
 </pre></div>
 </div>
 <p>In synthesis, the options available are :</p>
-<p><em>sortedby</em>, <em>groupedby</em>,*filter*,*scored*,*collapse*, <em>collapse_limit</em>, <em>collapse_order</em>,*filter*, <em>groupedby</em>, <em>limit</em>, <em>maptype</em>, <em>mask</em>, <em>optimize</em>, <em>reverse</em>, <em>scored</em>, <em>terms</em>. Which are widely described in the <a href="#id25"><span class="problematic" id="id26">whoosh_documentation_</span></a>.</p>
+<p><em>sortedby</em>, <em>groupedby</em>,*filter*,*scored*,*collapse*, <em>collapse_limit</em>, <em>collapse_order</em>,*filter*, <em>groupedby</em>, <em>limit</em>, <em>maptype</em>, <em>mask</em>, <em>optimize</em>, <em>reverse</em>, <em>scored</em>, <em>terms</em>. Which are widely described in the <a href="#id11"><span class="problematic" id="id12">whoosh_documentation_</span></a>.</p>
 <div class="section" id="searching-by-field">
 <h3>Searching by field:<a class="headerlink" href="#searching-by-field" title="Permalink to this headline">¶</a></h3>
 <p>By default the function <em>search()</em> performs a multifield parser query, i.e. that you will be searching in all the fields you have declared when you registered the model. However, sometimes you would like to perform searching in just one or some of all the fields.
@@ -177,9 +177,14 @@ For these reasons we implemented the following extra options: The first one is r
 </div>
 <div class="section" id="the-arguments-add-wildcards-something">
 <h3>The arguments add_wildcards &amp; something<a class="headerlink" href="#the-arguments-add-wildcards-something" title="Permalink to this headline">¶</a></h3>
-<p>Whoosh  sets a wildcard &#8216;<em>,?,!&#8217; by default to perform search for inexact terms, however sometimes  is desirable to search by exact terms instead. For this reason we added two more options: *add_wildcards</em> and <em>something</em>.</p>
-<p><em>add_wildcards</em> (by default False)  is a boolean argument that tells the searcher wheter it should or not include wild cards. For example, if you want to search &#8220;harol&#8221; when add_wildcards=False, and you search by &#8220;har&#8221; the results would be 0. If <em>add_wildcards=True</em>, then &#8220;har&#8221; would be fair enough to get the result &#8220;harol&#8221;  because searching was performed in this way &#8220;* har <a href="#id3"><span class="problematic" id="id4">*</span></a>&#8221;.</p>
-<p>The <em>something=True</em> option, would run first a search with <em>add_wildcards=False</em> value, but in case results are empty it would automatically run a search adding wildcards to the result.</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">search</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">add_wildcards</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Whoosh  sets a wildcard &#8216;<em>,?,!&#8217; by default to perform search for inexact terms, however sometimes  is desirable to search by exact terms instead. For this reason we added two more options:
+*add_wildcards</em> and <em>something</em>.</p>
+<p>The option <em>add_wildcards</em> (by default False)  is a boolean argument that tells the searcher whether it should or not include wild cards. For example, if you want to search &#8220;harol&#8221; when add_wildcards=False, and you search by &#8220;har&#8221; the results would be 0. If <em>add_wildcards=True</em>, then &#8220;har&#8221; would be fair enough to get the result &#8220;harol&#8221;  because searching was performed in this way &#8220;* har <a href="#id3"><span class="problematic" id="id4">*</span></a>&#8221;.</p>
+<p>The <em>something=True</em> option, would run first a search with
+<em>add_wildcards=False</em> value, but in case results are empty it would automatically run a search adding wildcards to the result.</p>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">search</span><span class="p">(</span><span class="n">Attribute</span><span class="p">,</span> <span class="s">&quot;tejo&quot;</span><span class="p">,</span> <span class="n">something</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
 <span class="go">    {&#39;cant_results&#39;: 4,</span>
 <span class="go">     &#39;facet_names&#39;: [],</span>
@@ -201,22 +206,26 @@ For these reasons we implemented the following extra options: The first one is r
 <div class="section" id="the-results-dictionary">
 <h2>The results dictionary<a class="headerlink" href="#the-results-dictionary" title="Permalink to this headline">¶</a></h2>
 <p>The <em>search()</em> function returns a dictionary with selected information.</p>
-<p><a href="#id5"><span class="problematic" id="id6">*</span></a>&#8216;cant_results&#8217;: is the total number of documents collected by the searcher.</p>
-<p><a href="#id7"><span class="problematic" id="id8">*</span></a>&#8216;facet_names&#8217; is useful when the option &#8216;groupedby&#8217; is used, because it returns the item used to group the results.</p>
-<p><a href="#id9"><span class="problematic" id="id10">*</span></a>&#8216;matched_terms&#8217; is a dictionary that saves the searcheables field and the match given by the query.</p>
-<dl class="docutils">
-<dt><a href="#id11"><span class="problematic" id="id12">*</span></a>&#8216;results&#8217; is  a dictionary&#8217;s list of the individual results. i.e. a dictionary for every single result containing:</dt>
-<dd><p class="first"><a href="#id13"><span class="problematic" id="id14">*</span></a>&#8216;rank&#8217;: the position of the result,</p>
-<p><a href="#id15"><span class="problematic" id="id16">*</span></a>&#8216;result&#8217;: indicating the primary key and the correspond value of the item,</p>
-<p class="last"><a href="#id17"><span class="problematic" id="id18">*</span></a>&#8216;score&#8217; the score for the item in the search, and
-&#8216;runtime&#8217;: how much time the searcher took to find it.</p>
-</dd>
-</dl>
+<ul class="simple">
+<li>&#8216;cant_results&#8217;: is the total number of documents collected by the searcher.</li>
+<li>&#8216;facet_names&#8217;: is useful with the option &#8216;groupedby&#8217;, because it returns the item used to group the results.</li>
+<li>&#8216;matched_terms&#8217;: is a dictionary that saves the searcheable field and the match given by the query.</li>
+<li><em>runtime</em>: how much time the searcher took to find it.</li>
+<li>&#8216;results&#8217; is  a dictionary&#8217;s list for the individual results. i.e. a dictionary for every single result, containing:<ul>
+<li>&#8216;rank&#8217;: the position of the result,</li>
+<li>&#8216;result&#8217;: indicating the primary key and the correspond value of the item,</li>
+<li>&#8216;score the score for the item in the search, and</li>
+</ul>
+</li>
+</ul>
 </div>
 <div class="section" id="full-search-function">
 <h2>Full Search Function<a class="headerlink" href="#full-search-function" title="Permalink to this headline">¶</a></h2>
+<div class="code python highlight-python"><div class="highlight"><pre>&#39;full_search(query, **kwargs)
+</pre></div>
+</div>
 <p>This function allows you to search in every model instead of searching in one by one. <code class="docutils literal"><span class="pre">full_search</span></code> takes three arguments:
-<code class="docutils literal"><span class="pre">wh</span></code> is by default the whoosheers where the indexes of  models from the database are stored. <a href="#id19"><span class="problematic" id="id20">*</span></a>arg is where you type your query, and the last arguments  are the options just as were described before,  with the new feature for <a href="#id21"><span class="problematic" id="id22">``</span></a>models``(this is explained later in this section).</p>
+<code class="docutils literal"><span class="pre">wh</span></code> is by default the whoosheers where the indexes of  models from the database are stored. <a href="#id5"><span class="problematic" id="id6">*</span></a>arg is where you type your query, and the last arguments  are the options just as were described before,  with the new feature for <a href="#id7"><span class="problematic" id="id8">``</span></a>models``(this is explained later in this section).</p>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">app</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">flask_ponywhoosh</span> <span class="kn">import</span> <span class="n">full_search</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">full_search</span><span class="p">(</span><span class="n">wh</span><span class="p">,</span><span class="s">&quot;ch&quot;</span><span class="p">)</span>
@@ -235,8 +244,8 @@ For these reasons we implemented the following extra options: The first one is r
 <span class="go">}</span>
 </pre></div>
 </div>
-<p>The results object is a dictionary containing &#8216;runtime&#8217;: The sum of the runtime for the search in every field. &#8216;matched_terms&#8217;: another dictionary that stores the field where the query matched and a list with the results obtained. &#8216;results&#8217;: A dictionary with the location of every result listed by the field.</p>
-<p>If you would rather prefer, you can indicate specifically in which models are you interested on searching, by indicating in the arguments of the function <code class="docutils literal"><span class="pre">full_search(wh,&quot;search_string&quot;,</span> <span class="pre">models=[list</span> <span class="pre">with</span> <span class="pre">the</span> <span class="pre">models])</span></code>. For example:</p>
+<p>The results object for this function is a dictionary containing &#8216;runtime&#8217;: The sum of the runtime for the search in every field. &#8216;matched_terms&#8217;: another dictionary that stores the field where the query matched and a list with the results obtained. &#8216;results&#8217;: A dictionary with the location of every result listed by the field.</p>
+<p>If you would rather prefer, you can indicate specifically in which models are you interested on searching, by indicating in the arguments of the function <em>full_search(wh,&#8221;search_string&#8221;, models=[list with the models])</em>. For example:</p>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">app</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">flask_ponywhoosh</span> <span class="kn">import</span> <span class="n">full_search</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">full_search</span><span class="p">(</span><span class="n">wh</span><span class="p">,</span><span class="s">&quot;ch&quot;</span><span class="p">,</span><span class="n">models</span><span class="o">=</span><span class="p">[</span><span class="n">User</span><span class="p">,</span><span class="n">Attributes</span><span class="p">])</span>
@@ -306,14 +315,6 @@ with <code class="docutils literal"><span class="pre">id=1</span></code>.</li>
 </pre></div>
 </div>
 <p>Try something like the following sentences:</p>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">app</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">flask_ponywhoosh</span> <span class="kn">import</span> <span class="n">search</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">search</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="s">&#39;harol&#39;</span><span class="p">)</span>
-<span class="go">{&#39;runtime&#39;: 0.006242990493774414, &#39;results&#39;: [User[49], User[48], User[35], User[34], User[28], User[</span>
-
-<span class="go">27], User[21], User[20], User[14], User[13]]}</span>
-</pre></div>
-</div>
 </div>
 </div>
 
