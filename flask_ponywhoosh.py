@@ -123,7 +123,7 @@ class Whoosheer(object):
             pk = unicode(self.primary)
             for r in results:
                 parms = {pk: r[pk]}
-                entity = self.model.name.entity.get(**parms)
+                entity = self.model.get(**parms)
                 ans = {
                     'result': parms,
                     'entity': entity,
