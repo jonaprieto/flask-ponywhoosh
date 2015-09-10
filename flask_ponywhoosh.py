@@ -20,6 +20,7 @@ from __version__ import __version__
 from pony import orm
 from whoosh import fields, index
 from whoosh import qparser
+from datetime import datetime
 import whoosh
 
 
@@ -245,20 +246,20 @@ class Whoosh(object):
 
                     mwh.schema_attrs[field.name] = whoosh.fields.ID(
                         stored=True, unique=True)
+
                 if field.name in index_fields:
-                    if field.is_string==False and field.is_relation==False:
-                        
-                        # if field.name.py_type.__name__ in ['int', 'float']:
-                        mwh.schema_attrs[field.name] = whoosh.fields.NUMERIC(**kw)
+                    if field.is_string == False and field.is_relation == False:
+                        if field.py_type.__name__ in ['int','float']:
+                            mwh.schema_attrs[field.name] = whoosh.fields.NUMERIC(**kw)
+                        elif field.py_type.__name__ == 'datetime':
+                            mwh.schema_attrs[field.name] = whoosh.fields.DATETIME(**kw)     
+
                         lista[field.name] = field.py_type.__name__
-                        # else:
-                        #         
                     else:
 
                         mwh.schema_attrs[field.name] = whoosh.fields.TEXT(**kw)
-                            #
+                        
 
-                
             mwh.schema = whoosh.fields.Schema(**mwh.schema_attrs)
             self.register_whoosheer(mwh)
 
@@ -268,21 +269,19 @@ class Whoosh(object):
                 attrs = {mwh.primary: obj.get_pk()}
                 for f in mwh.schema_attrs.keys():
                     attrs[f] = getattr(obj, f)
-                    
+
                     try:
                         attrs[f] = unicode(attrs[f])
                     except Exception, e:
                         print e
 
-                    if attrs[f] in ['None','nan']:
-                        attrs[f]=u'0'
+                    if attrs[f] in ['None', 'nan']:
+                        attrs[f] = u'0'
 
                     if f in lista:
-                        if lista[f] == 'int':
-                            attrs[f] = int(attrs[f])
-                        elif lista[f]== 'float':
-                            attrs[f] = float(attrs[f])
-                            
+                        attrs[f] = getattr(obj, f)
+
+
                 if status == 'inserted':
                     writer.add_document(**attrs)
                 elif status == 'updated':
