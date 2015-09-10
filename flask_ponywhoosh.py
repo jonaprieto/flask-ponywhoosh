@@ -274,6 +274,9 @@ class Whoosh(object):
                     except Exception, e:
                         print e
 
+                    if attrs[f] in ['None','nan']:
+                        attrs[f]=0
+
                     if f in lista:
                         if lista[f] == 'int':
                             attrs[f] = int(attrs[f])
