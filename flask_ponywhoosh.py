@@ -250,12 +250,13 @@ class Whoosh(object):
                         
                         # if field.name.py_type.__name__ in ['int', 'float']:
                         mwh.schema_attrs[field.name] = whoosh.fields.NUMERIC(**kw)
+                        lista[field.name] = field.py_type.__name__
                         # else:
-                        #     mwh.schema_attrs[field.name] = whoosh.fields.TEXT(**kw)    
+                        #         
                     else:
 
                         mwh.schema_attrs[field.name] = whoosh.fields.TEXT(**kw)
-                            #lista[field.name] = field.py_type.__name__
+                            #
 
                 
             mwh.schema = whoosh.fields.Schema(**mwh.schema_attrs)
