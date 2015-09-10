@@ -244,7 +244,7 @@ class Whoosh(object):
                     if field.is_string:
                         mwh.schema_attrs[field.name] = whoosh.fields.TEXT(**kw)
                     else:
-                        mwh.schema_attrs[field.name] = whoosh.fields.NUMERIC(**kw)
+                        mwh.schema_attrs[field.name] = whoosh.fields.NUMERIC(stored=True)
 
             mwh.schema = whoosh.fields.Schema(**mwh.schema_attrs)
             self.register_whoosheer(mwh)
@@ -256,7 +256,9 @@ class Whoosh(object):
                 for f in mwh.schema_attrs.keys():
                     attrs[f] = getattr(obj, f)
                     try:
-                        attrs[f] = unicode(attrs[f])
+                        if (not isinstance(attrs[f], int) or
+                            not isinstance(attrs[f], float))º:
+                            attrs[f] = unicode(attrs[f])
                     except Exception, e:
                         print e
 
