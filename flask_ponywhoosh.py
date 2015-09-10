@@ -25,6 +25,7 @@ import whoosh
 
 __version__ = "0.1.3"
 
+
 class Whoosheer(object):
 
     """
@@ -79,7 +80,7 @@ class Whoosheer(object):
     def search(self, search_string, **opt):
         prepped_string = self.prep_search_string(
             search_string, opt.get('add_wildcards', False))
-        
+
         with self.index.searcher() as searcher:
             parser = whoosh.qparser.MultifieldParser(
                 self.schema.names(), self.index.schema,
@@ -247,7 +248,8 @@ class Whoosh(object):
                     if field.is_string:
                         mwh.schema_attrs[field.name] = whoosh.fields.TEXT(**kw)
                     else:
-                        mwh.schema_attrs[field.name] = whoosh.fields.NUMERIC(**kw)
+                        mwh.schema_attrs[
+                            field.name] = whoosh.fields.NUMERIC(stored=True)
 
             mwh.schema = whoosh.fields.Schema(**mwh.schema_attrs)
             self.register_whoosheer(mwh)
@@ -258,8 +260,13 @@ class Whoosh(object):
                 attrs = {mwh.primary: obj.get_pk()}
                 for f in mwh.schema_attrs.keys():
                     attrs[f] = getattr(obj, f)
+
                     try:
-                        attrs[f] = unicode(attrs[f])
+                        if (not isinstance(attrs[f], int) or
+                                not isinstance(attrs[f], float)):
+                            attrs[f] = unicode(attrs[f])
+                        elif attrs[f] is None:
+                            attrs[f] = 0
                     except Exception, e:
                         print e
 
