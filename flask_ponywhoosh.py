@@ -260,7 +260,7 @@ class Whoosh(object):
                 attrs = {mwh.primary: obj.get_pk()}
                 for f in mwh.schema_attrs.keys():
                     attrs[f] = getattr(obj, f)
-
+                    print 'attrs[f]', obj, f, ' = ', attrs[f]
                     try:
                         if (not isinstance(attrs[f], int) and
                                 not isinstance(attrs[f], float)):
