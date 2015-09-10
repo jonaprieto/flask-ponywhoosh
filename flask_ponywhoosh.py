@@ -126,7 +126,7 @@ class Whoosheer(object):
             pk = unicode(self.primary)
             for r in results:
                 parms = {pk: r[pk]}
-                entity = self.model.name.entity.get(**parms)
+                entity = self.model.get(**parms)
                 ans = {
                     'result': parms,
                     'entity': entity,
@@ -244,7 +244,10 @@ class Whoosh(object):
                     mwh.schema_attrs[field.name] = whoosh.fields.ID(
                         stored=True, unique=True)
                 if field.name in index_fields:
-                    mwh.schema_attrs[field.name] = whoosh.fields.TEXT(**kw)
+                    if field.is_string:
+                        mwh.schema_attrs[field.name] = whoosh.fields.TEXT(**kw)
+                    else:
+                        mwh.schema_attrs[field.name] = whoosh.fields.NUMERIC(**kw)
 
             mwh.schema = whoosh.fields.Schema(**mwh.schema_attrs)
             self.register_whoosheer(mwh)

@@ -170,9 +170,14 @@ For these reasons we implemented the following extra options: The first one is r
 The arguments add_wildcards & something
 ***************************************
 
-Whoosh  sets a wildcard '*,?,!' by default to perform search for inexact terms, however sometimes  is desirable to search by exact terms instead. For this reason we added two more options: *add_wildcards* and *something*. 
+.. code :: python
+    
+   search(query, add_wildcards=True)
 
-*add_wildcards* (by default False)  is a boolean argument that tells the searcher wheter it should or not include wild cards. For example, if you want to search "harol" when add_wildcards=False, and you search by "har" the results would be 0. If *add_wildcards=True*, then "har" would be fair enough to get the result "harol"  because searching was performed in this way "* har *". 
+Whoosh  sets a wildcard '*,?,!' by default to perform search for inexact terms, however sometimes  is desirable to search by exact terms instead. For this reason we added two more options: 
+*add_wildcards* and *something*. 
+
+The option *add_wildcards* (by default False)  is a boolean argument that tells the searcher whether it should or not include wild cards. For example, if you want to search "harol" when add_wildcards=False, and you search by "har" the results would be 0. If *add_wildcards=True*, then "har" would be fair enough to get the result "harol"  because searching was performed in this way "* har *". 
 
 .. code:: python
         >>> search(User, "har", add_wildcards=False)
@@ -207,7 +212,8 @@ Whoosh  sets a wildcard '*,?,!' by default to perform search for inexact terms, 
          }
 
 
-The *something=True* option, would run first a search with *add_wildcards=False* value, but in case results are empty it would automatically run a search adding wildcards to the result. 
+The *something=True* option, would run first a search with 
+*add_wildcards=False* value, but in case results are empty it would automatically run a search adding wildcards to the result. 
 
 .. code:: python 
 
@@ -233,26 +239,30 @@ The results dictionary
 The *search()* function returns a dictionary with selected information. 
 
 
-*'cant_results': is the total number of documents collected by the searcher. 
+* 'cant_results': is the total number of documents collected by the searcher. 
 
-*'facet_names': is useful with the option 'groupedby', because it returns the item used to group the results. 
+* 'facet_names': is useful with the option 'groupedby', because it returns the item used to group the results. 
 
-*'matched_terms': is a dictionary that saves the searcheable field and the match given by the query. 
+* 'matched_terms': is a dictionary that saves the searcheable field and the match given by the query. 
 
-*'runtime': how much time the searcher took to find it.   
+* 'runtime': how much time the searcher took to find it.   
 
 
-*'results' is  a dictionary's list for the individual results. i.e. a dictionary for every single result, containing: 
+* 'results': is  a dictionary's list for the individual results. i.e. a dictionary for every single result, containing: 
 
-  *'rank': the position of the result, 
+  * 'rank': the position of the result, 
 
-  *'result': indicating the primary key and the correspond value of the item, 
+  * 'result': indicating the primary key and the correspond value of the item, 
 
-  *'score' the score for the item in the search, and 
+  * 'score': the score for the item in the search, and 
   
 ====================
 Full Search Function
 ====================
+
+.. code :: python
+    
+  'full_search(query, **kwargs)
 
 This function allows you to search in every model instead of searching in one by one. ``full_search`` takes three arguments: 
 ``wh`` is by default the whoosheers where the indexes of  models from the database are stored. *arg is where you type your query, and the last arguments  are the options just as were described before,  with the new feature for ``models``(this is explained later in this section). 
@@ -374,13 +384,23 @@ Start a session of a shell.
 Try something like the following sentences:
 
 .. code:: python
-
-    >>> from app import *
-    >>> from flask_ponywhoosh import search
-    >>> search(User, 'harol')
-    {'runtime': 0.006242990493774414, 'results': [User[49], User[48], User[35], User[34], User[28], User[
-
-    27], User[21], User[20], User[14], User[13]]}
+      >>> from app import *
+    >>> from flask_ponywhoosh import full_search
+    >>> full_search(wh,"ch")
+    { 'matched_terms': {'name': ['chuck'], 
+                        'deporte': ['chulo', 'lucha']}, 
+      'runtime': 0.0033812522888183594  
+      'results': {'User': {'items': [User[15], User[8], 
+                    User[1]],     
+      'matched_terms': {'name': ['chuck']}}, 
+      'Attributes': {'items': [Attributes[17], 
+                    Attributes[14],         
+                    Attributes[11], Attributes[8], 
+                    Attributes[5], Attributes[2]],
+     'matched_terms': {'deporte': ['chulo', 'lucha']}}
+                 }
+    }
+   
 
 .. |PyPI Package latest release| image:: http://img.shields.io/pypi/v/Flask-PonyWhoosh.png?style=flat
    :target: https://pypi.python.org/pypi/Flask-PonyWhoosh
