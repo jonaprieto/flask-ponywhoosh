@@ -246,17 +246,18 @@ class Whoosh(object):
                     mwh.schema_attrs[field.name] = whoosh.fields.ID(
                         stored=True, unique=True)
                 if field.name in index_fields:
-                    if field.is_string:
-                        mwh.schema_attrs[field.name] = whoosh.fields.TEXT(**kw)
+                    if field.is_string==False and field.is_relation==False:
+                        
+                        # if field.name.py_type.__name__ in ['int', 'float']:
+                        mwh.schema_attrs[field.name] = whoosh.fields.NUMERIC(**kw)
+                        # else:
+                        #     mwh.schema_attrs[field.name] = whoosh.fields.TEXT(**kw)    
                     else:
-                        try:
 
-                            lista[field.name] = field.py_type.__name__
-                            mwh.schema_attrs[field.name] = whoosh.fields.NUMERIC(**kw)
-                    
-                        except Exception, e:
-                            print e
+                        mwh.schema_attrs[field.name] = whoosh.fields.TEXT(**kw)
+                            #lista[field.name] = field.py_type.__name__
 
+                
             mwh.schema = whoosh.fields.Schema(**mwh.schema_attrs)
             self.register_whoosheer(mwh)
 
