@@ -262,7 +262,7 @@ class Whoosh(object):
                     attrs[f] = getattr(obj, f)
 
                     try:
-                        if (not isinstance(attrs[f], int) or
+                        if (not isinstance(attrs[f], int) and
                                 not isinstance(attrs[f], float)):
                             attrs[f] = unicode(attrs[f])
                         elif attrs[f] is None:
