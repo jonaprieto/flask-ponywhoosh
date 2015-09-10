@@ -275,7 +275,7 @@ class Whoosh(object):
                         print e
 
                     if attrs[f] in ['None','nan']:
-                        attrs[f]=0
+                        attrs[f]=u'0'
 
                     if f in lista:
                         if lista[f] == 'int':
