@@ -42,7 +42,7 @@ class User(db.Entity):
     attrs = Set("Attribute")
 
 
-@wh.register_model('weight', 'name', 'sport', stored=True, sortable=True)
+@wh.register_model('weight', 'name', 'sport', 'user', stored=True, sortable=True)
 class Attribute(db.Entity):
     _table_ = 'Attribute'
     id = PrimaryKey(int, auto=True)

@@ -237,6 +237,7 @@ class Whoosh(object):
             mwh.primary = None
             mwh.primary_type = int
 
+            lista = {}
             for field in model._attrs_:
                 if field == model._pk_:
                     mwh.primary = field.name
@@ -248,8 +249,13 @@ class Whoosh(object):
                     if field.is_string:
                         mwh.schema_attrs[field.name] = whoosh.fields.TEXT(**kw)
                     else:
-                        mwh.schema_attrs[
-                            field.name] = whoosh.fields.NUMERIC(stored=True)
+                        try:
+
+                            lista[field.name] = field.py_type.__name__
+                            mwh.schema_attrs[field.name] = whoosh.fields.NUMERIC(**kw)
+                    
+                        except Exception, e:
+                            print e
 
             mwh.schema = whoosh.fields.Schema(**mwh.schema_attrs)
             self.register_whoosheer(mwh)
@@ -260,16 +266,18 @@ class Whoosh(object):
                 attrs = {mwh.primary: obj.get_pk()}
                 for f in mwh.schema_attrs.keys():
                     attrs[f] = getattr(obj, f)
-                    print 'attrs[f]', obj, f, ' = ', attrs[f]
+                    
                     try:
-                        if (not isinstance(attrs[f], int) and
-                                not isinstance(attrs[f], float)):
-                            attrs[f] = unicode(attrs[f])
-                        elif attrs[f] is None:
-                            attrs[f] = 0
+                        attrs[f] = unicode(attrs[f])
                     except Exception, e:
                         print e
 
+                    if f in lista:
+                        if lista[f] == 'int':
+                            attrs[f] = int(attrs[f])
+                        elif lista[f]== 'float':
+                            attrs[f] = float(attrs[f])
+                            
                 if status == 'inserted':
                     writer.add_document(**attrs)
                 elif status == 'updated':
