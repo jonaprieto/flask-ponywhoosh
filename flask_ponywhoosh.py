@@ -34,6 +34,28 @@ def to_bool(v):
     if isinstance(v, int):
         return bool(v)
     return False
+
+def parse_opts_searcher(opts, parameters):
+    assert isinstance(opts, dict)
+    res = {}
+    for k,v in opts.items():
+        if k in parameters:
+            typevalue = parameters[k]
+            if isinstance(typevalue,int):
+                if isinstance(v, list):
+                    res[k] = v[0]
+                res[k] = int(v)
+            elif typevalue == unicode:
+                if isinstance(v, list):
+                    res[k] = v[0]
+                res[k] = unicode(v)
+            elif typevalue ==  bool:
+                if isinstance(v, list):
+                    res[k] = v[0]
+                res[k] = to_bool(v)
+    return res
+
+
                         
 class Whoosheer(object):
 
@@ -42,6 +64,20 @@ class Whoosheer(object):
     Whoosheer is basically a unit of fulltext search.
 
     """
+
+    parameters = {
+        'collapse': bool,
+        'collapse_limit':int,
+        'filter': unicode,
+        'groupedby':unicode, 
+        'limit':int,
+        'mask': unicode,
+        'optimize':bool,
+        'reverse':bool,
+        'scored': unicode,
+        'sortedby':unicode,
+        'terms': unicode
+    }
 
     def add_field(self, fieldname, fieldspec=fields.TEXT):
         self.index.add_field(fieldname, fieldspec)
@@ -113,14 +149,7 @@ class Whoosheer(object):
                     group=opt.get('group', qparser.OrGroup))
 
             query = parser.parse(prepped_string)
-
-            parameters = [
-                'collapse', 'collapse_limit', 'collapse_order',
-                'filter', 'groupedby', 'limit', 'maptype', 'mask',
-                'optimize', 'reverse', 'scored', 'sortedby', 'terms'
-            ]
-
-            search_opts = {k: v for k, v in opt.items() if k in parameters}
+            search_opts = parse_opts_searcher(opt, self.parameters)
             results = searcher.search(query, terms=True, **search_opts)
 
             ma = defaultdict(set)
