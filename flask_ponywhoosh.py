@@ -128,15 +128,15 @@ class Whoosheer(object):
             rs = []
             pk = unicode(self.primary)
             for r in results:
-                parms = {pk: r[pk]}
-                entity = self.model.get(**parms)
                 ans = {
-                    'result': parms,
-                    'entity': entity,
+                    'pk': r[pk],
                     'rank': r.rank,
                     'score': r.score,
                     'docnum': r.docnum
                 }
+                if opt.get('include_entity', False):
+                    entity = self.model.get(**parms)
+                    ans['entity'] = entity
                 rs.append(ans)
             dic['results'] = rs
 
