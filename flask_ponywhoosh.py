@@ -45,11 +45,11 @@ def parse_opts_searcher(opts, parameters):
                 if isinstance(v, list):
                     res[k] = v[0]
                 res[k] = int(v)
-            elif typevalue == unicode:
+            elif isinstance(typevalue,unicode):
                 if isinstance(v, list):
                     res[k] = v[0]
                 res[k] = unicode(v)
-            elif typevalue ==  bool:
+            elif isinstance(typevalue,bool):
                 if isinstance(v, list):
                     res[k] = v[0]
                 res[k] = to_bool(v)
@@ -66,17 +66,17 @@ class Whoosheer(object):
     """
 
     parameters = {
-        'collapse': bool,
-        'collapse_limit':int,
-        'filter': unicode,
-        'groupedby':unicode, 
-        'limit':int,
-        'mask': unicode,
-        'optimize':bool,
-        'reverse':bool,
-        'scored': unicode,
-        'sortedby':unicode,
-        'terms': unicode
+        'collapse':False,
+        'collapse_limit':0,
+        'filter': u'',
+        'groupedby':u'', 
+        'limit':0,
+        'mask': u'',
+        'optimize':False,
+        'reverse':False,
+        'scored': u'',
+        'sortedby':u'',
+        'terms': u''
     }
 
     def add_field(self, fieldname, fieldspec=fields.TEXT):
