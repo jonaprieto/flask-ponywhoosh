@@ -26,7 +26,15 @@ import whoosh
 
 __version__ = "0.1.3"
 
-
+def to_bool(v):
+    if isinstance(v, bool):
+        return v
+    if isinstance(v, unicode) or isinstance(v, str):
+        return v == 'True' or v == 'true' or v == 't' or v == 'y' or v == 'yes'
+    if isinstance(v, int):
+        return bool(v)
+    return False
+                        
 class Whoosheer(object):
 
     """
@@ -81,7 +89,7 @@ class Whoosheer(object):
     @orm.db_session
     def search(self, search_string, **opt):
         prepped_string = self.prep_search_string(
-            search_string, opt.get('add_wildcards', False))
+            search_string, to_bool(opt.get('add_wildcards', False)))
 
         with self.index.searcher() as searcher:
             parser = whoosh.qparser.MultifieldParser(
@@ -134,13 +142,14 @@ class Whoosheer(object):
                     'score': r.score,
                     'docnum': r.docnum
                 }
-                if opt.get('include_entity', False):
+                if to_bool(opt.get('include_entity', False)):
+                    parms = {pk : r[pk]}
                     entity = self.model.get(**parms)
                     ans['entity'] = entity
                 rs.append(ans)
             dic['results'] = rs
 
-            if dic['cant_results'] == 0 and opt.get('something', False):
+            if dic['cant_results'] == 0 and to_bool(opt.get('something', False)):
                 opt['add_wildcards'] = True
                 opt['something'] = False
                 return self.search(search_string, **opt)

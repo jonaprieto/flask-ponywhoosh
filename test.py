@@ -86,17 +86,17 @@ class BaseTestCases(object):
         def test_search(self):
             self.fixtures()
 
-            found = self.User._wh_.search('harol')
+            found = self.User._wh_.search('harol', include_entity=True)
             self.assertEqual(found['cant_results'], 1)
             self.assertEqual(self.u3.id, found['results'][0]['entity'].id)
         def test_search_something(self):
             self.fixtures()
-            found= self.User._wh_.search('har', something=True)
+            found= self.User._wh_.search('har', something=True, include_entity=True)
             self.assertEqual(found['cant_results'],1)
 
         def test_search_sortedby(self):
             self.fixtures()
-            found= self.Attribute._wh_.search('lun',add_wildcards=True, sortedby="weight")
+            found= self.Attribute._wh_.search('lun',add_wildcards=True, sortedby="weight", include_entity=True)
             self.assertEqual(self.a2.id, found['results'][0]['entity'].id)
             self.assertEqual(self.a1.id, found['results'][1]['entity'].id)
         def test_full_search_without_wildcards(self):
@@ -108,7 +108,7 @@ class BaseTestCases(object):
         def test_full_search_with_wildcards(self):
             self.fixtures()
 
-            found=full_search(self.wh,"fel",add_wildcards=True)
+            found=full_search(self.wh,"fel",add_wildcards=True, include_entity=True)
             self.assertEqual(found['cant_results'], 3)
        
         #def test_full_search_by_whoosheeer(self):
