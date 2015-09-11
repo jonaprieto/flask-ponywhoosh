@@ -49,7 +49,8 @@ class Whoosheer(object):
             if pk in doc:
                 doc_pk = unicode(doc[pk])
                 self.index.delete_by_term(pk, doc_pk)
-
+    def optimize(self):
+        self.index.optimize()
     def counts(self):
         return self.index.doc_count()
 
@@ -71,7 +72,7 @@ class Whoosheer(object):
                 for f in self.schema_attrs.keys():
                     attrs[f] = unicode(getattr(obj, f))
                 writer.add_document(**attrs)
-            writer.commit(optimize=True)
+            writer.commit()
 
     def update_documents(self):
         self.delete_documents()
@@ -289,7 +290,7 @@ class Whoosh(object):
                 elif status in set(['marked_to_delete', 'deleted', 'cancelled']):
                     writer.delete_by_term(primary, attrs[primary])
 
-                writer.commit(optimize=True)
+                writer.commit()
                 return obj._after_save_
 
             model._after_save_ = _middle_save_
