@@ -285,7 +285,9 @@ class Whoosh(object):
                         elif field.py_type.__name__ == 'datetime':
                             mwh.schema_attrs[
                                 field.name] = whoosh.fields.DATETIME(**kw)
-
+                        elif field.py_type.__name__=='bool':
+                            mwh.schema_attrs[
+                                field.name] = whoosh.fields.BOOLEAN(stored=True)
                         lista[field.name] = field.py_type.__name__
                     else:
 

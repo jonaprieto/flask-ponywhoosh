@@ -33,12 +33,13 @@ if not os.path.exists('test.sqlite'):
 db = Database()
 
 
-@wh.register_model('name', 'age', 'birthday', sortable=True, stored=True)
+@wh.register_model('name', 'age', 'birthday', 'active', sortable=True, stored=True)
 class User(db.Entity):
     _table_ = 'User'
     id = PrimaryKey(int, auto=True)
     name = Required(unicode)
     age = Optional(int)
+    active=Optional(bool)
     birthday=Optional(datetime)
     attrs = Set("Attribute")
 
@@ -61,13 +62,13 @@ db.generate_mapping(create_tables=True)
 @app.route("/fixtures")
 @db_session
 def fixtures():
-    u1 = User(name=u'chuck',birthday=datetime.utcnow(), age=13)
-    u2 = User(name=u'arnold',birthday=datetime.utcnow(), age=16)
-    u3 = User(name=u'silvester',birthday=datetime.utcnow(), age=17)
-    u4 = User(name=u'jonathan',birthday=datetime.utcnow(), age=15)
-    u5 = User(name=u'felipe',birthday=datetime.utcnow(), age=19)
-    u6 = User(name=u'harol',birthday=datetime.utcnow(), age=16)
-    u7 = User(name=u'harol',birthday=datetime.utcnow(), age=17)
+    u1 = User(name=u'chuck',birthday=datetime.utcnow(),active=True, age=13)
+    u2 = User(name=u'arnold',birthday=datetime.utcnow(),active=True, age=16)
+    u3 = User(name=u'silvester',birthday=datetime.utcnow(),active=True, age=17)
+    u4 = User(name=u'jonathan',birthday=datetime.utcnow(),active=True, age=15)
+    u5 = User(name=u'felipe',birthday=datetime.utcnow(),active=False, age=19)
+    u6 = User(name=u'harol',birthday=datetime.utcnow(),active=False, age=16)
+    u7 = User(name=u'harol',birthday=datetime.utcnow(),active=True, age=17)
 
     a1 = Attribute(name=u'tejo', user=u1, weight=75, sport=u'tejo')
     a2 = Attribute(
