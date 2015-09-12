@@ -331,13 +331,13 @@ Currently we have implemented 10 tests, primary over the *search()* and *full_se
 
 In the terminal you have to write the following commands to run the tests:
 
-.. code::bash 
+.. code:: bash 
     
     python -m unittest test
 
 This option  runs all the test and display 'OK', if all of them were satisfied, the time taken to run all of them and how many were there . 
 
-.. code::bash 
+.. code:: bash 
 
     python -m unittest -v test
 
@@ -384,7 +384,8 @@ Start a session of a shell.
 Try something like the following sentences:
 
 .. code:: python
-      >>> from app import *
+
+    >>> from app import *
     >>> from flask_ponywhoosh import full_search
     >>> full_search(wh,"ch")
     { 'matched_terms': {'name': ['chuck'], 
@@ -398,8 +399,7 @@ Try something like the following sentences:
                     Attributes[11], Attributes[8], 
                     Attributes[5], Attributes[2]],
      'matched_terms': {'deporte': ['chulo', 'lucha']}}
-                 }
-    }
+                 }}
    
 
 .. |PyPI Package latest release| image:: http://img.shields.io/pypi/v/Flask-PonyWhoosh.png?style=flat

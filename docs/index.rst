@@ -47,10 +47,12 @@ And for each entity wrap it up with the decorator
         entries = Set("Entry")
         attributes = Set("Attributes")
 
-As you could see in the previous example, you should declare as strings these fields where you want whoosh to store the searcheables. All the parameters from whoosh are available you just have to listed separating them with commas: sortable, stored, scored, etc. Refer to whoosh_documentation_ for
+As you could see in the previous example, you should declare as strings these fields where you want whoosh to store the searcheables ('name', 'age', etc.). All the parameters from whoosh are available you just have to listed, separating them with commas: sortable, stored, scored, etc. Refer to whoosh_documentation_ for
 further explanations on the application of these parameters. 
  
 .. _documentation: http://pythonhosted.org/Whoosh/searching.html#scoring-and-sorting for
+
+
 ==============
 Flask Settings
 ==============
@@ -63,6 +65,15 @@ From flask configuration, you could add options for whoosh:
     app.config['WHOSHEE_MIN_STRING_LEN'] = 3
     app.config['WHOOSHEE_WRITER_TIMEOUT'] = 2
 
+=================
+What's new? 0.1.4
+=================
+
+In this version we have included 'datetime', 'optimize' as a method,   With this attribute you can register datetime formated fields, so now the option 'sortedby' include datetime fields. This in particular is very useful for our application, because it helps us to order when searching coments or contents by date. 
+
+Running the previous versions, when we charged 
+
+We  noticed that charging a large ammount of data could take long time
 =========
 Searching
 =========
@@ -91,7 +102,7 @@ something like the following code over a view function, or even from the shell,
                   'score': 2.540445040947149}],
      'runtime': 0.001981973648071289}
 
-If you prefer you may use the function *search()*,  which will run the same function but is quite more handy when writing
+If you would prefer, you may use the function *search()*,  which will run the same function but is quite more handy when writing
 
 .. code:: python
 
@@ -113,7 +124,11 @@ If you prefer you may use the function *search()*,  which will run the same func
 
 The function *search()* takes three arguments. 1. A ponymodel, the databse entity where you want to perform the search. 2. The search_string, what  you are looking for; and, 3. The arguments, Some additional options for more refined searching.
 
-For example if  you would like the results to be sorted by some specific searcheable field,
+.. code:: python
+
+    search(ponymodel, query, **kw)
+
+For example if  you want  the results to be sorted by some specific searcheable field,
 you have to indicate so, by adding the argument *sortedby="field"*.
 In this case the search results object would show as a score the value of the item you choose for sorting. Please note that in order for
 one field to be sortable, you must indicate it when you are registering
@@ -143,6 +158,10 @@ In synthesis, the options available are :
 
 Searching by field:
 *******************
+
+.. code:: python 
+
+    search(PonyModel, query, field="field_name")
 
 By default the function *search()* performs a multifield parser query, i.e. that you will be searching in all the fields you have declared when you registered the model. However, sometimes you would like to perform searching in just one or some of all the fields.
 For these reasons we implemented the following extra options: The first one is refered as ``field`` all you have to do is indicate in which field you want to search. The output would be a results object containing only the information found in that field. And ``fields``where you should write a list with all the fields you want to search. 
@@ -331,13 +350,13 @@ Currently we have implemented 10 tests, primary over the *search()* and *full_se
 
 In the terminal you have to write the following commands to run the tests:
 
-.. code::bash 
+.. code:: bash 
     
     python -m unittest test
 
 This option  runs all the test and display 'OK', if all of them were satisfied, the time taken to run all of them and how many were there . 
 
-.. code::bash 
+.. code:: bash 
 
     python -m unittest -v test
 
@@ -384,7 +403,8 @@ Start a session of a shell.
 Try something like the following sentences:
 
 .. code:: python
-      >>> from app import *
+
+    >>> from app import *
     >>> from flask_ponywhoosh import full_search
     >>> full_search(wh,"ch")
     { 'matched_terms': {'name': ['chuck'], 
@@ -398,8 +418,7 @@ Try something like the following sentences:
                     Attributes[11], Attributes[8], 
                     Attributes[5], Attributes[2]],
      'matched_terms': {'deporte': ['chulo', 'lucha']}}
-                 }
-    }
+                 }}
    
 
 .. |PyPI Package latest release| image:: http://img.shields.io/pypi/v/Flask-PonyWhoosh.png?style=flat

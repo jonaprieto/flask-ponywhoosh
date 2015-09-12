@@ -281,7 +281,13 @@ For these reasons we implemented the following extra options: The first one is r
 <h2>Testing:<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h2>
 <p>Currently we have implemented 10 tests, primary over the <em>search()</em> and <em>full_search()</em> functions. You can find them in the file test.py.</p>
 <p>In the terminal you have to write the following commands to run the tests:</p>
+<div class="code bash highlight-python"><div class="highlight"><pre>python -m unittest test
+</pre></div>
+</div>
 <p>This option  runs all the test and display &#8216;OK&#8217;, if all of them were satisfied, the time taken to run all of them and how many were there .</p>
+<div class="code bash highlight-python"><div class="highlight"><pre>python -m unittest -v test
+</pre></div>
+</div>
 <p>This option displays every test.</p>
 </div>
 <div class="section" id="app-full-example">
@@ -315,6 +321,23 @@ with <code class="docutils literal"><span class="pre">id=1</span></code>.</li>
 </pre></div>
 </div>
 <p>Try something like the following sentences:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">app</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">flask_ponywhoosh</span> <span class="kn">import</span> <span class="n">full_search</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">full_search</span><span class="p">(</span><span class="n">wh</span><span class="p">,</span><span class="s">&quot;ch&quot;</span><span class="p">)</span>
+<span class="go">{ &#39;matched_terms&#39;: {&#39;name&#39;: [&#39;chuck&#39;],</span>
+<span class="go">                    &#39;deporte&#39;: [&#39;chulo&#39;, &#39;lucha&#39;]},</span>
+<span class="go">  &#39;runtime&#39;: 0.0033812522888183594</span>
+<span class="go">  &#39;results&#39;: {&#39;User&#39;: {&#39;items&#39;: [User[15], User[8],</span>
+<span class="go">                User[1]],</span>
+<span class="go">  &#39;matched_terms&#39;: {&#39;name&#39;: [&#39;chuck&#39;]}},</span>
+<span class="go">  &#39;Attributes&#39;: {&#39;items&#39;: [Attributes[17],</span>
+<span class="go">                Attributes[14],</span>
+<span class="go">                Attributes[11], Attributes[8],</span>
+<span class="go">                Attributes[5], Attributes[2]],</span>
+<span class="go"> &#39;matched_terms&#39;: {&#39;deporte&#39;: [&#39;chulo&#39;, &#39;lucha&#39;]}}</span>
+<span class="go">             }}</span>
+</pre></div>
+</div>
 </div>
 </div>
 
