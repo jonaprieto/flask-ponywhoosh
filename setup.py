@@ -54,8 +54,6 @@ setup(
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
         'Topic :: Software Development :: Libraries :: Python Modules'
     ],
-    # tests_require=['Flask-Testing'],
-    # test_suite='test.test_all'
 )
 
 # pandoc --from=rst --to=rst --output=README.rst README.rst
