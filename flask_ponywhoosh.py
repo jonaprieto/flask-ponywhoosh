@@ -12,51 +12,17 @@
 '''
 
 from collections import defaultdict
+from datetime import datetime
 import os
 import re
 import sys
 
 from __version__ import __version__
 from pony import orm
-from whoosh import fields, index
-from whoosh import qparser
-from datetime import datetime
+from whoosh import fields, index, qparser
 import whoosh
 
 
-__version__ = "0.1.3"
-
-def to_bool(v):
-    if isinstance(v, bool):
-        return v
-    if isinstance(v, unicode) or isinstance(v, str):
-        return v == 'True' or v == 'true' or v == 't' or v == 'y' or v == 'yes'
-    if isinstance(v, int):
-        return bool(v)
-    return False
-
-def parse_opts_searcher(opts, parameters):
-    assert isinstance(opts, dict)
-    res = {}
-    for k,v in opts.items():
-        if k in parameters:
-            typevalue = parameters[k]
-            if isinstance(typevalue,int):
-                if isinstance(v, list):
-                    res[k] = v[0]
-                res[k] = int(v)
-            elif isinstance(typevalue,unicode):
-                if isinstance(v, list):
-                    res[k] = v[0]
-                res[k] = unicode(v)
-            elif isinstance(typevalue,bool):
-                if isinstance(v, list):
-                    res[k] = v[0]
-                res[k] = to_bool(v)
-    return res
-
-
-                        
 class Whoosheer(object):
 
     """
@@ -66,17 +32,11 @@ class Whoosheer(object):
     """
 
     parameters = {
-        'collapse':False,
-        'collapse_limit':0,
-        'filter': u'',
-        'groupedby':u'', 
-        'limit':0,
-        'mask': u'',
-        'optimize':False,
-        'reverse':False,
+        'limit': 0,
+        'optimize': False,
+        'reverse': False,
         'scored': u'',
-        'sortedby':u'',
-        'terms': u''
+        'sortedby': u'',
     }
 
     def add_field(self, fieldname, fieldspec=fields.TEXT):
@@ -93,8 +53,10 @@ class Whoosheer(object):
             if pk in doc:
                 doc_pk = unicode(doc[pk])
                 self.index.delete_by_term(pk, doc_pk)
+
     def optimize(self):
         self.index.optimize()
+
     def counts(self):
         return self.index.doc_count()
 
@@ -125,7 +87,7 @@ class Whoosheer(object):
     @orm.db_session
     def search(self, search_string, **opt):
         prepped_string = self.prep_search_string(
-            search_string, to_bool(opt.get('add_wildcards', False)))
+            search_string, self.to_bool(opt.get('add_wildcards', False)))
 
         with self.index.searcher() as searcher:
             parser = whoosh.qparser.MultifieldParser(
@@ -149,7 +111,7 @@ class Whoosheer(object):
                     group=opt.get('group', qparser.OrGroup))
 
             query = parser.parse(prepped_string)
-            search_opts = parse_opts_searcher(opt, self.parameters)
+            search_opts = self.parse_opts_searcher(opt, self.parameters)
             results = searcher.search(query, terms=True, **search_opts)
 
             ma = defaultdict(set)
@@ -162,7 +124,8 @@ class Whoosheer(object):
                 'matched_terms': {k: list(v) for k, v in ma.items()},
                 'facet_names': results.facet_names(),
             }
-            rs = []
+
+            dic['results'] = []
             pk = unicode(self.primary)
             for r in results:
                 ans = {
@@ -171,14 +134,13 @@ class Whoosheer(object):
                     'score': r.score,
                     'docnum': r.docnum
                 }
-                if to_bool(opt.get('include_entity', False)):
-                    parms = {pk : r[pk]}
+                if self.to_bool(opt.get('include_entity', False)):
+                    parms = {pk: r[pk]}
                     entity = self.model.get(**parms)
-                    ans['entity'] = entity
-                rs.append(ans)
-            dic['results'] = rs
+                    ans['entity'] = entity.to_dict()
+                dic['results'].append(ans)
 
-            if dic['cant_results'] == 0 and to_bool(opt.get('something', False)):
+            if dic['cant_results'] == 0 and self.to_bool(opt.get('something', False)):
                 opt['add_wildcards'] = True
                 opt['something'] = False
                 return self.search(search_string, **opt)
@@ -198,6 +160,35 @@ class Whoosheer(object):
         if add_wildcards:
             s = u'*{0}*'.format(re.sub('[\s]+', '* *', s))
         return s
+
+    def to_bool(self, v):
+        if isinstance(v, bool):
+            return v
+        if isinstance(v, unicode) or isinstance(v, str):
+            return v == 'True' or v == 'true' or v == 't' or v == 'y' or v == 'yes'
+        if isinstance(v, int):
+            return bool(v)
+        return False
+
+    def parse_opts_searcher(self, opts, parameters):
+        assert isinstance(opts, dict)
+        res = {}
+        for k, v in opts.items():
+            if k in parameters:
+                typevalue = parameters[k]
+                if isinstance(typevalue, int):
+                    if isinstance(v, list):
+                        res[k] = v[0]
+                    res[k] = int(v)
+                elif isinstance(typevalue, unicode):
+                    if isinstance(v, list):
+                        res[k] = v[0]
+                    res[k] = unicode(v)
+                elif isinstance(typevalue, bool):
+                    if isinstance(v, list):
+                        res[k] = v[0]
+                    res[k] = self.to_bool(v)
+        return res
 
 
 class Whoosh(object):
@@ -288,16 +279,17 @@ class Whoosh(object):
 
                 if field.name in index_fields:
                     if field.is_string == False and field.is_relation == False:
-                        if field.py_type.__name__ in ['int','float']:
-                            mwh.schema_attrs[field.name] = whoosh.fields.NUMERIC(**kw)
+                        if field.py_type.__name__ in ['int', 'float']:
+                            mwh.schema_attrs[
+                                field.name] = whoosh.fields.NUMERIC(**kw)
                         elif field.py_type.__name__ == 'datetime':
-                            mwh.schema_attrs[field.name] = whoosh.fields.DATETIME(**kw)     
+                            mwh.schema_attrs[
+                                field.name] = whoosh.fields.DATETIME(**kw)
 
                         lista[field.name] = field.py_type.__name__
                     else:
 
                         mwh.schema_attrs[field.name] = whoosh.fields.TEXT(**kw)
-                        
 
             mwh.schema = whoosh.fields.Schema(**mwh.schema_attrs)
             self.register_whoosheer(mwh)
@@ -319,7 +311,6 @@ class Whoosh(object):
 
                     if f in lista:
                         attrs[f] = getattr(obj, f)
-
 
                 if status == 'inserted':
                     writer.add_document(**attrs)
