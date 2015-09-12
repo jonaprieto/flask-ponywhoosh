@@ -1,7 +1,7 @@
 Welcome to Flask-PonyWhoosh's documentation!
 ============================================
 
-|PyPI Package latest release| |PyPI Package monthly downloads|
+|PyPI Package latest release| |PyPI Package monthly downloads| |Test|
 
 This package integrate the amazing power of ``Whoosh`` with ``Pony ORM``
 inside ``Flask``. Source code and issue tracking at
@@ -442,3 +442,5 @@ Try something like the following sentences:
    :target: https://pypi.python.org/pypi/Flask-PonyWhoosh
 .. |PyPI Package monthly downloads| image:: http://img.shields.io/pypi/dm/Flask-PonyWhoosh.png?style=flat
    :target: https://pypi.python.org/pypi/Flask-PonyWhoosh
+.. |Test| image:: https://travis-ci.org/piperod/Flask-PonyWhoosh.svg?branch=master
+    :target: https://travis-ci.org/piperod/Flask-PonyWhoosh
