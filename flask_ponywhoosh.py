@@ -208,7 +208,7 @@ class Whoosh(object):
             os.makedirs(self.index_path_root)
 
     def init_app(self, app):
-        print config
+        print app.config
         self.index_path_root = app.config.get('WHOOSHEE_DIR',  'whooshee')
         self.search_string_min_len = app.config.get(
             'WHOSHEE_MIN_STRING_LEN', 3)
