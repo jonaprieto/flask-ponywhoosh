@@ -208,11 +208,18 @@ class Whoosh(object):
             os.makedirs(self.index_path_root)
 
     def init_app(self, app):
-        print app.config
         self.index_path_root = app.config.get('WHOOSHEE_DIR',  'whooshee')
         self.search_string_min_len = app.config.get(
             'WHOSHEE_MIN_STRING_LEN', 3)
         self.writer_timeout = app.config.get('WHOOSHEE_WRITER_TIMEOUT', 2)
+
+    def init_opts(self, opts):
+        assert isinstance(opts, dict)
+        self.index_path_root = opts.get('WHOOSHEE_DIR',  'whooshee')
+        self.search_string_min_len = opts.get(
+            'WHOSHEE_MIN_STRING_LEN', 3)
+        self.writer_timeout = opts.get('WHOOSHEE_WRITER_TIMEOUT', 2)
+        
 
     def delete_whoosheers(self):
         self._whoosheers = {}
