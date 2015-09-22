@@ -112,7 +112,7 @@ class Whoosheer(object):
 
             query = parser.parse(prepped_string)
             search_opts = self.parse_opts_searcher(opt, self.parameters)
-            results = searcher.search(query,terms=True,**search_opts)
+            results = searcher.search(query,terms="True",**search_opts)
 
             ma = defaultdict(set)
             for f, term in results.matched_terms():
