@@ -110,9 +110,17 @@ class Whoosheer(object):
                     fields_parser, self.index.schema,
                     group=opt.get('group', qparser.OrGroup))
 
+            if 'except_fields' in opt:
+                fields_parser=opt.get('except_fields',self.schema.names())
+                fields_parser=list(set(self.schema.names())-set(opt['except_fields']))
+
+                parser = whoosh.qparser.MultifieldParser(
+                    fields_parser, self.index.schema,
+                    group=opt.get('group', qparser.OrGroup))
+
             query = parser.parse(prepped_string)
             search_opts = self.parse_opts_searcher(opt, self.parameters)
-            results = searcher.search(query,terms="True",**search_opts)
+            results = searcher.search(query,terms=True,**search_opts)
 
             ma = defaultdict(set)
             for f, term in results.matched_terms():
