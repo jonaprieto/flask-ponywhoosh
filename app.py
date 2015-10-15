@@ -1,10 +1,11 @@
 import os
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 from flask.ext.script import Manager, Shell
 from pony.orm import *
 from pony.orm.serialization import to_json
-from flask_ponywhoosh import Whoosh
+from flask_ponywhoosh import Whoosh, full_search
 from datetime import datetime, timedelta
+
 
 #   Create the flask application
 
@@ -13,7 +14,7 @@ app.debug = True
 
 
 # It allow us to call the app with:
-# $ python app.py runserver
+#$ python app.py runserver
 manager = Manager(app)
 manager.add_command("shell", Shell(use_bpython=True))
 
@@ -33,15 +34,57 @@ if not os.path.exists('test.sqlite'):
 db = Database()
 
 
-@wh.register_model('name', 'age', 'birthday', 'active', sortable=True, stored=True)
+@wh.register_model('username', 'age', 'birthday',  sortable=True, stored=True)
 class User(db.Entity):
     _table_ = 'User'
     id = PrimaryKey(int, auto=True)
-    name = Required(unicode)
+    username = Required(unicode)
     age = Optional(int)
-    active=Optional(bool)
-    birthday=Optional(datetime)
+    birthday = Optional(datetime)
     attrs = Set("Attribute")
+
+from flask.ext.bootstrap import Bootstrap
+from flask.ext.wtf import Form
+from wtforms import StringField, SubmitField, BooleanField, SelectField
+from wtforms.validators import Required
+app.config['SECRET_KEY'] = 'hard to guess string'
+bootstrap = Bootstrap(app)
+
+
+
+
+
+class SearchForm(Form):
+    query = StringField('What are you looking for?')
+    entity = StringField('Entity/ies')
+    fields = StringField('Fields')
+    except_field = StringField('Except in Fields')
+    sortedby = SelectField('Order by Field', choices=[(1,'username'),(2,'age'),(3,'birthday')])
+    wildcards = BooleanField('Add Wildcards')
+    submit = SubmitField('Submit')
+
+
+@app.route("/index", methods=['GET', 'POST'])
+def index():
+    query = None
+    fields = None
+    wildcards = True
+    entity = None
+    form = SearchForm()
+    
+    if form.submit():
+        query = form.query.data
+        fields= form.fields.data
+        print fields
+        if query!="":
+            results= full_search(
+                wh, str(query), add_wildcards=True, include_entity=True)
+            
+            return render_template('results.html', entidades= db.entities.keys(),
+                        form=form,results=results, n=results['cant_results'], 
+                                labels=results['results'].keys())
+
+    return render_template('index.html', form=form, query=query,fields=fields)
 
 
 @wh.register_model('weight', 'name', 'sport', 'user', stored=True, sortable=True)
@@ -62,13 +105,15 @@ db.generate_mapping(create_tables=True)
 @app.route("/fixtures")
 @db_session
 def fixtures():
-    u1 = User(name=u'chuck',birthday=datetime.utcnow(),active=True, age=13)
-    u2 = User(name=u'arnold',birthday=datetime.utcnow(),active=True, age=16)
-    u3 = User(name=u'silvester',birthday=datetime.utcnow(),active=True, age=17)
-    u4 = User(name=u'jonathan',birthday=datetime.utcnow(),active=True, age=15)
-    u5 = User(name=u'felipe',birthday=datetime.utcnow(),active=False, age=19)
-    u6 = User(name=u'harol',birthday=datetime.utcnow(),active=False, age=16)
-    u7 = User(name=u'harol',birthday=datetime.utcnow(),active=True, age=17)
+    u1 = User(username=u'chuck', birthday=datetime.utcnow(), age=13)
+    u2 = User(username=u'arnold', birthday=datetime.utcnow(), age=16)
+    u3 = User(
+        username=u'silvester', birthday=datetime.utcnow(), age=17)
+    u4 = User(
+        username=u'jonathan', birthday=datetime.utcnow(), age=15)
+    u5 = User(username=u'felipe', birthday=datetime.utcnow(), age=19)
+    u6 = User(username=u'harol', birthday=datetime.utcnow(),  age=16)
+    u7 = User(username=u'harol', birthday=datetime.utcnow(), age=17)
 
     a1 = Attribute(name=u'tejo', user=u1, weight=75, sport=u'tejo')
     a2 = Attribute(

@@ -1,0 +1,60 @@
+
+{%extends "base.html"%}
+{% import "bootstrap/wtf.html" as wtf %} 
+{% block title %}Flasky{% endblock %}
+{% block page_content %}
+<div class="page-header">
+	<h1>Welcome to Flask-Ponywhoosh</h1>
+</div>
+
+{{ wtf.quick_form(form) }}
+
+<div class="Matched terms">
+<h2>Matched Terms</h2>
+<td>{{results['matched_terms']}}</td>
+</div>
+<div>
+<td><h2>runtime</h2></td>
+<td>{{results['runtime']}}</td>
+</div>
+
+<ul class="Results">
+<h1>Results</h1>
+<br>
+{%for l in labels%}
+
+<h2>{{l}}</h2>
+
+<table class="table">
+	<tr>
+	{%if results["results"][l]["items"] == []%}
+	<th>No hay elementos que mostrar</th>
+	{%else%}
+	
+	{%for s in results["results"][l]["items"][0]["entity"].keys() %}
+	<tr>
+	<th>{{s}}</th>
+	
+	<td>
+	{% for  result  in results["results"][l]["items"] %}
+		
+		{%with%}
+			{%set r=result['entity']%}
+			
+			{{r[s]}}
+			
+		{%endwith%}
+
+		{% endfor %}
+	
+	{%endfor%}
+	{%endif%}
+	</td>
+	</tr>
+
+</table>
+
+{%endfor%}
+
+</ul>
+{% endblock %}
