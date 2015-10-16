@@ -68,6 +68,7 @@ def index():
     fields = None
     wildcards = True
     except_field = None
+    # sortedby= None
     form = SearchForm()
 
     if form.validate_on_submit():
@@ -77,16 +78,18 @@ def index():
         fields = re.split('\W+', f, flags=re.UNICODE) 
         e=form.except_field.data
         except_fields=re.split('\W+', e, flags=re.UNICODE)
+        wildcards= form.wildcards.data
+
         if fields.count('')==1:
             results = full_search(
-                    wh, query, add_wildcards=True, include_entity=True)
+                    wh, query, add_wildcards=wildcards, include_entity=True)
         
         else:
             results = full_search(
-                    wh, query, add_wildcards=True, include_entity=True, fields=fields)
+                    wh, query, add_wildcards=wildcards, include_entity=True, fields=fields)
         if except_fields.count('') !=1:
             results = full_search(
-                    wh, query, add_wildcards=True, include_entity=True, except_fields=except_fields)
+                    wh, query, add_wildcards=wildcards, include_entity=True, except_fields=except_fields)
 
         return render_template('results.html', entidades=db.entities.keys(),
                                form=form, results=results, n=results[
