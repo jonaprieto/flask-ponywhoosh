@@ -25,34 +25,35 @@
 
 <h2>{{l}}</h2>
 
-<table class="table">
-	<tr>
-	{%if results["results"][l]["items"] == []%}
-	<th>No hay elementos que mostrar</th>
-	{%else%}
-	
-	{%for s in results["results"][l]["items"][0]["entity"].keys() %}
-	<tr>
-	<th>{{s}}</th>
-	
-	<td>
-	{% for  result  in results["results"][l]["items"] %}
-		
-		{%with%}
-			{%set r=result['entity']%}
-			
-			{{r[s]}}
-			
-		{%endwith%}
+			<table class="table">
 
-		{% endfor %}
-	
-	{%endfor%}
-	{%endif%}
-	</td>
-	</tr>
+				{%if results["results"][l]["items"] == []%}
+						<th>No hay elementos que mostrar</th>
+				{%else%}
+						
+						{%for s in results["results"][l]["items"][0]["entity"].keys() %}
+								<th>{{s}}</th>
+						{%endfor%}
+						
+							<tr>	
+							{% for  result  in results["results"][l]["items"] %}
+							<tr>
+							{%for s in results["results"][l]["items"][0]["entity"].keys() %}
+							{%with%}
+								{%set r=result['entity']%}
+								<td>{{r[s]}}</td>
+							{%endwith%}
+							{% endfor %}
+								</tr>
+							{%endfor%}
+							</tr>
+						
+				
+				
+				{%endif%}
+				
 
-</table>
+			</table>
 
 {%endfor%}
 

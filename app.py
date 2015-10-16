@@ -5,6 +5,9 @@ from pony.orm import *
 from pony.orm.serialization import to_json
 from flask_ponywhoosh import Whoosh, full_search
 from datetime import datetime, timedelta
+import string
+import re
+
 
 
 #   Create the flask application
@@ -56,10 +59,9 @@ bootstrap = Bootstrap(app)
 
 class SearchForm(Form):
     query = StringField('What are you looking for?')
-    entity = StringField('Entity/ies')
     fields = StringField('Fields')
     except_field = StringField('Except in Fields')
-    sortedby = SelectField('Order by Field', choices=[(1,'username'),(2,'age'),(3,'birthday')])
+    # sortedby = SelectField('Order by Field', choices=[(1,'username'),(2,'age'),(3,'birthday')])
     wildcards = BooleanField('Add Wildcards')
     submit = SubmitField('Submit')
 
@@ -67,18 +69,25 @@ class SearchForm(Form):
 @app.route("/index", methods=['GET', 'POST'])
 def index():
     query = None
-    fields = None
+    fields = "ingrese el texto"
     wildcards = True
-    entity = None
+    except_field="Ingrese texto"
     form = SearchForm()
     
-    if form.submit():
+    if form.validate_on_submit():
         query = form.query.data
-        fields= form.fields.data
-        print fields
-        if query!="":
+        
+        if query!="" and fields!="":
+            f= form.fields.data
+            fields=re.split('\W+', f, flags=re.UNICODE)
+            e=form.except_field.data 
+            except_fields=re.split('\W+', e, flags=re.UNICODE)
+            print fields
+            print except_fields
+           
             results= full_search(
-                wh, str(query), add_wildcards=True, include_entity=True)
+                wh, query, add_wildcards=True, include_entity=True, 
+                except_fields=except_fields, fields=fields)
             
             return render_template('results.html', entidades= db.entities.keys(),
                         form=form,results=results, n=results['cant_results'], 
@@ -113,7 +122,7 @@ def fixtures():
         username=u'jonathan', birthday=datetime.utcnow(), age=15)
     u5 = User(username=u'felipe', birthday=datetime.utcnow(), age=19)
     u6 = User(username=u'harol', birthday=datetime.utcnow(),  age=16)
-    u7 = User(username=u'harol', birthday=datetime.utcnow(), age=17)
+    u7 = User(username=u'tejo all ', birthday=datetime.utcnow(), age=17)
 
     a1 = Attribute(name=u'tejo', user=u1, weight=75, sport=u'tejo')
     a2 = Attribute(
