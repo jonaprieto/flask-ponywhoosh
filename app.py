@@ -9,7 +9,6 @@ import string
 import re
 
 
-
 #   Create the flask application
 
 app = Flask(__name__)
@@ -54,9 +53,6 @@ app.config['SECRET_KEY'] = 'hard to guess string'
 bootstrap = Bootstrap(app)
 
 
-
-
-
 class SearchForm(Form):
     query = StringField('What are you looking for?')
     fields = StringField('Fields')
@@ -69,31 +65,35 @@ class SearchForm(Form):
 @app.route("/index", methods=['GET', 'POST'])
 def index():
     query = None
-    fields = "ingrese el texto"
+    fields = None
     wildcards = True
-    except_field="Ingrese texto"
+    except_field = None
     form = SearchForm()
-    
+
     if form.validate_on_submit():
         query = form.query.data
         
-        if query!="" and fields!="":
-            f= form.fields.data
-            fields=re.split('\W+', f, flags=re.UNICODE)
-            e=form.except_field.data 
-            except_fields=re.split('\W+', e, flags=re.UNICODE)
-            print fields
-            print except_fields
-           
-            results= full_search(
-                wh, query, add_wildcards=True, include_entity=True, 
-                except_fields=except_fields, fields=fields)
-            
-            return render_template('results.html', entidades= db.entities.keys(),
-                        form=form,results=results, n=results['cant_results'], 
-                                labels=results['results'].keys())
+        f = form.fields.data
+        fields = re.split('\W+', f, flags=re.UNICODE) 
+        e=form.except_field.data
+        except_fields=re.split('\W+', e, flags=re.UNICODE)
+        if fields.count('')==1:
+            results = full_search(
+                    wh, query, add_wildcards=True, include_entity=True)
+        
+        else:
+            results = full_search(
+                    wh, query, add_wildcards=True, include_entity=True, fields=fields)
+        if except_fields.count('') !=1:
+            results = full_search(
+                    wh, query, add_wildcards=True, include_entity=True, except_fields=except_fields)
 
-    return render_template('index.html', form=form, query=query,fields=fields)
+        return render_template('results.html', entidades=db.entities.keys(),
+                               form=form, results=results, n=results[
+                                   'cant_results'],
+                               labels=results['results'].keys())
+
+    return render_template('index.html', form=form, query=query, fields=fields)
 
 
 @wh.register_model('weight', 'name', 'sport', 'user', stored=True, sortable=True)

@@ -9,21 +9,20 @@
 
 {{ wtf.quick_form(form) }}
 
-<div class="Matched terms">
-<h2>Matched Terms</h2>
-<td>{{results['matched_terms']}}</td>
-</div>
-<div>
-<td><h2>runtime</h2></td>
-<td>{{results['runtime']}}</td>
-</div>
 
 <ul class="Results">
 <h1>Results</h1>
 <br>
+<table class="table">
+<td><th>Matched Terms</th>
+<td>{{results['matched_terms']}}</td></td>
+<td><th>runtime</th></td>
+<td>{{results['runtime']}}</td>
+</table>
+<br>
 {%for l in labels%}
 
-<h2>{{l}}</h2>
+<h3>{{l}}</h3>
 
 			<table class="table">
 
