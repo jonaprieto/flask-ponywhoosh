@@ -18,9 +18,97 @@ import re
 import sys
 
 from __version__ import __version__
+from flask import render_template
+from flask.ext.bootstrap import Bootstrap
+from flask.ext.wtf import Form
+from flask.views import View
+import jinja2
 from pony import orm
 from whoosh import fields, index, qparser
 import whoosh
+from wtforms import StringField, SubmitField, BooleanField, SelectField
+from wtforms.validators import Required
+
+basedir = os.path.abspath(os.path.dirname(__file__))
+print '...', basedir
+
+
+class SearchForm(Form):
+    query = StringField('What are you looking for?')
+    fields = StringField('Fields')
+    except_field = StringField('Except in Fields')
+    # sortedby = SelectField('Order by Field', choices=[(1,'username'),(2,'age'),(3,'birthday')])
+    wildcards = BooleanField('Add Wildcards')
+    submit = SubmitField('Submit')
+
+
+class IndexView(View):
+    methods = ['POST', 'GET']
+
+    def __init__(self, wh,
+                 template_name):
+        print template_name
+        print '*' * 30
+        self.template_name = template_name
+        self.wh = wh
+
+    def get_template_name(self):
+        return self.template_name
+
+    def render_template(self, context):
+        return render_template(self.get_template_name(), **context)
+
+    def dispatch_request(self):
+        ctx = {
+        'form' : SearchForm()
+        }
+
+        return self.render_template(ctx)
+        query = None
+        fields = None
+        wildcards = True
+        except_field = None
+        # sortedby= None
+        form = SearchForm()
+
+        if form.validate_on_submit():
+            query = form.query.data
+
+            f = form.fields.data
+            fields = re.split('\W+', f, flags=re.UNICODE)
+            e = form.except_field.data
+            except_fields = re.split('\W+', e, flags=re.UNICODE)
+            wildcards = form.wildcards.data
+
+            if fields.count('') == 1:
+                results = full_search(wh, query,
+                                      add_wildcards=wildcards,
+                                      include_entity=True
+                                      )
+            else:
+                results = full_search(
+                    wh, query,
+                    add_wildcards=wildcards,
+                    include_entity=True,
+                    fields=fields
+                )
+            if except_fields.count('') != 1:
+                results = full_search(wh, query,
+                                      add_wildcards=wildcards,
+                                      include_entity=True,
+                                      except_fields=except_fields
+                                      )
+
+            return self.render_template(
+                # 'results.html',
+                entidades=db.entities.keys(),
+                form=form,
+                results=results,
+                n=results['cant_results'],
+                labels=results['results'].keys()
+            )
+
+        return self.render_template(form=form, query=query, fields=fields)
 
 
 class Whoosheer(object):
@@ -111,8 +199,9 @@ class Whoosheer(object):
                     group=opt.get('group', qparser.OrGroup))
 
             if 'except_fields' in opt:
-                fields_parser=opt.get('except_fields',self.schema.names())
-                fields_parser=list(set(self.schema.names())-set(opt['except_fields']))
+                fields_parser = opt.get('except_fields', self.schema.names())
+                fields_parser = list(
+                    set(self.schema.names()) - set(opt['except_fields']))
 
                 parser = whoosh.qparser.MultifieldParser(
                     fields_parser, self.index.schema,
@@ -120,7 +209,7 @@ class Whoosheer(object):
 
             query = parser.parse(prepped_string)
             search_opts = self.parse_opts_searcher(opt, self.parameters)
-            results = searcher.search(query,terms=True,**search_opts)
+            results = searcher.search(query, terms=True, **search_opts)
 
             ma = defaultdict(set)
             for f, term in results.matched_terms():
@@ -220,6 +309,21 @@ class Whoosh(object):
         self.search_string_min_len = app.config.get(
             'WHOSHEE_MIN_STRING_LEN', 3)
         self.writer_timeout = app.config.get('WHOOSHEE_WRITER_TIMEOUT', 2)
+        app.add_url_rule(
+            app.config.get('WHOOSHEE_URL', '/ponywhoosh'),
+            view_func=IndexView.as_view(
+                'ponywhoosh', template_name='index.html', wh=self)
+        )
+
+        my_loader = jinja2.ChoiceLoader([
+            app.jinja_loader,
+            jinja2.FileSystemLoader(
+                app.config.get('WHOOSHEE_TEMPLATE_PATH',
+                               os.path.join(basedir, 'templates')
+                               )
+            )
+        ])
+        app.jinja_loader = my_loader
 
     def init_opts(self, opts):
         assert isinstance(opts, dict)
@@ -227,7 +331,6 @@ class Whoosh(object):
         self.search_string_min_len = opts.get(
             'WHOSHEE_MIN_STRING_LEN', 3)
         self.writer_timeout = opts.get('WHOOSHEE_WRITER_TIMEOUT', 2)
-        
 
     def delete_whoosheers(self):
         self._whoosheers = {}
@@ -300,7 +403,7 @@ class Whoosh(object):
                         elif field.py_type.__name__ == 'datetime':
                             mwh.schema_attrs[
                                 field.name] = whoosh.fields.DATETIME(**kw)
-                        elif field.py_type.__name__=='bool':
+                        elif field.py_type.__name__ == 'bool':
                             mwh.schema_attrs[
                                 field.name] = whoosh.fields.BOOLEAN(stored=True)
                         lista[field.name] = field.py_type.__name__
