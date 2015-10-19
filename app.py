@@ -5,8 +5,7 @@ from pony.orm import *
 from pony.orm.serialization import to_json
 from flask_ponywhoosh import Whoosh, full_search
 from datetime import datetime, timedelta
-import string
-import re
+
 
 
 #   Create the flask application
@@ -49,8 +48,11 @@ from flask.ext.bootstrap import Bootstrap
 from flask.ext.wtf import Form
 from wtforms import StringField, SubmitField, BooleanField, SelectField
 from wtforms.validators import Required
+import string
+import re
 app.config['SECRET_KEY'] = 'hard to guess string'
 bootstrap = Bootstrap(app)
+
 
 
 class SearchForm(Form):
