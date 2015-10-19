@@ -24,6 +24,9 @@ manager.add_command("shell", Shell(use_bpython=True))
 app.config['WHOOSHEE_DIR'] = 'whooshes'
 app.config['WHOSHEE_MIN_STRING_LEN'] = 1
 app.config['WHOOSHEE_WRITER_TIMEOUT'] = 3
+app.config['WHOOSHEE_URL'] = '/ponywhoosh'
+# app.config['WHOOSHEE_TEMPLATE_PATH'] 
+
 
 wh = Whoosh(app)  # this is our whoosh instance
 
@@ -75,28 +78,39 @@ def index():
 
     if form.validate_on_submit():
         query = form.query.data
-        
-        f = form.fields.data
-        fields = re.split('\W+', f, flags=re.UNICODE) 
-        e=form.except_field.data
-        except_fields=re.split('\W+', e, flags=re.UNICODE)
-        wildcards= form.wildcards.data
 
-        if fields.count('')==1:
-            results = full_search(
-                    wh, query, add_wildcards=wildcards, include_entity=True)
-        
+        f = form.fields.data
+        fields = re.split('\W+', f, flags=re.UNICODE)
+        e = form.except_field.data
+        except_fields = re.split('\W+', e, flags=re.UNICODE)
+        wildcards = form.wildcards.data
+
+        if fields.count('') == 1:
+            results = full_search( wh, query, 
+                add_wildcards=wildcards, 
+                include_entity=True
+            )
         else:
             results = full_search(
-                    wh, query, add_wildcards=wildcards, include_entity=True, fields=fields)
-        if except_fields.count('') !=1:
-            results = full_search(
-                    wh, query, add_wildcards=wildcards, include_entity=True, except_fields=except_fields)
+                wh, query, 
+                add_wildcards=wildcards, 
+                include_entity=True, 
+                fields=fields
+            )
+        if except_fields.count('') != 1:
+            results = full_search(wh, query, 
+                add_wildcards=wildcards, 
+                include_entity=True, 
+                except_fields=except_fields
+            )
 
-        return render_template('results.html', entidades=db.entities.keys(),
-                               form=form, results=results, n=results[
-                                   'cant_results'],
-                               labels=results['results'].keys())
+        return render_template('results.html', 
+                    entidades=db.entities.keys(),
+                    form=form, 
+                    results=results,
+                    n=results['cant_results'],
+                    labels=results['results'].keys()
+            )
 
     return render_template('index.html', form=form, query=query, fields=fields)
 
