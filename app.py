@@ -73,7 +73,7 @@ def index():
     fields = None
     wildcards = True
     except_field = None
-    # sortedby= None
+    
     form = SearchForm()
 
     if form.validate_on_submit():
@@ -84,7 +84,7 @@ def index():
         e = form.except_field.data
         except_fields = re.split('\W+', e, flags=re.UNICODE)
         wildcards = form.wildcards.data
-
+        
         if fields.count('') == 1:
             results = full_search( wh, query, 
                 add_wildcards=wildcards, 
@@ -103,7 +103,7 @@ def index():
                 include_entity=True, 
                 except_fields=except_fields
             )
-
+         
         return render_template('results.html', 
                     entidades=db.entities.keys(),
                     form=form, 
@@ -111,7 +111,7 @@ def index():
                     n=results['cant_results'],
                     labels=results['results'].keys()
             )
-
+        form.sortedby.choices = [(g.id, g.name) for g in a['results']['User']['items'][0]['entity'].keys()]
     return render_template('index.html', form=form, query=query, fields=fields)
 
 
