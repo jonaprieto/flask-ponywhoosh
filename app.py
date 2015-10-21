@@ -5,9 +5,6 @@ from pony.orm import *
 from pony.orm.serialization import to_json
 from flask_ponywhoosh import Whoosh, full_search
 from datetime import datetime, timedelta
-import string
-import re
-
 
 #   Create the flask application
 
@@ -26,9 +23,12 @@ app.config['WHOOSHEE_DIR'] = 'whooshes'
 app.config['WHOSHEE_MIN_STRING_LEN'] = 1
 app.config['WHOOSHEE_WRITER_TIMEOUT'] = 3
 app.config['WHOOSHEE_URL'] = '/ponywhoosh'
+app.config['SECRET_KEY'] = 'hard to guess string'
+
 # app.config['WHOOSHEE_TEMPLATE_PATH'] 
 
 
+bootstrap = Bootstrap(app)
 wh = Whoosh(app)  # this is our whoosh instance
 
 # database creation
@@ -47,64 +47,6 @@ class User(db.Entity):
     age = Optional(int)
     birthday = Optional(datetime)
     attrs = Set("Attribute")
-
-from flask.ext.bootstrap import Bootstrap
-from flask.ext.wtf import Form
-from wtforms import StringField, SubmitField, BooleanField, SelectField
-from wtforms.validators import Required
-app.config['SECRET_KEY'] = 'hard to guess string'
-bootstrap = Bootstrap(app)
-
-
-
-
-@app.route("/index", methods=['GET', 'POST'])
-def index():
-    query = None
-    fields = None
-    wildcards = True
-    except_field = None
-    # sortedby= None
-    form = SearchForm()
-
-    if form.validate_on_submit():
-        query = form.query.data
-
-        f = form.fields.data
-        fields = re.split('\W+', f, flags=re.UNICODE)
-        e = form.except_field.data
-        except_fields = re.split('\W+', e, flags=re.UNICODE)
-        wildcards = form.wildcards.data
-
-        if fields.count('') == 1:
-            results = full_search( wh, query, 
-                add_wildcards=wildcards, 
-                include_entity=True
-            )
-        else:
-            results = full_search(
-                wh, query, 
-                add_wildcards=wildcards, 
-                include_entity=True, 
-                fields=fields
-            )
-        if except_fields.count('') != 1:
-            results = full_search(wh, query, 
-                add_wildcards=wildcards, 
-                include_entity=True, 
-                except_fields=except_fields
-            )
-
-        return render_template('results.html', 
-                    entidades=db.entities.keys(),
-                    form=form, 
-                    results=results,
-                    n=results['cant_results'],
-                    labels=results['results'].keys()
-            )
-
-    return render_template('index.html', form=form, query=query, fields=fields)
-
 
 @wh.register_model('weight', 'name', 'sport', 'user', stored=True, sortable=True)
 class Attribute(db.Entity):
