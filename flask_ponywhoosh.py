@@ -52,18 +52,10 @@ class IndexView(View):
         self.template_name = template_name
         self.wh = wh
 
-    def get_template_name(self):
-        return self.template_name
-
-    def render_template(self, context):
-        return render_template(self.get_template_name(), **context)
-
     def dispatch_request(self):
         ctx = {
         'form' : SearchForm()
         }
-
-        return self.render_template(ctx)
         query = None
         fields = None
         wildcards = True
@@ -81,34 +73,34 @@ class IndexView(View):
             wildcards = form.wildcards.data
 
             if fields.count('') == 1:
-                results = full_search(wh, query,
+                results = full_search(self.wh, query,
                                       add_wildcards=wildcards,
                                       include_entity=True
                                       )
             else:
                 results = full_search(
-                    wh, query,
+                    self.wh, query,
                     add_wildcards=wildcards,
                     include_entity=True,
                     fields=fields
                 )
             if except_fields.count('') != 1:
-                results = full_search(wh, query,
+                results = full_search(self.wh, query,
                                       add_wildcards=wildcards,
                                       include_entity=True,
                                       except_fields=except_fields
                                       )
 
-            return self.render_template(
-                # 'results.html',
-                entidades=db.entities.keys(),
+            return render_template(
+                'results.html',
+                entidades=list(self.wh.entities),
                 form=form,
                 results=results,
                 n=results['cant_results'],
                 labels=results['results'].keys()
             )
 
-        return self.render_template(form=form, query=query, fields=fields)
+        return render_template(self.template_name, form=form, query=query, fields=fields)
 
 
 class Whoosheer(object):
@@ -296,6 +288,7 @@ class Whoosh(object):
     index_path_root = 'whooshee'
     search_string_min_len = 3
     writer_timeout = 2
+    entities = set()
 
     def __init__(self, app=None):
 
@@ -309,13 +302,14 @@ class Whoosh(object):
         self.search_string_min_len = app.config.get(
             'WHOSHEE_MIN_STRING_LEN', 3)
         self.writer_timeout = app.config.get('WHOOSHEE_WRITER_TIMEOUT', 2)
+        route = app.config.get('WHOOSHEE_URL', '/ponywhoosh')
         app.add_url_rule(
-            app.config.get('WHOOSHEE_URL', '/ponywhoosh'),
+            route,
             view_func=IndexView.as_view(
                 'ponywhoosh', template_name='index.html', wh=self)
         )
 
-        my_loader = jinja2.ChoiceLoader([
+        loader = jinja2.ChoiceLoader([
             app.jinja_loader,
             jinja2.FileSystemLoader(
                 app.config.get('WHOOSHEE_TEMPLATE_PATH',
@@ -323,7 +317,7 @@ class Whoosh(object):
                                )
             )
         ])
-        app.jinja_loader = my_loader
+        app.jinja_loader = loader
 
     def init_opts(self, opts):
         assert isinstance(opts, dict)
@@ -381,6 +375,8 @@ class Whoosh(object):
             mwh.index_subdir = model._table_
             if not mwh.index_subdir:
                 mwh.index_subdir = model.__name__
+
+            self.entities.add(mwh.index_subdir)
 
             mwh.schema_attrs = {}
             mwh.primary = None

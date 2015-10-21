@@ -5,7 +5,7 @@ from pony.orm import *
 from pony.orm.serialization import to_json
 from flask_ponywhoosh import Whoosh, full_search
 from datetime import datetime, timedelta
-
+from flask.ext.bootstrap import Bootstrap
 #   Create the flask application
 
 app = Flask(__name__)
