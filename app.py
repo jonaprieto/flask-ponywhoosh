@@ -11,7 +11,6 @@ from flask.ext.bootstrap import Bootstrap
 app = Flask(__name__)
 app.debug = True
 
-
 # It allow us to call the app with:
 #$ python app.py runserver
 manager = Manager(app)

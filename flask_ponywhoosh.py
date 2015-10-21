@@ -30,6 +30,7 @@ from wtforms import StringField, SubmitField, BooleanField, SelectField
 from wtforms.validators import Required
 
 basedir = os.path.abspath(os.path.dirname(__file__))
+
 print '...', basedir
 
 
@@ -45,16 +46,12 @@ class SearchForm(Form):
 class IndexView(View):
     methods = ['POST', 'GET']
 
-    def __init__(self, wh,
-                 template_name):
-        print template_name
-        print '*' * 30
-        self.template_name = template_name
+    def __init__(self, wh):
         self.wh = wh
 
     def dispatch_request(self):
         ctx = {
-        'form' : SearchForm()
+            'form': SearchForm()
         }
         query = None
         fields = None
@@ -92,7 +89,7 @@ class IndexView(View):
                                       )
 
             return render_template(
-                'results.html',
+                'ponywhoosh/results.html',
                 entidades=list(self.wh.entities),
                 form=form,
                 results=results,
@@ -100,7 +97,12 @@ class IndexView(View):
                 labels=results['results'].keys()
             )
 
-        return render_template(self.template_name, form=form, query=query, fields=fields)
+        return render_template(
+            'ponywhoosh/index.html',
+            form=form,
+            query=query,
+            fields=fields
+        )
 
 
 class Whoosheer(object):
@@ -303,21 +305,23 @@ class Whoosh(object):
             'WHOSHEE_MIN_STRING_LEN', 3)
         self.writer_timeout = app.config.get('WHOOSHEE_WRITER_TIMEOUT', 2)
         route = app.config.get('WHOOSHEE_URL', '/ponywhoosh')
-        app.add_url_rule(
-            route,
-            view_func=IndexView.as_view(
-                'ponywhoosh', template_name='index.html', wh=self)
-        )
+        template_path = app.config.get('WHOOSHEE_TEMPLATE_PATH',
+                               os.path.join(basedir, 'templates')
+                               )
+        print '-'*30
+        print template_path
 
         loader = jinja2.ChoiceLoader([
             app.jinja_loader,
-            jinja2.FileSystemLoader(
-                app.config.get('WHOOSHEE_TEMPLATE_PATH',
-                               os.path.join(basedir, 'templates')
-                               )
-            )
+            jinja2.FileSystemLoader(template_path)
         ])
+
         app.jinja_loader = loader
+        app.add_url_rule(
+            route,
+            view_func=IndexView.as_view(
+                'ponywhoosh', wh=self)
+        )
 
     def init_opts(self, opts):
         assert isinstance(opts, dict)
