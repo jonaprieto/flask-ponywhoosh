@@ -56,13 +56,6 @@ app.config['SECRET_KEY'] = 'hard to guess string'
 bootstrap = Bootstrap(app)
 
 
-class SearchForm(Form):
-    query = StringField('What are you looking for?')
-    fields = StringField('Fields')
-    except_field = StringField('Except in Fields')
-    # sortedby = SelectField('Order by Field', choices=[(1,'username'),(2,'age'),(3,'birthday')])
-    wildcards = BooleanField('Add Wildcards')
-    submit = SubmitField('Submit')
 
 
 @app.route("/index", methods=['GET', 'POST'])
