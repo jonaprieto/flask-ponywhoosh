@@ -401,7 +401,8 @@ class Whoosh(object):
         * Sets some default values on it (unless they're already set)
         * Replaces query class of every whoosheer's model by WhoosheeQuery
         """
-        wh.search_string_min_len = self.search_string_min_len
+        if not hasattr(wh, 'search_string_min_len'):
+            wh.search_string_min_len = self.search_string_min_len
 
         if not hasattr(wh, 'index_subdir'):
             wh.index_subdir = wh.__name__
@@ -416,6 +417,7 @@ class Whoosh(object):
         """
 
         mwh = Whoosheer(DEBUG=self.DEBUG)
+        mwh.search_string_min_len = self.search_string_min_len
         mwh.kw = kw
 
         def inner(model):
@@ -455,7 +457,7 @@ class Whoosh(object):
                         mwh.schema_attrs[field.name] = whoosh.fields.TEXT(**kw)
 
             mwh.schema = whoosh.fields.Schema(**mwh.schema_attrs)
-            mwh = self.register_whoosheer(mwh)
+            self.register_whoosheer(mwh)
 
             def _middle_save_(obj, status):
                 writer = mwh.index.writer(timeout=self.writer_timeout)
