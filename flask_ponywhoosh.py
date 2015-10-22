@@ -128,6 +128,7 @@ class Whoosheer(object):
     Whoosheer is basically a unit of fulltext search.
 
     """
+    search_string_min_len = 3
     DEBUG = False
     parameters = {
         'limit': 0,
@@ -278,6 +279,8 @@ class Whoosheer(object):
         except:
             pass
         s = s.replace('*', '')
+        if self.DEBUG:
+            print 'SEARCH_STRING_MIN_LEN -> ', self.search_string_min_len
         if len(s) < self.search_string_min_len:
             raise ValueError('Search string must have at least {} characters'.format(
                 self.search_string_min_len))
@@ -398,8 +401,8 @@ class Whoosh(object):
         * Sets some default values on it (unless they're already set)
         * Replaces query class of every whoosheer's model by WhoosheeQuery
         """
-        if not hasattr(wh, 'search_string_min_len'):
-            wh.search_string_min_len = self.search_string_min_len
+        wh.search_string_min_len = self.search_string_min_len
+
         if not hasattr(wh, 'index_subdir'):
             wh.index_subdir = wh.__name__
 
@@ -452,7 +455,7 @@ class Whoosh(object):
                         mwh.schema_attrs[field.name] = whoosh.fields.TEXT(**kw)
 
             mwh.schema = whoosh.fields.Schema(**mwh.schema_attrs)
-            self.register_whoosheer(mwh)
+            mwh = self.register_whoosheer(mwh)
 
             def _middle_save_(obj, status):
                 writer = mwh.index.writer(timeout=self.writer_timeout)
