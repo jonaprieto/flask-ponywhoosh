@@ -48,14 +48,14 @@ And for each entity wrap it up with the decorator
         entries = Set("Entry")
         attributes = Set("Attributes")
 
-As you could see in the previous example, you should declare as strings these fields where you want whoosh to store the searcheables (``name``, ``age``, etc.). All the parameters from whoosh are available you just have to listed, separating them with commas: sortable, stored, scored, etc. Refer to whoosh documentation for
+As you could see in the previous example, you should declare as strings these fields where you want whoosh to store the searcheables (``name``, ``age``, etc.). All the parameters from whoosh are available, You just have to listed separating them with commas: sortable, stored, scored, etc. Refer to whoosh documentation for
 further explanations on the application of these parameters. 
  
 =================
 What's new? 0.1.5
 =================
 
-We decided to go one step forward. We decided to have ready for you a default view and a template where you can actually search and  see the results in a pretty organized way. So right now the route '/ponywhoosh' would let you search and view in a visual interactive interface!
+We decided to go one step forward. We decided to have ready for you a default view and a template where you can actually search and  see the results in a pretty organized way. So right now the parametrizable route '/ponywhoosh' would let you search  in a visual interactive interface!
 
 This will be further explained in the bonus section. 
 
@@ -65,14 +65,16 @@ For other updates, see ``CHANGELOG.rst``.
 Flask Settings
 ==============
 
-From a flask configuration, you could add the following options if you want to:
+From a flask configuration, you can add the following options. 
 
 .. code:: python
 
     app.config['WHOOSHEE_DIR'] = 'whooshes'
     app.config['WHOSHEE_MIN_STRING_LEN'] = 3
     app.config['WHOOSHEE_WRITER_TIMEOUT'] = 2
+    app.config['WHOOSHEE_URL'] = '/ponywhoosh'
 
+This configurations set up the default folder for savind the whoshees, the minimun lenght of the string in the query, the time out (stop searching if is taking so much) and the route where you might charge the default template for searching available from version 0.1.5.
 
 =========
 Searching
@@ -122,14 +124,14 @@ If you would prefer, you may use the function ``search()``,  which will run the 
                   'score': 2.540445040947149}],
      'runtime': 0.001981973648071289}
 
-The function ``search()`` takes three arguments.
+The function ``search()`` takes up to three arguments.
 1. A ponymodel, the databse entity where you want to perform the search.
-2. The s``earch_string``, what  you are looking for; and,
+2. The ``search_string``, what  you are looking for; and,
 3. The arguments, some additional options for more refined searching.
 
 .. code:: python
 
-    search(PonyModel, query, **kw)
+    search(PonyModel, "query", **kw)
 
 For example if  you want  the results to be sorted by some specific searcheable field,
 you have to indicate so, by adding the argument ``sortedby="field"``.
@@ -165,7 +167,7 @@ Searching by field:
 
     search(PonyModel, query, field="field_name")
 
-By default the function ``search()`` performs a multifield parser query, i.e. that you will be searching in all the fields you have declared when you registered the model. However, sometimes you would like to perform searching in just one or some of all the fields.
+By default the function ``search()`` performs a multifield parser query, i.e.  you will be searching in all the fields you have declared when you registered the model. However, sometimes you would like to perform searching in just one or some of all the fields.
 For these reasons we implemented the following extra options: The first one is refered as ``field`` all you have to do is indicate in which field you want to search. The output would be a results object containing only the information found in that field. And ``fields`` where you should write a list with all the fields you want to search. 
 
 .. code:: python 
@@ -215,7 +217,7 @@ The arguments ``add_wildcards`` and ``something``
 
 Whoosh  sets a wildcard ``*``,``?``,``!`` by default to perform search for inexact terms, however sometimes  is desirable to search by exact terms instead. For this reason we added two more options: ``add_wildcards`` and ``something``. 
 
-The option *add_wildcards* (by default False)  is a boolean argument that tells the searcher whether it should or not include wild cards. For example, if you want to search "harol" when ``add_wildcards=False``, and you search by "har" the results would be 0. If ``add_wildcards=True`` , then "har" would be fair enough to get the result "harol"  because searching was performed in using wild cards. 
+The option *add_wildcards* (by default False)  is a boolean argument that tells the searcher whether it should or not include wild cards. For example, if you want to search "harol" when ``add_wildcards=False``, and you search by "har" the results would be 0. If ``add_wildcards=True`` , then "har" would be fair enough to get the result "harol"  because searching was performed  using wild cards. 
 
 .. code:: python
 
@@ -359,16 +361,22 @@ There are some special features avalaible for models from the database:
 * ``counts``: This function counts all the documents existing in an indexes. 
 
 =================
-BONUS  :/ponywhoosh ! 
+BONUS:/ponywhoosh ! 
 =================
 
-We  aknowledged  that the way we were showing the results was not the most convinient, for this reason we thought that it would be nice and useful to get ready for you a fully interactive and visual interface where you can perform the searches for your own website. So  right now is by  default available at the route '<your_url>/ponywhoosh'. This route looks  something like this. 
+We  aknowledged  that  we could do better in how the results were shown, for this reason we thought that it would be nice and useful to get ready for you a fully interactive and visual interface where you can perform the searches for your own website. So,  right now is by  default available at the route '<your_url>/ponywhoosh'. This route  would get you to  this html template:
 
 |Pony|
 
-These form was made thinking in what is more important. Then if you submit the search, it would show you the results in a parametrized way, deppending on the name of your tables and wheter they are searcheables or not. 
+These form was made thinking in what is more important (query, fields, add wildcards or something, etc). Then if you submit the search, it would show you the results in a parametrized way, deppending on the name of your tables and whether they are searcheables or not. For instance, the example app we provided in here would look like this after you perform some  search:
 
 |Results|
+
+To run this template, you only have to add to your own route the extension /ponywhoosh  and it would redirect you to the personalized view for your own searches. It is possible to change this '/ponywhoosh', take a look in the Flask settings section. 
+
+So far is available to limitate the search to those fields where you want to search and even for those that you want to avoid. As well we include check boxes for add_wildcard and something functions. If there are not results to show the table won't be created. 
+
+Enjoy it! 
 
 ========
 Testing
@@ -417,6 +425,7 @@ After that, you could visit the following urls.
 -  ``http://localhost:5000/update`` to perform an update in an entity
    with ``id=1``.
 -  ``http://localhost:5000/`` to see the entities from database.
+- ``http://localhost:500/ponywhoosh`` to load the visual html interface. 
 
 Running the app example
 ***************************************
