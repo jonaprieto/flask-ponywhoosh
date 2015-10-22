@@ -196,21 +196,14 @@ class Whoosheer(object):
             search_string, self.to_bool(opt.get('add_wildcards', False)))
 
         with self.index.searcher() as searcher:
-            parser = whoosh.qparser.MultifieldParser(
-                self.schema.names(), self.index.schema,
-                group=opt.get('group', qparser.OrGroup))
-            
 
             fields = opt.get('fields', self.schema.names())
             fields = filter(lambda x: len(x) > 0, fields)
 
-            parser_defined = False
             field = opt.get('field', '')
             if len(field) > 0:
                 if isinstance(field, str) or isinstance(field, unicode):
-                    parser = whoosh.qparser.QueryParser(
-                        field, self.index.schema)
-                    parser_defined = True
+                    fields = [field]
                 elif isinstance(field, list):
                     fields = fields + field
 

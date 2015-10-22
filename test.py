@@ -22,10 +22,8 @@ class BaseTestCases(object):
 
         def setUp(self):
             self.db = Database()
-
             @self.wh.register_model('name', 'age', stored=True, sortable=True)
             class User(self.db.Entity):
-                _table_ = 'User'
                 id = PrimaryKey(int, auto=True)
                 name = Required(unicode)
                 age = Optional(int)
@@ -33,14 +31,13 @@ class BaseTestCases(object):
 
             @self.wh.register_model('weight', 'sport', 'name', stored=True, sortable=True)
             class Attribute(self.db.Entity):
-                _table_ = 'Attribute'
                 id = PrimaryKey(int, auto=True)
                 name = Optional(unicode)
                 user = Optional("User")
                 weight = Required(unicode)
                 sport = Optional(unicode)
 
-            self.db.bind('sqlite', 'test.sqlite', create_db=True)
+            self.db.bind('sqlite', ':memory:', create_db=True)
             self.db.generate_mapping(create_tables=True)
             self.User = User
             self.Attribute = Attribute
@@ -61,7 +58,7 @@ class BaseTestCases(object):
             shutil.rmtree(self.app.config['WHOOSHEE_DIR'], ignore_errors=True)
             self.wh.delete_whoosheers()
             self.db.drop_all_tables(with_all_data=True)
-            os.remove('test.sqlite')
+            # os.remove('test.sqlite')
 
          # tests testing model whoosheers should have mw in their name, for custom whoosheers it's cw
          # ideally, there should be a separate class for model whoosheer and custom whoosheer
@@ -102,16 +99,13 @@ class BaseTestCases(object):
 class TestsWithApp(BaseTestCases.BaseTest):
 
     def setUp(self):
-
         self.wh = Whoosh(self.app)
-
         super(TestsWithApp, self).setUp()
 
 
 class TestsWithInitApp(BaseTestCases.BaseTest):
 
     def setUp(self):
-
         self.wh = Whoosh()
         self.wh.init_app(self.app)
 
