@@ -359,14 +359,16 @@ There are some special features avalaible for models from the database:
 * ``counts``: This function counts all the documents existing in an indexes. 
 
 =================
-BONUS  :'/ponywhoosh' ! 
+BONUS  :/ponywhoosh ! 
 =================
 
 We  aknowledged  that the way we were showing the results was not the most convinient, for this reason we thought that it would be nice and useful to get ready for you a fully interactive and visual interface where you can perform the searches for your own website. So  right now is by  default available at the route '<your_url>/ponywhoosh'. This route looks  something like this. 
 
 |Pony|
 
+These form was made thinking in what is more important. Then if you submit the search, it would show you the results in a parametrized way, deppending on the name of your tables and wheter they are searcheables or not. 
 
+|Results|
 
 ========
 Testing
@@ -453,4 +455,6 @@ Try something like the following sentences:
 .. |Test| image:: https://travis-ci.org/piperod/Flask-PonyWhoosh.svg?branch=master
     :target: https://travis-ci.org/piperod/Flask-PonyWhoosh
 .. |Pony| image:: https://raw.githubusercontent.com/compiteing/flask-ponywhoosh/master/docs/_static/%3Aponywhoosh.png
+    :target: https://travis-ci.org/piperod/Flask-PonyWhoosh
+.. |Results| image:: https://raw.githubusercontent.com/compiteing/flask-ponywhoosh/master/docs/_static/results.png
     :target: https://travis-ci.org/piperod/Flask-PonyWhoosh
