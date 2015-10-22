@@ -508,7 +508,7 @@ class Whoosh(object):
         models = kw.get('models', self.entities.values())
         models = [self.entities.get(model, None) if isinstance(model, str) or isinstance(model, unicode)\
                   else model for model in models]
-        models = filter(lambda x: x is not None and len(x) > 0, models)
+        models = filter(lambda x: x is not None, models)
         
         if models == [] or not models:
             models = self.entities.values()
