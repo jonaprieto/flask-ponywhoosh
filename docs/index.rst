@@ -366,9 +366,11 @@ We  aknowledged  that the way we were showing the results was not the most convi
 
 |Pony|
 
-These form was made thinking in what is more important. Then if you submit the search, it would show you the results in a parametrized way, deppending on the name of your tables and wheter they are searcheables or not. 
+These form was made thinking in what is more important (query, fields, add wildcards or something, etc). Then if you submit the search, it would show you the results in a parametrized way, deppending on the name of your tables and wheter they are searcheables or not. 
 
 |Results|
+
+To run this template and make it work, you only have to add to your own route the extension /ponywhoosh  and it would redirect you to the personalized view for your own searches. 
 
 ========
 Testing
