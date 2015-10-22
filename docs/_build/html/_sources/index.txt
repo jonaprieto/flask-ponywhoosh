@@ -52,14 +52,12 @@ As you could see in the previous example, you should declare as strings these fi
 further explanations on the application of these parameters. 
  
 =================
-What's new? 0.1.4
+What's new? 0.1.5
 =================
 
+We decided to go one step forward. We decided to have ready for you a default view and a template where you can actually search and  see the results in a pretty organized way. So right now the route '/ponywhoosh' would let you search and view in a visual interactive interface!
 
-At this moment, we provide support for fields of type: ``datetime``, ``optimize`` as a method,   With this attribute you can register datetime formated fields, so now the option 'sortedby' include datetime fields. This in particular is very useful for our application, because it helps us to order when searching coments or contents by date.  http://pythonhosted.org/Whoosh/searching.html#scoring-and-sorting
-
-
-We noticed that charging a large ammount of data from a common database could take long time. So, if you want to optimize a specific index, now, you can invoke the method ``optmize()`` for these index. See above how.
+This will be further explained in the bonus section. 
 
 For other updates, see ``CHANGELOG.rst``.
 
@@ -360,6 +358,16 @@ There are some special features avalaible for models from the database:
 * ``update_documents``: This function deletes all the documents and recharges them again. 
 * ``counts``: This function counts all the documents existing in an indexes. 
 
+=================
+BONUS  :'/ponywhoosh' ! 
+=================
+
+We  aknowledged  that the way we were showing the results was not the most convinient, for this reason we thought that it would be nice and useful to get ready for you a fully interactive and visual interface where you can perform the searches for your own website. So  right now is by  default available at the route '<your_url>/ponywhoosh'. This route looks  something like this. 
+
+|Pony|
+
+
+
 ========
 Testing
 ========
@@ -443,4 +451,6 @@ Try something like the following sentences:
 .. |PyPI Package monthly downloads| image:: http://img.shields.io/pypi/dm/Flask-PonyWhoosh.png?style=flat
    :target: https://pypi.python.org/pypi/Flask-PonyWhoosh
 .. |Test| image:: https://travis-ci.org/piperod/Flask-PonyWhoosh.svg?branch=master
+    :target: https://travis-ci.org/piperod/Flask-PonyWhoosh
+.. |Pony| image:: https://raw.githubusercontent.com/compiteing/flask-ponywhoosh/master/docs/_static/%3Aponywhoosh.png
     :target: https://travis-ci.org/piperod/Flask-PonyWhoosh

@@ -76,10 +76,10 @@ inside <code class="docutils literal"><span class="pre">Flask</span></code>. Sou
 <p>As you could see in the previous example, you should declare as strings these fields where you want whoosh to store the searcheables (<code class="docutils literal"><span class="pre">name</span></code>, <code class="docutils literal"><span class="pre">age</span></code>, etc.). All the parameters from whoosh are available you just have to listed, separating them with commas: sortable, stored, scored, etc. Refer to whoosh documentation for
 further explanations on the application of these parameters.</p>
 </div>
-<div class="section" id="what-s-new-0-1-4">
-<h2>What&#8217;s new? 0.1.4<a class="headerlink" href="#what-s-new-0-1-4" title="Permalink to this headline">¶</a></h2>
-<p>At this moment, we provide support for fields of type: <code class="docutils literal"><span class="pre">datetime</span></code>, <code class="docutils literal"><span class="pre">optimize</span></code> as a method,   With this attribute you can register datetime formated fields, so now the option &#8216;sortedby&#8217; include datetime fields. This in particular is very useful for our application, because it helps us to order when searching coments or contents by date.  <a class="reference external" href="http://pythonhosted.org/Whoosh/searching.html#scoring-and-sorting">http://pythonhosted.org/Whoosh/searching.html#scoring-and-sorting</a></p>
-<p>We noticed that charging a large ammount of data from a common database could take long time. So, if you want to optimize a specific index, now, you can invoke the method <code class="docutils literal"><span class="pre">optmize()</span></code> for these index. See above how.</p>
+<div class="section" id="what-s-new-0-1-5">
+<h2>What&#8217;s new? 0.1.5<a class="headerlink" href="#what-s-new-0-1-5" title="Permalink to this headline">¶</a></h2>
+<p>We decided to go one step forward. We decided to have ready for you a default view and a template where you can actually search and  see the results in a pretty organized way. So right now the route &#8216;/ponywhoosh&#8217; would let you search and view in a visual interactive interface!</p>
+<p>This will be further explained in the bonus section.</p>
 <p>For other updates, see <code class="docutils literal"><span class="pre">CHANGELOG.rst</span></code>.</p>
 </div>
 <div class="section" id="flask-settings">
@@ -340,6 +340,11 @@ For these reasons we implemented the following extra options: The first one is r
 <li><code class="docutils literal"><span class="pre">update_documents</span></code>: This function deletes all the documents and recharges them again.</li>
 <li><code class="docutils literal"><span class="pre">counts</span></code>: This function counts all the documents existing in an indexes.</li>
 </ul>
+</div>
+<div class="section" id="bonus-ponywhoosh">
+<h2>BONUS  :&#8217;/ponywhoosh&#8217; !<a class="headerlink" href="#bonus-ponywhoosh" title="Permalink to this headline">¶</a></h2>
+<p>We  aknowledged  that the way we were showing the results was not the most convinient, for this reason we thought that it would be nice and useful to get ready for you a fully interactive and visual interface where you can perform the searches for your own website. So  right now is by  default available at the route &#8216;&lt;your_url&gt;/ponywhoosh&#8217;. This route looks  something like this.</p>
+<p><a class="reference external" href="https://travis-ci.org/piperod/Flask-PonyWhoosh"><img alt="Pony" src="https://raw.githubusercontent.com/compiteing/flask-ponywhoosh/master/docs/_static/%3Aponywhoosh.png" /></a></p>
 </div>
 <div class="section" id="testing">
 <h2>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h2>
