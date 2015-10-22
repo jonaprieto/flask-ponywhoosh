@@ -40,6 +40,7 @@ class SearchForm(Form):
     except_field = StringField('Except in Fields')
     # sortedby = SelectField('Order by Field', choices=[(1,'username'),(2,'age'),(3,'birthday')])
     wildcards = BooleanField('Add Wildcards')
+    something = BooleanField('Something')
     submit = SubmitField('Submit')
 
 
@@ -68,22 +69,23 @@ class IndexView(View):
             e = form.except_field.data
             except_fields = re.split('\W+', e, flags=re.UNICODE)
             wildcards = form.wildcards.data
+            something = form.something.data
 
             if fields.count('') == 1:
                 results = full_search(self.wh, query,
-                                      add_wildcards=wildcards,
+                                      add_wildcards=wildcards, something=something,
                                       include_entity=True
                                       )
             else:
                 results = full_search(
                     self.wh, query,
-                    add_wildcards=wildcards,
+                    add_wildcards=wildcards, something=something,
                     include_entity=True,
                     fields=fields
                 )
             if except_fields.count('') != 1:
                 results = full_search(self.wh, query,
-                                      add_wildcards=wildcards,
+                                      add_wildcards=wildcards, something=something,
                                       include_entity=True,
                                       except_fields=except_fields
                                       )
@@ -306,8 +308,8 @@ class Whoosh(object):
         self.writer_timeout = app.config.get('WHOOSHEE_WRITER_TIMEOUT', 2)
         route = app.config.get('WHOOSHEE_URL', '/ponywhoosh')
         template_path = app.config.get('WHOOSHEE_TEMPLATE_PATH',
-                               os.path.join(basedir, 'templates')
-                               )
+                                       os.path.join(basedir, 'templates')
+                                       )
         print '-'*30
         print template_path
 
