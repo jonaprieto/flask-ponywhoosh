@@ -18,6 +18,7 @@ manager.add_command("shell", Shell(use_bpython=True))
 
 #   Setting the options for PonyWhoosh
 
+app.config['PONYWHOOSH_DEBUG'] = True
 app.config['WHOOSHEE_DIR'] = 'whooshes'
 app.config['WHOSHEE_MIN_STRING_LEN'] = 1
 app.config['WHOOSHEE_WRITER_TIMEOUT'] = 3

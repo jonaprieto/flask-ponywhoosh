@@ -23,11 +23,7 @@
 {%for l in labels%}
 {%if results["results"][l]["items"] != []%}
 <h3>{{l}}</h3>
-
 			<table class="table">
-
-				
-						
 						{%for s in results["results"][l]["items"][0]["entity"].keys() %}
 								<th>{{s}}</th>
 						{%endfor%}

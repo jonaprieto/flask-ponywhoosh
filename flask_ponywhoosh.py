@@ -4,7 +4,7 @@
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     Adds capabilities to perform full-text search over your modules of Pony ORM
-    for flask applications. Enjoy it! 
+    for flask applications. Enjoy it!
 
     :copyright: (c) 2015 by Jonathan S. Prieto & Ivan Felipe Rodriguez.
     :license: BSD (see LICENSE.md)
@@ -28,27 +28,31 @@ from whoosh import fields, index, qparser
 import whoosh
 from wtforms import StringField, SubmitField, BooleanField, SelectField
 from wtforms.validators import Required
+from pprint import pprint
 
 basedir = os.path.abspath(os.path.dirname(__file__))
-
-print '...', basedir
 
 
 class SearchForm(Form):
     query = StringField('What are you looking for?')
+    models = StringField('Models')
     fields = StringField('Fields')
     except_field = StringField('Except in Fields')
-    # sortedby = SelectField('Order by Field', choices=[(1,'username'),(2,'age'),(3,'birthday')])
+    # sortedby = SelectField('Order by Field',
+    # choices=[(1,'username'),(2,'age'),(3,'birthday')])
     wildcards = BooleanField('Add Wildcards')
     something = BooleanField('Something')
     submit = SubmitField('Submit')
 
 
 class IndexView(View):
+
+    DEBUG = False
     methods = ['POST', 'GET']
 
     def __init__(self, wh):
         self.wh = wh
+        self.DEBUG = self.wh.DEBUG
 
     def dispatch_request(self):
         ctx = {
@@ -60,39 +64,49 @@ class IndexView(View):
         except_field = None
         # sortedby= None
         form = SearchForm()
+        if self.DEBUG:
+            print 'form:'
+            pprint(form.data)
 
         if form.validate_on_submit():
+            print "entro..."
             query = form.query.data
-
-            f = form.fields.data
-            fields = re.split('\W+', f, flags=re.UNICODE)
-            e = form.except_field.data
-            except_fields = re.split('\W+', e, flags=re.UNICODE)
+            models = re.split('\W+', form.models.data, flags=re.UNICODE)
+            fields = re.split('\W+', form.fields.data, flags=re.UNICODE)
+            except_fields = re.split(
+                '\W+', form.except_field.data, flags=re.UNICODE)
             wildcards = form.wildcards.data
             something = form.something.data
 
-            if fields.count('') == 1:
-                results = full_search(self.wh, query,
-                                      add_wildcards=wildcards, something=something,
-                                      include_entity=True
-                                      )
-            else:
-                results = full_search(
-                    self.wh, query,
-                    add_wildcards=wildcards, something=something,
-                    include_entity=True,
-                    fields=fields
-                )
-            if except_fields.count('') != 1:
-                results = full_search(self.wh, query,
-                                      add_wildcards=wildcards, something=something,
-                                      include_entity=True,
-                                      except_fields=except_fields
-                                      )
+            if self.DEBUG:
+                pprint({
+                    'query': query,
+                    'add_wildcards': wildcards,
+                    'something': something,
+                    'include_entity': True,
+                    'fields': fields,
+                    'models': models,
+                    'except_fields': except_fields
+                })
+
+            results = full_search(
+                self.wh,
+                query,
+                add_wildcards=wildcards,
+                something=something,
+                include_entity=True,
+                fields=fields,
+                models=models,
+                except_fields=except_fields
+            )
+
+            if self.DEBUG:
+                print "results = ",
+                pprint(results)
 
             return render_template(
                 'ponywhoosh/results.html',
-                entidades=list(self.wh.entities),
+                entidades=list(self.wh.entities.keys()),
                 form=form,
                 results=results,
                 n=results['cant_results'],
@@ -114,7 +128,7 @@ class Whoosheer(object):
     Whoosheer is basically a unit of fulltext search.
 
     """
-
+    DEBUG = False
     parameters = {
         'limit': 0,
         'optimize': False,
@@ -122,6 +136,9 @@ class Whoosheer(object):
         'scored': u'',
         'sortedby': u'',
     }
+
+    def __init__(self, DEBUG=False):
+        self.DEBUG = DEBUG
 
     def add_field(self, fieldname, fieldspec=fields.TEXT):
         self.index.add_field(fieldname, fieldspec)
@@ -170,6 +187,11 @@ class Whoosheer(object):
 
     @orm.db_session
     def search(self, search_string, **opt):
+
+        if self.DEBUG:
+            print 'opt:'
+            pprint(opt)
+
         prepped_string = self.prep_search_string(
             search_string, self.to_bool(opt.get('add_wildcards', False)))
 
@@ -177,31 +199,47 @@ class Whoosheer(object):
             parser = whoosh.qparser.MultifieldParser(
                 self.schema.names(), self.index.schema,
                 group=opt.get('group', qparser.OrGroup))
+            
 
-            if 'field' in opt:
-                if isinstance(opt['field'], str) or isinstance(opt['field'], unicode):
+            fields = opt.get('fields', self.schema.names())
+            fields = filter(lambda x: len(x) > 0, fields)
+
+            parser_defined = False
+            field = opt.get('field', '')
+            if len(field) > 0:
+                if isinstance(field, str) or isinstance(field, unicode):
                     parser = whoosh.qparser.QueryParser(
-                        opt['field'], self.index.schema)
-                elif isinstance(opt['field'], list):
-                    opt['fields'] = opt.get('fields', []) + opt['field']
+                        field, self.index.schema)
+                    parser_defined = True
+                elif isinstance(field, list):
+                    fields = fields + field
 
-            if 'fields' in opt:
-                fields_parser = opt.get('fields', self.schema.names())
-                fields_parser = list(
-                    set(opt['fields']) & set(self.schema.names()))
+            fields = filter(lambda x: len(x) > 0, fields)
+            if self.DEBUG:
+                print 'FIELDS #1 -> ', fields
 
-                parser = whoosh.qparser.MultifieldParser(
-                    fields_parser, self.index.schema,
-                    group=opt.get('group', qparser.OrGroup))
+            if len(fields) == 0:
+                fields = self.schema.names()
 
-            if 'except_fields' in opt:
-                fields_parser = opt.get('except_fields', self.schema.names())
-                fields_parser = list(
-                    set(self.schema.names()) - set(opt['except_fields']))
+            if len(fields) > 0:
+                fields = set(fields) & set(self.schema.names())
+                fields = list(fields)
 
-                parser = whoosh.qparser.MultifieldParser(
-                    fields_parser, self.index.schema,
-                    group=opt.get('group', qparser.OrGroup))
+            if self.DEBUG:
+                print 'FIELDS #2 -> ', fields
+
+            except_fields = opt.get('except_fields', [])
+            except_fields = filter(lambda x: len(x) > 0, except_fields)
+
+            if len(except_fields) > 0:
+                fields = list(set(fields) - set(except_fields))
+
+            if self.DEBUG:
+                print 'FIELDS #3 -> ', fields
+
+            parser = whoosh.qparser.MultifieldParser(
+                fields, self.index.schema,
+                group=opt.get('group', qparser.OrGroup))
 
             query = parser.parse(prepped_string)
             search_opts = self.parse_opts_searcher(opt, self.parameters)
@@ -292,7 +330,8 @@ class Whoosh(object):
     index_path_root = 'whooshee'
     search_string_min_len = 3
     writer_timeout = 2
-    entities = set()
+    entities = {}
+    DEBUG = False
 
     def __init__(self, app=None):
 
@@ -302,25 +341,31 @@ class Whoosh(object):
             os.makedirs(self.index_path_root)
 
     def init_app(self, app):
+        self.DEBUG = app.config.get('PONYWHOOSH_DEBUG', False)
         self.index_path_root = app.config.get('WHOOSHEE_DIR',  'whooshee')
+
         self.search_string_min_len = app.config.get(
             'WHOSHEE_MIN_STRING_LEN', 3)
         self.writer_timeout = app.config.get('WHOOSHEE_WRITER_TIMEOUT', 2)
-        route = app.config.get('WHOOSHEE_URL', '/ponywhoosh')
-        template_path = app.config.get('WHOOSHEE_TEMPLATE_PATH',
-                                       os.path.join(basedir, 'templates')
-                                       )
-        print '-'*30
-        print template_path
+        self.route = app.config.get('WHOOSHEE_URL', '/ponywhoosh')
+        self.template_path = app.config.get('WHOOSHEE_TEMPLATE_PATH',
+                                            os.path.join(basedir, 'templates')
+                                            )
+        if self.DEBUG:
+            print 'WHOOSHEE_DIR  -> ', self.index_path_root
+            print 'WHOOSHEE_MIN_STRING_LEN  -> ', self.search_string_min_len
+            print 'WHOOSHEE_WRITER_TIMEOUT -> ', self.writer_timeout
+            print 'WHOOSHEE_TEMPLATE_PATH -> ', self.template_path
+            print 'WHOOSHEE_URL -> ',  self.route
 
         loader = jinja2.ChoiceLoader([
             app.jinja_loader,
-            jinja2.FileSystemLoader(template_path)
+            jinja2.FileSystemLoader(self.template_path)
         ])
 
         app.jinja_loader = loader
         app.add_url_rule(
-            route,
+            self.route,
             view_func=IndexView.as_view(
                 'ponywhoosh', wh=self)
         )
@@ -374,7 +419,7 @@ class Whoosh(object):
         a simple Whoosheer for the model and calls self.register_whoosheer on it.
         """
 
-        mwh = Whoosheer()
+        mwh = Whoosheer(DEBUG=self.DEBUG)
         mwh.kw = kw
 
         def inner(model):
@@ -382,7 +427,7 @@ class Whoosh(object):
             if not mwh.index_subdir:
                 mwh.index_subdir = model.__name__
 
-            self.entities.add(mwh.index_subdir)
+            self.entities[mwh.index_subdir] = model
 
             mwh.schema_attrs = {}
             mwh.primary = None
@@ -452,18 +497,28 @@ class Whoosh(object):
 
     @orm.db_session
     def search(self, *arg, **kw):
-        full_results = {'runtime': 0,
-                        'results': {},
-                        'matched_terms': defaultdict(set),
-                        'cant_results': 0
-                        }
+        full_results = {
+            'runtime': 0,
+            'results': {},
+            'matched_terms': defaultdict(set),
+            'cant_results': 0
+        }
         whoosheers = self.whoosheers()
-        if 'models' in kw:
-            models = kw['models']
-            whoosheers = []
-            for model in models:
-                if hasattr(model, '_wh_'):
-                    whoosheers.append(model._wh_)
+
+        models = kw.get('models', self.entities.values())
+        models = [self.entities.get(model, None) if isinstance(model, str) or isinstance(model, unicode)\
+                  else model for model in models]
+        models = filter(lambda x: x is not None and len(x) > 0, models)
+        
+        if models == [] or not models:
+            models = self.entities.values()
+
+        if self.DEBUG:
+            print "SEARCHING ON MODELS -> ", models
+        whoosheers = []
+        for model in models:
+            if hasattr(model, '_wh_'):
+                whoosheers.append(model._wh_)
 
         if whoosheers == []:
             return full_results
