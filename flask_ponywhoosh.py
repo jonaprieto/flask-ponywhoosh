@@ -128,8 +128,7 @@ class Whoosheer(object):
     Whoosheer is basically a unit of fulltext search.
 
     """
-    search_string_min_len = 3
-    DEBUG = False
+
     parameters = {
         'limit': 0,
         'optimize': False,
@@ -140,6 +139,7 @@ class Whoosheer(object):
 
     def __init__(self, DEBUG=False):
         self.DEBUG = DEBUG
+        self.search_string_min_len = 2
 
     def add_field(self, fieldname, fieldspec=fields.TEXT):
         self.index.add_field(fieldname, fieldspec)
@@ -341,7 +341,7 @@ class Whoosh(object):
         self.index_path_root = app.config.get('WHOOSHEE_DIR',  'whooshee')
 
         self.search_string_min_len = app.config.get(
-            'WHOSHEE_MIN_STRING_LEN', 3)
+            'WHOSHEE_MIN_STRING_LEN', 4)
         self.writer_timeout = app.config.get('WHOOSHEE_WRITER_TIMEOUT', 2)
         self.route = app.config.get('WHOOSHEE_URL', '/ponywhoosh')
         self.template_path = app.config.get('WHOOSHEE_TEMPLATE_PATH',
@@ -370,7 +370,7 @@ class Whoosh(object):
         assert isinstance(opts, dict)
         self.index_path_root = opts.get('WHOOSHEE_DIR',  'whooshee')
         self.search_string_min_len = opts.get(
-            'WHOSHEE_MIN_STRING_LEN', 3)
+            'WHOSHEE_MIN_STRING_LEN', 6)
         self.writer_timeout = opts.get('WHOOSHEE_WRITER_TIMEOUT', 2)
 
     def delete_whoosheers(self):
