@@ -21,14 +21,12 @@
 </table>
 <br>
 {%for l in labels%}
-
+{%if results["results"][l]["items"] != []%}
 <h3>{{l}}</h3>
 
 			<table class="table">
 
-				{%if results["results"][l]["items"] == []%}
-						<th>No hay elementos que mostrar</th>
-				{%else%}
+				
 						
 						{%for s in results["results"][l]["items"][0]["entity"].keys() %}
 								<th>{{s}}</th>
