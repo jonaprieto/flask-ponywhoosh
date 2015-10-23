@@ -14,6 +14,7 @@
 from collections import defaultdict
 from datetime import datetime
 import os
+from pprint import pprint
 import re
 import sys
 
@@ -28,7 +29,7 @@ from whoosh import fields, index, qparser
 import whoosh
 from wtforms import StringField, SubmitField, BooleanField, SelectField
 from wtforms.validators import Required
-from pprint import pprint
+
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -38,8 +39,6 @@ class SearchForm(Form):
     models = StringField('Models')
     fields = StringField('Fields')
     except_field = StringField('Except in Fields')
-    # sortedby = SelectField('Order by Field',
-    # choices=[(1,'username'),(2,'age'),(3,'birthday')])
     wildcards = BooleanField('Add Wildcards')
     something = BooleanField('Something')
     submit = SubmitField('Submit')
@@ -47,7 +46,6 @@ class SearchForm(Form):
 
 class IndexView(View):
 
-    DEBUG = False
     methods = ['POST', 'GET']
 
     def __init__(self, wh):
@@ -55,11 +53,8 @@ class IndexView(View):
         self.DEBUG = self.wh.DEBUG
 
     def dispatch_request(self):
-        ctx = {
-            'form': SearchForm()
-        }
-        query = None
-        fields = None
+        ctx = {'form': SearchForm()}
+        query, fields = None, None
         wildcards = True
         except_field = None
         # sortedby= None
@@ -77,19 +72,7 @@ class IndexView(View):
             wildcards = form.wildcards.data
             something = form.something.data
 
-            if self.DEBUG:
-                pprint({
-                    'query': query,
-                    'add_wildcards': wildcards,
-                    'something': something,
-                    'include_entity': True,
-                    'fields': fields,
-                    'models': models,
-                    'except_fields': except_fields
-                })
-
-            results = full_search(
-                self.wh,
+            results = self.wh.search(
                 query,
                 add_wildcards=wildcards,
                 something=something,
@@ -100,7 +83,18 @@ class IndexView(View):
             )
 
             if self.DEBUG:
-                print "results = ",
+                print 'form = ',
+                pprint({
+                    'query': query,
+                    'add_wildcards': wildcards,
+                    'something': something,
+                    'include_entity': True,
+                    'fields': fields,
+                    'models': models,
+                    'except_fields': except_fields
+                })
+
+                print "results = "
                 pprint(results)
 
             return render_template(
@@ -115,8 +109,7 @@ class IndexView(View):
         return render_template(
             'ponywhoosh/index.html',
             form=form,
-            query=query,
-            fields=fields
+            query=query
         )
 
 
@@ -188,9 +181,10 @@ class Whoosheer(object):
     @orm.db_session
     def search(self, search_string, **opt):
 
-        print 'VERSION -> ', __version__
-        print 'opt:'
-        pprint(opt)
+        if self.DEBUG:
+            print 'VERSION -> ', __version__
+            print 'opt:'
+            pprint(opt)
 
         prepped_string = self.prep_search_string(
             search_string, self.to_bool(opt.get('add_wildcards', False)))
@@ -208,6 +202,7 @@ class Whoosheer(object):
                     fields = fields + field
 
             fields = filter(lambda x: len(x) > 0, fields)
+
             if self.DEBUG:
                 print 'FIELDS #1 -> ', fields
 
@@ -278,7 +273,10 @@ class Whoosheer(object):
         except:
             pass
         s = s.replace('*', '')
-        print 'SEARCH_STRING_MIN_LEN -> ', self.wh.search_string_min_len
+
+        if self.DEBUG:
+            print 'SEARCH_STRING_MIN_LEN -> ', self.wh.search_string_min_len
+
         if len(s) < self.wh.search_string_min_len:
             raise ValueError('Search string must have at least {} characters'.format(
                 self.wh.search_string_min_len))
@@ -331,7 +329,7 @@ class Whoosh(object):
 
         if app is not None:
             self.init_app(app)
-        
+
         if not os.path.exists(self.index_path_root):
             os.makedirs(self.index_path_root)
 
@@ -339,13 +337,14 @@ class Whoosh(object):
         self.DEBUG = app.config.get('PONYWHOOSH_DEBUG', False)
         self.index_path_root = app.config.get('WHOOSHEE_DIR',  'whooshee')
         self.search_string_min_len = app.config.get(
-            'WHOSHEE_MIN_STRING_LEN', 4)
+            'WHOSHEE_MIN_STRING_LEN', 3)
         self.writer_timeout = app.config.get('WHOOSHEE_WRITER_TIMEOUT', 2)
-        self.route = app.config.get('WHOOSHEE_URL', '/ponywhoosh')
+        self.route = app.config.get('WHOOSHEE_URL', '/ponywhoosh/')
         self.template_path = app.config.get('WHOOSHEE_TEMPLATE_PATH',
                                             os.path.join(basedir, 'templates')
                                             )
         if self.DEBUG:
+            print 'PONYWHOOSH_DEBUG -> ', self.DEBUG
             print 'WHOOSHEE_DIR  -> ', self.index_path_root
             print 'WHOOSHEE_MIN_STRING_LEN  -> ', self.search_string_min_len
             print 'WHOOSHEE_WRITER_TIMEOUT -> ', self.writer_timeout
@@ -363,13 +362,6 @@ class Whoosh(object):
             view_func=IndexView.as_view(
                 'ponywhoosh', wh=self)
         )
-
-    # def init_opts(self, opts):
-    #     assert isinstance(opts, dict)
-    #     self.index_path_root = opts.get('WHOOSHEE_DIR',  'whooshee')
-    #     self.search_string_min_len = opts.get(
-    #         'WHOSHEE_MIN_STRING_LEN', 6)
-    #     self.writer_timeout = opts.get('WHOOSHEE_WRITER_TIMEOUT', 2)
 
     def delete_whoosheers(self):
         self._whoosheers = {}
@@ -399,7 +391,6 @@ class Whoosh(object):
         * Sets some default values on it (unless they're already set)
         * Replaces query class of every whoosheer's model by WhoosheeQuery
         """
-        print 'entro a setear wh, y minlen...'
         if not hasattr(wh, 'index_subdir'):
             wh.index_subdir = wh.__name__
 
@@ -491,7 +482,7 @@ class Whoosh(object):
 
     @orm.db_session
     def search(self, *arg, **kw):
-        full_results = {
+        output = {
             'runtime': 0,
             'results': {},
             'matched_terms': defaultdict(set),
@@ -500,43 +491,41 @@ class Whoosh(object):
         whoosheers = self.whoosheers()
 
         models = kw.get('models', self.entities.values())
-        models = [self.entities.get(model, None) if isinstance(model, str) or isinstance(model, unicode)\
+        models = [self.entities.get(model, None) if isinstance(model, str) or isinstance(model, unicode)
                   else model for model in models]
         models = filter(lambda x: x is not None, models)
-        
+
         if models == [] or not models:
             models = self.entities.values()
 
         if self.DEBUG:
             print "SEARCHING ON MODELS -> ", models
-        whoosheers = []
-        for model in models:
-            if hasattr(model, '_wh_'):
-                whoosheers.append(model._wh_)
+
+        whoosheers = [m._wh_ for m in models if hasattr(m, '_wh_')]
 
         if whoosheers == []:
-            return full_results
+            return output
 
         runtime, cant = 0, 0
 
         ma = defaultdict(set)
         for whoosher in whoosheers:
-            output = whoosher.search(*arg, **kw)
-            runtime += output['runtime']
-            cant += output['cant_results']
+            res = whoosher.search(*arg, **kw)
+            runtime += res['runtime']
+            cant += res['cant_results']
 
-            full_results['results'][whoosher.index_subdir] = {
-                'items': output['results'],
-                'matched_terms': output['matched_terms']
+            output['results'][whoosher.index_subdir] = {
+                'items': res['results'],
+                'matched_terms': res['matched_terms']
             }
-            for k, ts in output['matched_terms'].items():
+            for k, ts in res['matched_terms'].items():
                 for t in ts:
                     ma[k].add(t)
 
-        full_results['runtime'] = runtime
-        full_results['matched_terms'] = {k: list(v) for k, v in ma.items()}
-        full_results['cant_results'] = cant
-        return full_results
+        output['runtime'] = runtime
+        output['matched_terms'] = {k: list(v) for k, v in ma.items()}
+        output['cant_results'] = cant
+        return output
 
 
 @orm.db_session
