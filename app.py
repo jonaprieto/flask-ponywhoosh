@@ -20,7 +20,7 @@ manager.add_command("shell", Shell(use_bpython=True))
 
 app.config['PONYWHOOSH_DEBUG'] = True
 app.config['WHOOSHEE_DIR'] = 'whooshes'
-app.config['WHOSHEE_MIN_STRING_LEN'] = 5
+app.config['WHOSHEE_MIN_STRING_LEN'] = 1
 app.config['WHOOSHEE_WRITER_TIMEOUT'] = 3
 app.config['WHOOSHEE_URL'] = '/ponywhoosh'
 app.config['SECRET_KEY'] = 'hard to guess string'

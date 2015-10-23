@@ -22,6 +22,7 @@ class BaseTestCases(object):
 
         def setUp(self):
             self.db = Database()
+
             @self.wh.register_model('name', 'age', stored=True, sortable=True)
             class User(self.db.Entity):
                 id = PrimaryKey(int, auto=True)
@@ -47,6 +48,7 @@ class BaseTestCases(object):
             self.u1 = self.User(name=u'jonathan', age=u'15')
             self.u2 = self.User(name=u'felipe', age=u'19')
             self.u3 = self.User(name=u'harol', age=u'16')
+            self.u4 = self.User(name=u'felun', age=u'16')
             self.a1 = self.Attribute(
                 name=u'felun', user=self.u1, weight=u'80', sport=u'tejo')
             self.a2 = self.Attribute(
@@ -94,7 +96,27 @@ class BaseTestCases(object):
 
             found = full_search(
                 self.wh, "fel", add_wildcards=True, include_entity=True)
-            self.assertEqual(found['cant_results'], 3)
+            self.assertEqual(found['cant_results'], 4)
+
+        def test_fields(self):
+            self.fixtures()
+            results = full_search(
+                self.wh, "felun", include_entity=True, fields=["name"])
+            self.assertEqual(results['cant_results'], 2)
+
+        def test_models(self):
+            self.fixtures()
+            results = full_search(
+                self.wh, "felun", include_entity=True, models=['User'])
+            self.assertEqual(results['cant_results'], 1)
+
+        def test_except_field(self):
+            self.fixtures()
+            results = full_search(self.wh, "felun", except_fields=["name"])
+            self.assertEqual(results['cant_results'], 0)
+
+        
+
 
 class TestsWithApp(BaseTestCases.BaseTest):
 
