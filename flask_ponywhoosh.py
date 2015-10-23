@@ -136,9 +136,9 @@ class Whoosheer(object):
         'sortedby': u'',
     }
 
-    def __init__(self, DEBUG=False):
-        self.DEBUG = DEBUG
-        self.search_string_min_len = 20
+    def __init__(self, wh):
+        self.wh = wh
+        self.DEBUG = wh.DEBUG
 
     def add_field(self, fieldname, fieldspec=fields.TEXT):
         self.index.add_field(fieldname, fieldspec)
@@ -278,10 +278,10 @@ class Whoosheer(object):
         except:
             pass
         s = s.replace('*', '')
-        print 'SEARCH_STRING_MIN_LEN -> ', self.search_string_min_len
-        if len(s) < self.search_string_min_len:
+        print 'SEARCH_STRING_MIN_LEN -> ', self.wh.search_string_min_len
+        if len(s) < self.wh.search_string_min_len:
             raise ValueError('Search string must have at least {} characters'.format(
-                self.search_string_min_len))
+                self.wh.search_string_min_len))
         if add_wildcards:
             s = u'*{0}*'.format(re.sub('[\s]+', '* *', s))
         return s
@@ -400,8 +400,6 @@ class Whoosh(object):
         * Replaces query class of every whoosheer's model by WhoosheeQuery
         """
         print 'entro a setear wh, y minlen...'
-        wh.search_string_min_len = self.search_string_min_len
-
         if not hasattr(wh, 'index_subdir'):
             wh.index_subdir = wh.__name__
 
@@ -414,12 +412,11 @@ class Whoosh(object):
         a simple Whoosheer for the model and calls self.register_whoosheer on it.
         """
 
-        mwh = Whoosheer(self.DEBUG)
+        mwh = Whoosheer(wh=self)
         mwh.kw = kw
 
         def inner(model):
 
-            mwh.search_string_min_len = self.search_string_min_len
             mwh.index_subdir = model._table_
             if not mwh.index_subdir:
                 mwh.index_subdir = model.__name__
