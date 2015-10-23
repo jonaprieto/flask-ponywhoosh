@@ -69,7 +69,6 @@ class IndexView(View):
             pprint(form.data)
 
         if form.validate_on_submit():
-            print "entro..."
             query = form.query.data
             models = re.split('\W+', form.models.data, flags=re.UNICODE)
             fields = re.split('\W+', form.fields.data, flags=re.UNICODE)
@@ -139,7 +138,7 @@ class Whoosheer(object):
 
     def __init__(self, DEBUG=False):
         self.DEBUG = DEBUG
-        self.search_string_min_len = 2
+        self.search_string_min_len = 20
 
     def add_field(self, fieldname, fieldspec=fields.TEXT):
         self.index.add_field(fieldname, fieldspec)
@@ -189,10 +188,9 @@ class Whoosheer(object):
     @orm.db_session
     def search(self, search_string, **opt):
 
-        if self.DEBUG:
-            print 'VERSION -> ', __version__
-            print 'opt:'
-            pprint(opt)
+        print 'VERSION -> ', __version__
+        print 'opt:'
+        pprint(opt)
 
         prepped_string = self.prep_search_string(
             search_string, self.to_bool(opt.get('add_wildcards', False)))
@@ -280,8 +278,7 @@ class Whoosheer(object):
         except:
             pass
         s = s.replace('*', '')
-        if self.DEBUG:
-            print 'SEARCH_STRING_MIN_LEN -> ', self.search_string_min_len
+        print 'SEARCH_STRING_MIN_LEN -> ', self.search_string_min_len
         if len(s) < self.search_string_min_len:
             raise ValueError('Search string must have at least {} characters'.format(
                 self.search_string_min_len))
@@ -325,22 +322,21 @@ class Whoosh(object):
 
     _whoosheers = {}
     index_path_root = 'whooshee'
-    search_string_min_len = 3
     writer_timeout = 2
     entities = {}
-    DEBUG = False
+    search_string_min_len = 20
 
     def __init__(self, app=None):
 
-        if app:
+        if app is not None:
             self.init_app(app)
+        
         if not os.path.exists(self.index_path_root):
             os.makedirs(self.index_path_root)
 
     def init_app(self, app):
         self.DEBUG = app.config.get('PONYWHOOSH_DEBUG', False)
         self.index_path_root = app.config.get('WHOOSHEE_DIR',  'whooshee')
-
         self.search_string_min_len = app.config.get(
             'WHOSHEE_MIN_STRING_LEN', 4)
         self.writer_timeout = app.config.get('WHOOSHEE_WRITER_TIMEOUT', 2)
@@ -367,12 +363,12 @@ class Whoosh(object):
                 'ponywhoosh', wh=self)
         )
 
-    def init_opts(self, opts):
-        assert isinstance(opts, dict)
-        self.index_path_root = opts.get('WHOOSHEE_DIR',  'whooshee')
-        self.search_string_min_len = opts.get(
-            'WHOSHEE_MIN_STRING_LEN', 6)
-        self.writer_timeout = opts.get('WHOOSHEE_WRITER_TIMEOUT', 2)
+    # def init_opts(self, opts):
+    #     assert isinstance(opts, dict)
+    #     self.index_path_root = opts.get('WHOOSHEE_DIR',  'whooshee')
+    #     self.search_string_min_len = opts.get(
+    #         'WHOSHEE_MIN_STRING_LEN', 6)
+    #     self.writer_timeout = opts.get('WHOOSHEE_WRITER_TIMEOUT', 2)
 
     def delete_whoosheers(self):
         self._whoosheers = {}
@@ -402,8 +398,8 @@ class Whoosh(object):
         * Sets some default values on it (unless they're already set)
         * Replaces query class of every whoosheer's model by WhoosheeQuery
         """
-        if not hasattr(wh, 'search_string_min_len'):
-            wh.search_string_min_len = self.search_string_min_len
+        print 'entro a setear wh, y minlen...'
+        wh.search_string_min_len = self.search_string_min_len
 
         if not hasattr(wh, 'index_subdir'):
             wh.index_subdir = wh.__name__
@@ -417,7 +413,7 @@ class Whoosh(object):
         a simple Whoosheer for the model and calls self.register_whoosheer on it.
         """
 
-        mwh = Whoosheer(DEBUG=self.DEBUG)
+        mwh = Whoosheer(self.DEBUG)
         mwh.search_string_min_len = self.search_string_min_len
         mwh.kw = kw
 
