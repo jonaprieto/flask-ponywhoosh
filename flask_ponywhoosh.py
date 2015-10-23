@@ -414,10 +414,11 @@ class Whoosh(object):
         """
 
         mwh = Whoosheer(self.DEBUG)
-        mwh.search_string_min_len = self.search_string_min_len
         mwh.kw = kw
 
         def inner(model):
+            
+            mwh.search_string_min_len = self.search_string_min_len
             mwh.index_subdir = model._table_
             if not mwh.index_subdir:
                 mwh.index_subdir = model.__name__
