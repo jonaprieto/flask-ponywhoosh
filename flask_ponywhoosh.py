@@ -190,6 +190,7 @@ class Whoosheer(object):
     def search(self, search_string, **opt):
 
         if self.DEBUG:
+            print 'VERSION -> ', __version__
             print 'opt:'
             pprint(opt)
 
