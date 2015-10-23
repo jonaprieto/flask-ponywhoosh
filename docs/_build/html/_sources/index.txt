@@ -55,7 +55,7 @@ further explanations on the application of these parameters.
 What's new? 0.1.5
 =================
 
-We decided to go one step forward. We decided to have ready for you a default view and a template where you can actually search and  see the results in a pretty organized way. So right now the parametrizable route '/ponywhoosh' would let you search  in a visual interactive interface!
+We've decided to go one step forward. We wanted have ready for you a default view and a template where you can actually search and  see the results in a pretty organized way. So right now the parametrizable route '/ponywhoosh' would let you search  in a visual interactive interface!
 
 This will be further explained in the bonus section. 
 
@@ -70,11 +70,12 @@ From a flask configuration, you can add the following options.
 .. code:: python
 
     app.config['WHOOSHEE_DIR'] = 'whooshes'
+    app.config['PONYWHOOSH_DEBUG'] = False
     app.config['WHOSHEE_MIN_STRING_LEN'] = 3
     app.config['WHOOSHEE_WRITER_TIMEOUT'] = 2
     app.config['WHOOSHEE_URL'] = '/ponywhoosh'
 
-This configurations set up the default folder for savind the whoshees, the minimun lenght of the string in the query, the time out (stop searching if is taking so much) and the route where you might charge the default template for searching available from version 0.1.5.
+This configurations set up the default folder for savind the whoshees, if you want to activate debug, the minimun lenght of the string in the query, the time out (stop searching if is taking so much) and the route where you might charge the default template for searching available from version 0.1.5.
 
 =========
 Searching
@@ -133,7 +134,7 @@ The function ``search()`` takes up to three arguments.
 
     search(PonyModel, "query", **kw)
 
-For example if  you want  the results to be sorted by some specific searcheable field,
+For example, if  you want  the results to be sorted by some specific searcheable field,
 you have to indicate so, by adding the argument ``sortedby="field"``.
 
 In this case the search results object would show as a score the value of the item you choose for sorting. Please note that in order for
@@ -368,13 +369,13 @@ We  aknowledged  that  we could do better in how the results were shown, for thi
 
 |Pony|
 
-These form was made thinking in what is more important (query, fields, add wildcards or something, etc). Then if you submit the search, it would show you the results in a parametrized way, deppending on the name of your tables and whether they are searcheables or not. For instance, the example app we provided in here would look like this after you perform some  search:
+These form was made thinking in what is more important (query, fields, add wildcards or something, and models). Then if you submit the search, it would show you the results in a parametrized way, deppending on the name of your tables and whether they are searcheables or not. For instance, the example app we provided in here would look like this after you perform some  search:
 
 |Results|
 
-To run this template, you only have to add to your own route the extension /ponywhoosh  and it would redirect you to the personalized view for your own searches. It is possible to change this '/ponywhoosh', take a look in the Flask settings section. 
+To run this template, you only have to add to your own route the extension /ponywhoosh  and it would redirect you to the personalized view for your own searches. It is possible to change this '/ponywhoosh' route, take a look in the Flask settings section. 
 
-So far is available to limitate the search to those fields where you want to search and even for those that you want to avoid. As well we include check boxes for add_wildcard and something functions. If there are not results to show the table won't be created. 
+So far is possible to limitate the search to those fields and models where you want to search and even for those that you want to avoid. As well we include check boxes for add_wildcard and something functions. If there are not results to show the table won't be created. 
 
 Enjoy it! 
 
@@ -425,7 +426,7 @@ After that, you could visit the following urls.
 -  ``http://localhost:5000/update`` to perform an update in an entity
    with ``id=1``.
 -  ``http://localhost:5000/`` to see the entities from database.
-- ``http://localhost:500/ponywhoosh`` to load the visual html interface. 
+- ``http://localhost:500/ponywhoosh`` to load the visual  interface. 
 
 Running the app example
 ***************************************
@@ -455,6 +456,7 @@ Try something like the following sentences:
                     Attributes[5], Attributes[2]],
      'matched_terms': {'deporte': ['chulo', 'lucha']}}
                  }}
+Or you can take a look in the 'http://localhost:5000/ponywhoosh'. That performs a full_search in all the whoosheers.
    
 
 .. |PyPI Package latest release| image:: http://img.shields.io/pypi/v/Flask-PonyWhoosh.png?style=flat

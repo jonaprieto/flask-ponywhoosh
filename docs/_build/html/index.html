@@ -78,7 +78,7 @@ further explanations on the application of these parameters.</p>
 </div>
 <div class="section" id="what-s-new-0-1-5">
 <h2>What&#8217;s new? 0.1.5<a class="headerlink" href="#what-s-new-0-1-5" title="Permalink to this headline">¶</a></h2>
-<p>We decided to go one step forward. We decided to have ready for you a default view and a template where you can actually search and  see the results in a pretty organized way. So right now the parametrizable route &#8216;/ponywhoosh&#8217; would let you search  in a visual interactive interface!</p>
+<p>We&#8217;ve decided to go one step forward. We wanted have ready for you a default view and a template where you can actually search and  see the results in a pretty organized way. So right now the parametrizable route &#8216;/ponywhoosh&#8217; would let you search  in a visual interactive interface!</p>
 <p>This will be further explained in the bonus section.</p>
 <p>For other updates, see <code class="docutils literal"><span class="pre">CHANGELOG.rst</span></code>.</p>
 </div>
@@ -86,12 +86,13 @@ further explanations on the application of these parameters.</p>
 <h2>Flask Settings<a class="headerlink" href="#flask-settings" title="Permalink to this headline">¶</a></h2>
 <p>From a flask configuration, you can add the following options.</p>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;WHOOSHEE_DIR&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;whooshes&#39;</span>
+<span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;PONYWHOOSH_DEBUG&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
 <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;WHOSHEE_MIN_STRING_LEN&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span>
 <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;WHOOSHEE_WRITER_TIMEOUT&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
 <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;WHOOSHEE_URL&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;/ponywhoosh&#39;</span>
 </pre></div>
 </div>
-<p>This configurations set up the default folder for savind the whoshees, the minimun lenght of the string in the query, the time out (stop searching if is taking so much) and the route where you might charge the default template for searching available from version 0.1.5.</p>
+<p>This configurations set up the default folder for savind the whoshees, if you want to activate debug, the minimun lenght of the string in the query, the time out (stop searching if is taking so much) and the route where you might charge the default template for searching available from version 0.1.5.</p>
 </div>
 <div class="section" id="searching">
 <h2>Searching<a class="headerlink" href="#searching" title="Permalink to this headline">¶</a></h2>
@@ -141,7 +142,7 @@ something like the following code over a view function, or even from the shell,<
 <div class="code python highlight-python"><div class="highlight"><pre><span class="n">search</span><span class="p">(</span><span class="n">PonyModel</span><span class="p">,</span> <span class="s">&quot;query&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>For example if  you want  the results to be sorted by some specific searcheable field,
+<p>For example, if  you want  the results to be sorted by some specific searcheable field,
 you have to indicate so, by adding the argument <code class="docutils literal"><span class="pre">sortedby=&quot;field&quot;</span></code>.</p>
 <p>In this case the search results object would show as a score the value of the item you choose for sorting. Please note that in order for
 one field to be sortable, you must indicate it when you are registering
@@ -347,10 +348,10 @@ For these reasons we implemented the following extra options: The first one is r
 <h2>BONUS:/ponywhoosh !<a class="headerlink" href="#bonus-ponywhoosh" title="Permalink to this headline">¶</a></h2>
 <p>We  aknowledged  that  we could do better in how the results were shown, for this reason we thought that it would be nice and useful to get ready for you a fully interactive and visual interface where you can perform the searches for your own website. So,  right now is by  default available at the route &#8216;&lt;your_url&gt;/ponywhoosh&#8217;. This route  would get you to  this html template:</p>
 <p><a class="reference external" href="https://travis-ci.org/piperod/Flask-PonyWhoosh"><img alt="Pony" src="https://raw.githubusercontent.com/compiteing/flask-ponywhoosh/master/docs/_static/%3Aponywhoosh.png" /></a></p>
-<p>These form was made thinking in what is more important (query, fields, add wildcards or something, etc). Then if you submit the search, it would show you the results in a parametrized way, deppending on the name of your tables and whether they are searcheables or not. For instance, the example app we provided in here would look like this after you perform some  search:</p>
+<p>These form was made thinking in what is more important (query, fields, add wildcards or something, and models). Then if you submit the search, it would show you the results in a parametrized way, deppending on the name of your tables and whether they are searcheables or not. For instance, the example app we provided in here would look like this after you perform some  search:</p>
 <p><a class="reference external" href="https://travis-ci.org/piperod/Flask-PonyWhoosh"><img alt="Results" src="https://raw.githubusercontent.com/compiteing/flask-ponywhoosh/master/docs/_static/results.png" /></a></p>
-<p>To run this template, you only have to add to your own route the extension /ponywhoosh  and it would redirect you to the personalized view for your own searches. It is possible to change this &#8216;/ponywhoosh&#8217;, take a look in the Flask settings section.</p>
-<p>So far is available to limitate the search to those fields where you want to search and even for those that you want to avoid. As well we include check boxes for add_wildcard and something functions. If there are not results to show the table won&#8217;t be created.</p>
+<p>To run this template, you only have to add to your own route the extension /ponywhoosh  and it would redirect you to the personalized view for your own searches. It is possible to change this &#8216;/ponywhoosh&#8217; route, take a look in the Flask settings section.</p>
+<p>So far is possible to limitate the search to those fields and models where you want to search and even for those that you want to avoid. As well we include check boxes for add_wildcard and something functions. If there are not results to show the table won&#8217;t be created.</p>
 <p>Enjoy it!</p>
 </div>
 <div class="section" id="testing">
@@ -387,7 +388,7 @@ examples.</li>
 <li><code class="docutils literal"><span class="pre">http://localhost:5000/update</span></code> to perform an update in an entity
 with <code class="docutils literal"><span class="pre">id=1</span></code>.</li>
 <li><code class="docutils literal"><span class="pre">http://localhost:5000/</span></code> to see the entities from database.</li>
-<li><code class="docutils literal"><span class="pre">http://localhost:500/ponywhoosh</span></code> to load the visual html interface.</li>
+<li><code class="docutils literal"><span class="pre">http://localhost:500/ponywhoosh</span></code> to load the visual  interface.</li>
 </ul>
 </div>
 <div class="section" id="running-the-app-example">
@@ -414,6 +415,7 @@ with <code class="docutils literal"><span class="pre">id=1</span></code>.</li>
 <span class="go">             }}</span>
 </pre></div>
 </div>
+<p>Or you can take a look in the &#8216;<a class="reference external" href="http://localhost:5000/ponywhoosh">http://localhost:5000/ponywhoosh</a>&#8216;. That performs a full_search in all the whoosheers.</p>
 </div>
 </div>
 </div>
