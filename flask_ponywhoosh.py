@@ -325,6 +325,7 @@ class Whoosh(object):
     writer_timeout = 2
     entities = {}
     search_string_min_len = 20
+    DEBUG = False
 
     def __init__(self, app=None):
 
@@ -417,7 +418,7 @@ class Whoosh(object):
         mwh.kw = kw
 
         def inner(model):
-            
+
             mwh.search_string_min_len = self.search_string_min_len
             mwh.index_subdir = model._table_
             if not mwh.index_subdir:
