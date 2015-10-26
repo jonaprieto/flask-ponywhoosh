@@ -6,6 +6,13 @@ Changelog
 0.1.5 (2015-10-20)
 -----------------------------------------
 * wh.init_opts(**) depracted
+* <your_url>/ponywhoosh
+* config constant: WHOOSHEE_URL to add a view of search engine
+* config constant:  PONYWHOOSH_DEBUG for debugging purposes
+* fix bugs about search arguments and other stuffs.
+* full_search now accepts models as strings as wells.
+* Please look up into the documentation for more details about this version.
+
 
 
 0.1.4 (2015-09-11)
