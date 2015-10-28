@@ -1,5 +1,5 @@
 
-{%extends "ponywhoosh/base.html"%}
+{%extends "base.html"%}
 {% import "bootstrap/wtf.html" as wtf %} 
 {% block title %}Flasky{% endblock %}
 {% block page_content %}
@@ -7,9 +7,6 @@
 	<h1>Welcome to Flask-Ponywhoosh</h1>
 </div>
 
-<div class="page-header">
-	<h1>Search</h1>
-</div>
 <form method="POST" action="/ponywhoosh">
 	<div>{{form.query.label}}:{{form.query(class="css_class")}}</div>
 	<div>
@@ -32,20 +29,27 @@
 	
 </form>
 
+
 <ul class="Results">
 <h1>Results</h1>
 <br>
 <table class="table">
 <td><th>Matched Terms</th>
 <td>{{results['matched_terms']}}</td></td>
-<td><th>runtime</th></td>
+<td><th>runtime</t h></td>
 <td>{{results['runtime']}}</td>
 </table>
 <br>
 {%for l in labels%}
-{%if results["results"][l]["items"] != []%}
+
 <h3>{{l}}</h3>
+
 			<table class="table">
+
+				{%if results["results"][l]["items"] == []%}
+						<th>No hay elementos que mostrar</th>
+				{%else%}
+						
 						{%for s in results["results"][l]["items"][0]["entity"].keys() %}
 								<th>{{s}}</th>
 						{%endfor%}

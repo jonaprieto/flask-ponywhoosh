@@ -5,5 +5,24 @@
 <div class="page-header">
 	<h1>Search</h1>
 </div>
-{{ wtf.quick_form(form) }}
+<form method="POST" action="/ponywhoosh">
+	<div>{{form.query.label}}:{{form.query(class="css_class")}}</div>
+	<div>
+		{{form.models.label}} : {{form.models(class= "css_class")}}
+	</div>
+	<div> 
+		{{form.fields.label}}:{{form.fields(class= "css_class")}}
+	</div>
+	<div> 
+		{{form.except_field.label}}:{{form.except_field(class= "css_class")}}
+	</div>
+	<div> 
+		{{form.wildcards.label}}:{{form.wildcards(class= "css_class")}}
+	</div>
+	<div> 
+		{{form.something.label}}:{{form.something(class= "css_class")}}
+	</div>
+	<input type="submit" value="Go">
+</form>
+
 {% endblock %}
