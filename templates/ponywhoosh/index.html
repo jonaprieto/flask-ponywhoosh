@@ -6,6 +6,7 @@
 	<h1>Search</h1>
 </div>
 <form method="POST" action="/ponywhoosh">
+	{{ form.hidden_tag() }}
 	<div>{{form.query.label}}:{{form.query(class="css_class")}}</div>
 	<div>
 		{{form.models.label}} : {{form.models(class= "css_class")}}

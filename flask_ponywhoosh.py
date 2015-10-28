@@ -64,6 +64,7 @@ class IndexView(View):
             pprint(form.data)
 
         if form.validate_on_submit():
+            print 'entroooooo'
             query = form.query.data
             models = re.split('\W+', form.models.data, flags=re.UNICODE)
             fields = re.split('\W+', form.fields.data, flags=re.UNICODE)
