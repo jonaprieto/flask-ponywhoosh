@@ -3,33 +3,28 @@
 {% import "bootstrap/wtf.html" as wtf %} 
 {% block title %}Flasky{% endblock %}
 {% block page_content %}
+
 <div class="page-header">
 	<h1>Welcome to Flask-Ponywhoosh</h1>
 </div>
 
-<div class="page-header">
-	<h1>Search</h1>
-</div>
+
 <form method="POST" action="/ponywhoosh">
 	{{ form.hidden_tag() }}
-	<div>{{form.query.label}}:{{form.query(class="css_class")}}</div>
-	<div>
+	<div>{{form.query.label}}:{{form.query(class="css_class")}}
+	</div>
+	<div> 
 		{{form.models.label}} : {{form.models(class= "css_class")}}
-	</div>
-	<div> 
 		{{form.fields.label}}:{{form.fields(class= "css_class")}}
-	</div>
-	<div> 
 		{{form.except_field.label}}:{{form.except_field(class= "css_class")}}
 	</div>
 	<div> 
 		{{form.wildcards.label}}:{{form.wildcards(class= "css_class")}}
-	</div>
-	<div> 
+	
 		{{form.something.label}}:{{form.something(class= "css_class")}}
 	</div>
 	 
-		<input type="submit" value="Go">
+		<input type="submit" value="Search">
 	
 </form>
 
@@ -42,7 +37,46 @@
 <td><th>runtime</th></td>
 <td>{{results['runtime']}}</td>
 </table>
-<br>
+
+{%for l in labels%}
+{%if results["results"][l]["items"] != []%}
+<div class="row">
+<h3>{{l}}</h3>
+
+	{% for  result  in results["results"][l]["items"] %}
+	<div class="col-xs-12 col-md-3">
+		<div class="thumbnail">
+			<div class="caption">
+				
+				<h3><a href="">Result</a></h3>
+				
+				{%for s in results["results"][l]["items"][0]["entity"].keys() %}
+				{%with%}
+				{%set r=result['entity']%}
+
+				<p>{{s}}:  {{r[s]}}</p>
+				{%endwith%}
+				{%endfor%}
+				
+				<a href="#seccion" class="btn btn-success btn-cen" data-toggle="collapse">Leer mas</a>
+				<botton class="btn btn-info btn-comen hidden-xs hidden-sm">Comentarios</botton>
+				<div class="collapse" id="seccion">
+					<br>
+					<div class="well">
+					<p>In construction</p>	
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	{%endfor%}
+</div>
+
+{%endif%}
+
+{%endfor%}
+<!-- <br>
 {%for l in labels%}
 {%if results["results"][l]["items"] != []%}
 <h3>{{l}}</h3>
@@ -73,5 +107,5 @@
 
 {%endfor%}
 
-</ul>
+</ul> -->
 {% endblock %}
