@@ -48,14 +48,15 @@ class User(db.Entity):
     birthday = Optional(datetime)
     attrs = Set("Attribute")
 
-@wh.register_model('weight', 'name', 'sport', 'user', stored=True, sortable=True)
+@wh.register_model( 'name','sport', 'weight',sortable=True, stored=True)
 class Attribute(db.Entity):
     _table_ = 'Attribute'
     id = PrimaryKey(int, auto=True)
     name = Optional(unicode)
-    user = Optional("User")
-    weight = Optional(int)
     sport = Optional(unicode)
+    weight = Optional(int)
+    user = Optional("User")
+    
 
 db.bind('sqlite', 'test.sqlite', create_db=True)
 db.generate_mapping(create_tables=True)
