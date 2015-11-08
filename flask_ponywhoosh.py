@@ -257,7 +257,12 @@ class Whoosheer(object):
                 if self.to_bool(opt.get('include_entity', False)):
                     parms = {pk: r[pk]}
                     entity = self.model.get(**parms)
-                    ans['entity'] = entity.to_dict()
+                    dic_entity = entity.to_dict()
+                    fields_missing = set(dic_entity.keys()) - set(self.index_fields)
+                    ans['other_fields'] = [(k, dic_entity[k]) for k in fields_missing]
+                    ans['entity'] = [ (k, dic_entity[k]) for k in self.index_fields ]
+                    ans['model'] = self.index_subdir
+
                 dic['results'].append(ans)
 
             if dic['cant_results'] == 0 and self.to_bool(opt.get('something', False)):
@@ -406,6 +411,7 @@ class Whoosh(object):
 
         mwh = Whoosheer(wh=self)
         mwh.kw = kw
+        mwh.index_fields  = index_fields
 
         def inner(model):
 
