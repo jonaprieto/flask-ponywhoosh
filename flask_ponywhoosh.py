@@ -80,7 +80,8 @@ class IndexView(View):
                 include_entity=True,
                 fields=fields,
                 models=models,
-                except_fields=except_fields
+                except_fields=except_fields,
+                use_dict=False
             )
 
             if self.DEBUG:
@@ -258,9 +259,12 @@ class Whoosheer(object):
                     parms = {pk: r[pk]}
                     entity = self.model.get(**parms)
                     dic_entity = entity.to_dict()
-                    fields_missing = set(dic_entity.keys()) - set(self.index_fields)
-                    ans['other_fields'] = [(k, dic_entity[k]) for k in fields_missing]
-                    ans['entity'] = [ (k, dic_entity[k]) for k in self.index_fields ]
+                    if opt.get('use_dict', True):
+                        ans['entity'] = dic_entity
+                    else:
+                        fields_missing = set(dic_entity.keys()) - set(self.index_fields)
+                        ans['other_fields'] = [(k, dic_entity[k]) for k in fields_missing]
+                        ans['entity'] = [ (k, dic_entity[k]) for k in self.index_fields ]
                     ans['model'] = self.index_subdir
 
                 dic['results'].append(ans)
