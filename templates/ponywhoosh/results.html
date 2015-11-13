@@ -1,35 +1,184 @@
 
 {%extends "ponywhoosh/base.html"%}
 {% import "bootstrap/wtf.html" as wtf %} 
-{% block title %}Flask-PonyWhoosh{% endblock %}
-{% block page_content %}
+{% block styles %}
+{{super()}}
+<style>
+.container{
+	margin-top: 90px;
+}
+.col-po{
+	background: #eeeeee;
+}
+.HeaderMenu {
+  margin-top: 53px;
+}
+.HeaderMenu .navbar {
+  background-color: white;
+}
+.HeaderMenu .navbar-nav {
+  width: 100%;
+  text-align: center;
+  margin-top: 0;
+}
+.HeaderMenu .navbar-nav > li {
+  float: none;
+  display: inline-block;
+}
+@media (max-width: 790px) {
+  /*Try and stop login link from wrapping when small*/
+  .HeaderMenu .navbar-nav > li {
+    float: left;
+  }
+}
+.HeaderMenu span {
+  font-size: 22px;
+  font-weight: 600;
+}
+.HeaderMenu .collapsedMenu > li {
+  display: block
+}
+/*Menu Collapse overrides*/
 
-<div class="page-header">
-	<h1>Welcome to Flask-Ponywhoosh</h1>
+.collapsedMenu > li > a {
+  padding: 3px;
+}
+</style>
+{% endblock %}	
+{% block title %}Flask-PonyWhoosh{% endblock %}
+
+{% block navbar %}
+<header class="HeaderMenu">
+  <nav class="navbar navbar-fixed-top navbar-default" style="">
+    <!-- header nav -->
+    <div class="container-fluid" style="padding-left: 0; padding-right: 0;">
+      <div class="navbar-header visible-xs" style="background-color: white; margin-right: 10px; height: 52px;">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-main-collapse" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <div class="navbar-left visible-xs Logo" style="margin-left: 5px; margin-top: 18px"><a href="">Logo</a>
+        </div>
+      </div>
+
+      <div class="collapse navbar-collapse" id="navbar-main-collapse" style="background-color: white;">
+        <!--Collapsed/expanded Menu-->
+        <div class="visible-xs" style="text-align: center;">
+          <ul class="nav collapsedMenu">
+            <li class="active" style=""><a href="#" style="padding: 3px;"><span>H</span>OME</a>
+            </li>
+            <li style=""><a href="#" style="padding: 3px;"><span>W</span>IKIs</a>
+            </li>
+            <li><a href="#"><span>M</span>Y <span>S</span>ETUP</a>
+            </li>
+            <li><a href="#"><span>N</span>OTIFICATIONS</a>
+            </li>
+            <li><a href="#"><span>S</span>TORE</a>
+            </li>
+          </ul>
+        </div>
+        <!--Uncollapsed Menu-->
+        <div class="container-fluid  hidden-xs" style="">
+          <ul class="nav navbar-nav" style="">
+            <li class="navbar-left Logo hidden-sm" style="">
+              <a href="#" style="">Logo</a>
+            </li>
+            <li class="navbar-left LogoSm visible-sm" style="">
+              <a href="#" style="">Logo</a>
+            </li>
+
+
+            <li class="active" style=""><a href="#"><span>H</span>OME</a>
+            </li>
+            <li><a href="#"><span>W</span>IKI</a>
+            </li>
+            <li><a href="#"><span>N</span>OTIFICATIONS</a>
+            </li>
+            <li><a href="#"><span>S</span>TORE</a>
+            </li>
+
+            <li class="navbar-right hidden-sm" style="margin-right: 0; width: 155px;"><a href="#">Login</a>
+            </li>
+            <li class="navbar-right visible-sm" style="margin-right: 0; width: 140px;"><a href="#">Login</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <nav class="navbar navbar-default" role="navigation">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Sub menu link1</a>
+        </li>
+        <li class="active"><a href="#">Sub menu link1</a>
+        </li>
+        <li class="active"><a href="#">Sub menu link1</a>
+        </li>
+
+
+      </ul>
+    </div>
+    <!-- /.navbar-collapse -->
+  </nav>
+</header>
+{% endblock %}
+{% block page_content %}
+<!-- titulo que quite y pune en el navbar -->
+<div class="page-header hidden">
+	<div class="row">
+		<div class="col-md-6">
+			<h1>Welcome to Flask-Ponywhoosh</h1>
+		</div>
+		<div class="col-md-6">
+			<h2><small style="font-size: 15px"> ({{results['runtime']}} seg)and #number Result</small></h2>
+		</div>
+	</div>
 </div>
 
-
-<form method="POST" action="/ponywhoosh">
+<!-- Este es el buscador que estaba al principio -->
+<form method="POST" action="/ponywhoosh" class="hidden">
 	{{ form.hidden_tag() }}
-	<div>{{form.query.label}}:{{form.query(class="css_class")}}
+	<div>{{form.query.label}}:{{form.query(class="form-control")}}
 	</div>
-	<div> 
-		{{form.models.label}}: {{form.models(class= "css_class")}}
-		{{form.fields.label}}:{{form.fields(class= "css_class")}}
-		{{form.except_field.label}}:{{form.except_field(class= "css_class")}}
-	</div>
+	    <div>{{form.models.label}}: {{form.models(class= "form-control")}}</div>
+		<div>{{form.fields.label}}:{{form.fields(class= "form-control")}}</div>
+		<div>{{form.except_field.label}}:{{form.except_field(class="form-control")}}</div>	
 	<div> 
 		{{form.wildcards.label}}:{{form.wildcards(class= "css_class")}}
 	
 		{{form.something.label}}:{{form.something(class= "css_class")}}
 	</div>
-	 
 		<input type="submit" value="Search">
-	
 </form>
 
 <ul class="Results">
-<h2>Results <small> {{results['runtime']}} seg</small></h2>
+<br>
+<br>
+	<a href="#min" class="btn btn-default  active" data-toggle="collapse"><span class="glyphicon glyphicon-th"></span></a>
+    <a href="#panel" class="btn btn-default" data-toggle="collapse"><span class="glyphicon glyphicon-list"></span></a>
+<br>
+<br>
+
+<!--prueba javascript -->
+
+<!-- finn
+ -->
+
 <!-- <br>
 Matched Terms
 
@@ -43,39 +192,87 @@ Matched Terms
 	  {% endfor %}
  -->
 
-{%for l in labels%}
-{%if results["results"][l]["items"] != []%}
-<div class="row">
-<h3>{{l}}</h3>
+ <!-- Pureba de acordeones inicio -->
+ <!-- Nabs Inicio -->
 
-	{% for  result  in results["results"][l]["items"] %}
-	<div class="col-xs-12 col-md-3">
-		<div class="thumbnail">
-			<div class="caption">
-				<h3><a href="">{{result['entity'][0][1]}}</a> <small>{{result['entity'][0][0]}}</small></h3>
-				
-				{%for s in results["results"][l]["items"][0]["entity"][1:] %}
-				<p>{{s[0]}}:  {{s[1]}}</p>
-				{%endfor%}
-				
-				<a href="#seccion-{{result['model']}}-{{result['docnum']}}" class="btn btn-success btn-cen" data-toggle="collapse">Leer mas</a>
-				<div class="collapse" id="seccion-{{result['model']}}-{{result['docnum']}}">
-					<br>
-					<div class="well">
-					{%for s in results["results"][l]["items"][0]["other_fields"] %}
+ <div class="collapse" id="panel">
+<!-- Nabs Fin -->
+{%for l in labels%}
+		{%if results["results"][l]["items"] != []%}
+		{% for  result  in results["results"][l]["items"] %}
+			<div class="panel-group" role="tablist" id="accordion">
+				<div class="panel panel-info">
+					<div class="panel-heading" role="tab" di="" style="padding: 5px">
+						<h4 class="panel-title">
+							<a href="#seccion1-{{result['model']}}-{{result['docnum']}}" data-toggle="collapse" data-parent="#accordion">
+								<h4>
+									{{result['entity'][0][1]}} <small>{{result['entity'][0][0]}} </small> <span class=" glyphicon glyphicon-chevron-down"></span>
+								</h4>
+							</a>
+						</h4>
+					</div>
+		
+					<div class="panel-collapse collapse" id="seccion1-{{result['model']}}-{{result['docnum']}}">
+						<div class="panel-body">
+							{%for s in results["results"][l]["items"][0]["entity"][1:] %}
 						<p>{{s[0]}}:  {{s[1]}}</p>
-					{%endfor%}
+						{%for s in results["results"][l]["items"][0]["other_fields"] %}
+							<p>{{s[0]}}:  {{s[1]}}</p>
+						{%endfor%}
+						{%endfor%}
+						</div>
 					</div>
 				</div>
 			</div>
+		{%endfor%}
+		{%endif%}
+		
+		{%endfor%}
+ 	</div>
 
+
+
+ <!-- Pureba de acordeones fin -->
+
+<div class="collapse in" id="min">
+<!-- Nabs Inicio -->
+
+<!-- Nabs Fin -->
+
+{%for l in labels%}
+	{%if results["results"][l]["items"] != []%}
+	<div class="row">
+	<h3>{{l}}</h3>
+	
+		{% for  result  in results["results"][l]["items"] %}
+		<div class="col-xs-12 col-md-3">
+			<div class="thumbnail">
+				<div class="caption">
+					<h3><a href="">{{result['entity'][0][1]}}</a> <small>{{result['entity'][0][0]}}</small></h3>
+					
+					{%for s in results["results"][l]["items"][0]["entity"][1:] %}
+					<p>{{s[0]}}:  {{s[1]}}</p>
+					{%endfor%}
+					
+					<a href="#seccion-{{result['model']}}-{{result['docnum']}}" class="btn btn-success btn-cen" data-toggle="collapse">Leer mas</a>
+					<div class="collapse" id="seccion-{{result['model']}}-{{result['docnum']}}">
+						<br>
+						<div class="well">
+						{%for s in results["results"][l]["items"][0]["other_fields"] %}
+							<p>{{s[0]}}:  {{s[1]}}</p>
+						{%endfor%}
+						</div>
+					</div>
+				</div>
+	
+			</div>
 		</div>
+		{%endfor%}
 	</div>
+	
+	{%endif%}
+	
 	{%endfor%}
-</div>
-
-{%endif%}
-
-{%endfor%}
+	</div>
 
 {% endblock %}

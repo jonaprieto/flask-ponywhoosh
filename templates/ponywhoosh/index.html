@@ -1,29 +1,45 @@
 {% extends "ponywhoosh/base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
+{% block styles %}
+{{ super() }}
+<style>
+	.container-search{
+		text-align: center;
+	}
+	h1{
+		font-size: 600%;
+		font-family: 'Bree Serif', serif;
+	}
+</style>
+{% endblock %}
 {% block title %}Flask-PonyWhoosh{% endblock %}
 {% block page_content %}
-<div class="page-header">
-	<h1>Search</h1>
+<link href='https://fonts.googleapis.com/css?family=Bree+Serif' rel='stylesheet' type='text/css'>
+<div class="page-header" style="margin-top: 70px">
+	<div class="container container-search">
+		<h1>Search <small><h4>Welcome To Flask-Ponywhoosh</h4></small></h1>
+	</div>
 </div>
-<form method="POST" action="/ponywhoosh">
-	{{ form.hidden_tag() }}
-	<div>{{form.query.label}}:{{form.query(class="css_class")}}</div>
-	<div>
-		{{form.models.label}} : {{form.models(class= "css_class")}}
-	</div>
-	<div> 
-		{{form.fields.label}}:{{form.fields(class= "css_class")}}
-	</div>
-	<div> 
-		{{form.except_field.label}}:{{form.except_field(class= "css_class")}}
-	</div>
-	<div> 
-		{{form.wildcards.label}}:{{form.wildcards(class= "css_class")}}
-	</div>
-	<div> 
-		{{form.something.label}}:{{form.something(class= "css_class")}}
-	</div>
-	<input type="submit" value="Go">
-</form>
+<div class="container">
+	<form method="POST" action="/ponywhoosh">
+		{{ form.hidden_tag() }}
+		<div>{{form.query.label}}:{{form.query(class="form-control")}}</div>
+		<div>
+			{{form.models.label}} : {{form.models(class= "form-control")}}
+		</div>
+		<div> 
+			{{form.fields.label}}:{{form.fields(class= "form-control")}}
+		</div>
+		<div> 
+			{{form.except_field.label}}:{{form.except_field(class= "form-control")}}
+		</div>
+		<div> 
+			{{form.wildcards.label}}:{{form.wildcards(class= "css_class")}}
+			{{form.something.label}}:{{form.something(class= "css_class")}}
+		</div>
+	
+		<input type="submit" value="Search">
+	</form>
+</div>
 
 {% endblock %}
