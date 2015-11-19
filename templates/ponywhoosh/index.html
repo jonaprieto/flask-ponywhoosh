@@ -10,6 +10,22 @@
 		font-size: 600%;
 		font-family: 'Bree Serif', serif;
 	}
+	.btn-avan{
+		width: 100px;
+		margin-left: 45%;
+	}
+
+	#buscador{
+		margin-left: 510px;
+	}
+	@media screen and (max-width: 768px) {
+	.title-search {
+		font-size:500%; 
+	}
+	.btn-avan {
+		margin-left: 30%;
+	}
+}	
 </style>
 {% endblock %}
 {% block title %}Flask-PonyWhoosh{% endblock %}
@@ -17,28 +33,38 @@
 <link href='https://fonts.googleapis.com/css?family=Bree+Serif' rel='stylesheet' type='text/css'>
 <div class="page-header" style="margin-top: 70px">
 	<div class="container container-search">
-		<h1>Search <small><h4>Welcome To Flask-Ponywhoosh</h4></small></h1>
+		<div class="row">
+			<div class="col-md-12 col-xs-12">
+				<h1 class="title-search">Search <small><h4>Welcome To Flask-Ponywhoosh</h4></small></h1>
+			</div>
+		</div>
 	</div>
 </div>
 <div class="container">
 	<form method="POST" action="/ponywhoosh">
 		{{ form.hidden_tag() }}
-		<div>{{form.query.label}}:{{form.query(class="form-control")}}</div>
-		<div>
-			{{form.models.label}} : {{form.models(class= "form-control")}}
+		<div>{{form.query.label}}:{{form.query(class="form-control")}}</div><br>
+		<div class="collapse" id="avanzado">
+			<div class="well">
+				<div>
+					{{form.models.label}} : {{form.models(class= "form-control")}}
+				</div>
+				<div> 
+					{{form.fields.label}}:{{form.fields(class= "form-control")}}
+				</div>
+				<div> 
+					{{form.except_field.label}}:{{form.except_field(class= "form-control")}}
+				</div>
+				<div> 
+					{{form.wildcards.label}}:{{form.wildcards(class= "css_class")}}
+					{{form.something.label}}:{{form.something(class= "css_class")}}
+				</div>
+				<div >
+					<input type="submit" value="Search" id="buscador" class="btn btn-primary">
+				</div>
+			</div>
 		</div>
-		<div> 
-			{{form.fields.label}}:{{form.fields(class= "form-control")}}
-		</div>
-		<div> 
-			{{form.except_field.label}}:{{form.except_field(class= "form-control")}}
-		</div>
-		<div> 
-			{{form.wildcards.label}}:{{form.wildcards(class= "css_class")}}
-			{{form.something.label}}:{{form.something(class= "css_class")}}
-		</div>
-	
-		<input type="submit" value="Search">
+		<div><a class="btn btn-default btn-avan" href="#avanzado" data-toggle="collapse">Avanzado</a></div>
 	</form>
 </div>
 
