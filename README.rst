@@ -24,7 +24,7 @@ or
 
     git clone https://github.com/piperod/Flask-PonyWhoosh.git
 
-What's new? 0.1.5
+What's new? 0.1.6
 -----------------
 
 We've decided to go one step forward. We wanted have ready for you a
@@ -32,7 +32,9 @@ default view and a template where you can actually search and see the
 results in a pretty organized way. So right now the parametrizable route
 '/ponywhoosh' would let you search in a visual interactive interface!
 
-This will be further explained in the bonus section.
+The basic search form: |Search|
+
+One of two possible ways to view the results is: |Results|
 
 For other updates, see ``CHANGELOG.rst``.
 
@@ -42,3 +44,5 @@ For other updates, see ``CHANGELOG.rst``.
    :target: https://pypi.python.org/pypi/Flask-PonyWhoosh
 .. |Test| image:: https://travis-ci.org/piperod/Flask-PonyWhoosh.svg?branch=master
    :target: https://travis-ci.org/piperod/Flask-PonyWhoosh
+.. |Search| image:: https://raw.github.com/Flask-PonyWhoosh/searchform.png
+.. |Results| image:: https://raw.github.com/Flask-PonyWhoosh/results.png

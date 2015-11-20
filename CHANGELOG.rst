@@ -2,6 +2,10 @@
 Changelog
 =========
 
+0.1.6 (2015-10-20)
+-----------------------------------------
+* Improvements of Front-End Example Search Page and Results Page
+* New contribuitor, alegomezc64 to make the design/js of front pages.
 
 0.1.5 (2015-10-20)
 -----------------------------------------
