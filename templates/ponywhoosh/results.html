@@ -160,7 +160,7 @@ hr{
 				<div class="caption caption-{{label}}">
 					<h4 class="caption-result"><a>{{result['entity'][0][1]}}</a> <small>{{result['entity'][0][0]}}</small></h4>
 					
-					{%for s in results["results"][label]["items"][0]["entity"][1:] %}
+					{%for s in result["entity"][1:] %}
 						<table class="table">
 						<tr>
 						<td>{{s[0]}}</td>
@@ -174,7 +174,7 @@ hr{
 					<div class="collapse" id="seccion-{{result['model']}}-{{result['docnum']}}">
 						<br>
 						<div class="well">
-						{%for s in results["results"][label]["items"][0]["other_fields"] %}
+						{%for s in result["other_fields"] %}
 							<table class="table table-striped table-bordered table-hover ">
 							<tr>
 							<th>{{s[0]}}</th>
