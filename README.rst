@@ -5,7 +5,7 @@ Welcome to Flask-PonyWhoosh's Source Code Repository!
 
 This package integrate the amazing power of ``Whoosh`` with ``Pony ORM``
 inside ``Flask``. Source code and issue tracking at
-http://github.com/piperod/Flask-PonyWhoosh.
+http://github.com/compiteing/Flask-PonyWhoosh.
 
 Please take a look to the official documentation up-date:
     -  http://pythonhosted.org/Flask-PonyWhoosh/
@@ -22,7 +22,7 @@ or
 
 .. code:: bash
 
-    git clone https://github.com/piperod/Flask-PonyWhoosh.git
+    git clone https://github.com/compiteing/Flask-PonyWhoosh.git
 
 What's new? 0.1.6
 -----------------
@@ -44,9 +44,5 @@ For other updates, see ``CHANGELOG.rst``.
    :target: https://pypi.python.org/pypi/Flask-PonyWhoosh
 .. |Test| image:: https://travis-ci.org/piperod/Flask-PonyWhoosh.svg?branch=master
    :target: https://travis-ci.org/piperod/Flask-PonyWhoosh
-.. |Search| image:: https://raw.githubusercontent.com/compiteing/flask-ponywhoosh/master/searchform.png
-	:align center
-	:height 400px
-.. |Results| image:: https://raw.githubusercontent.com/compiteing/flask-ponywhoosh/master/results.png
-	:align center
-	:height 400px
+.. |Search| image:: https://raw.githubusercontent.com/compiteing/flask-ponywhoosh/master/searchform.png%0A%20:align%20center%0A%20:height%20400px
+.. |Results| image:: https://raw.githubusercontent.com/compiteing/flask-ponywhoosh/master/results.png%0A%20:align%20center%0A%20:height%20400px
