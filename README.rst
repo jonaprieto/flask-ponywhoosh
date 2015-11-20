@@ -44,5 +44,5 @@ For other updates, see ``CHANGELOG.rst``.
    :target: https://pypi.python.org/pypi/Flask-PonyWhoosh
 .. |Test| image:: https://travis-ci.org/piperod/Flask-PonyWhoosh.svg?branch=master
    :target: https://travis-ci.org/piperod/Flask-PonyWhoosh
-.. |Search| image:: https://raw.githubusercontent.com/compiteing/flask-ponywhoosh/master/searchform.png%0A%20:align%20center%0A%20:height%20400px
-.. |Results| image:: https://raw.githubusercontent.com/compiteing/flask-ponywhoosh/master/results.png%0A%20:align%20center%0A%20:height%20400px
+.. |Search| image:: https://github.com/compiteing/flask-ponywhoosh/blob/master/searchform.png?raw=true%0A%20:align%20center%0A%20:height%20400px
+.. |Results| image:: https://github.com/compiteing/flask-ponywhoosh/blob/master/results.png?raw=true%0A%20:align%20center%0A%20:height%20400px
