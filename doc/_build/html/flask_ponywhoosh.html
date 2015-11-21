@@ -94,16 +94,14 @@ for flask applications. Enjoy it!</p>
 <dt id="flask_ponywhoosh.IndexView">
 <em class="property">class </em><code class="descclassname">flask_ponywhoosh.</code><code class="descname">IndexView</code><span class="sig-paren">(</span><em>wh</em><span class="sig-paren">)</span><a class="headerlink" href="#flask_ponywhoosh.IndexView" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">flask.views.View</span></code></p>
-<p>Attributes:</p>
-<blockquote>
-<div>methods (list): POST and GET 
-wh (whoosheers): The whoosheers is the object where all the whoosheer are saved.</div></blockquote>
+<p>This is all the setting for the template index.html in the templates folder.</p>
+<p>methods (list): POST and GET 
+wh (whoosheers): The whoosheers is the object where all the whoosheer are saved.</p>
 <dl class="method">
 <dt id="flask_ponywhoosh.IndexView.dispatch_request">
 <code class="descname">dispatch_request</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#flask_ponywhoosh.IndexView.dispatch_request" title="Permalink to this definition">¶</a></dt>
-<dd><p>Form for ponywhoosh</p>
-<p>This form is plugeable. This means that all what you need to do is to install the package and run
-the url :: /ponywhoosh (You may change it in the config) and get this results.</p>
+<dd><p>This form is plugeable. That means that all what you need to do is to install the package and run
+the url :: /ponywhoosh (You may change it in the config) and get the results.</p>
 <dl class="docutils">
 <dt>Returns:</dt>
 <dd>Results: The results are sent to the template using bootstrap. 
@@ -124,7 +122,7 @@ the one that will be contained in the tittle of each searh result.</dd>
 <dt id="flask_ponywhoosh.SearchForm">
 <em class="property">class </em><code class="descclassname">flask_ponywhoosh.</code><code class="descname">SearchForm</code><span class="sig-paren">(</span><em>formdata=&lt;class flask_wtf.form._Auto&gt;</em>, <em>obj=None</em>, <em>prefix=''</em>, <em>csrf_context=None</em>, <em>secret_key=None</em>, <em>csrf_enabled=None</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#flask_ponywhoosh.SearchForm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">flask_wtf.form.Form</span></code></p>
-<p>Search Form</p>
+<p>This is the searching form that we will be use to make our search engine website.</p>
 <dl class="docutils">
 <dt>Attributes:</dt>
 <dd>except_field (StringField): Fields you do not want to include in the search results.
@@ -206,7 +204,7 @@ wildcards (BooleanField): Checkbox</dd>
 <dl class="method">
 <dt id="flask_ponywhoosh.Whoosh.delete_whoosheers">
 <code class="descname">delete_whoosheers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#flask_ponywhoosh.Whoosh.delete_whoosheers" title="Permalink to this definition">¶</a></dt>
-<dd><p>Delete whoosheers</p>
+<dd><p>This set to empty all the whosheers registered.</p>
 <dl class="docutils">
 <dt>Returns:</dt>
 <dd>TYPE: This empty all the whoosheers.</dd>
@@ -226,7 +224,7 @@ wildcards (BooleanField): Checkbox</dd>
 <dl class="method">
 <dt id="flask_ponywhoosh.Whoosh.init_app">
 <code class="descname">init_app</code><span class="sig-paren">(</span><em>app</em><span class="sig-paren">)</span><a class="headerlink" href="#flask_ponywhoosh.Whoosh.init_app" title="Permalink to this definition">¶</a></dt>
-<dd><p>Summary</p>
+<dd><p>Initializes the App.</p>
 <dl class="docutils">
 <dt>Args:</dt>
 <dd>app (TYPE): Description</dd>
@@ -265,7 +263,7 @@ a simple Whoosheer for the model and calls self.register_whoosheer on it.</p>
 <dl class="method">
 <dt id="flask_ponywhoosh.Whoosh.search">
 <code class="descname">search</code><span class="sig-paren">(</span><em>*arg</em>, <em>**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#flask_ponywhoosh.Whoosh.search" title="Permalink to this definition">¶</a></dt>
-<dd><p>search fucntion. This allows you to search using the following arguments.</p>
+<dd><p>Search function. This allows you to search using the following arguments.</p>
 <dl class="docutils">
 <dt>Args:</dt>
 <dd><a href="#id5"><span class="problematic" id="id6">*</span></a>arg: The search string. 
@@ -307,12 +305,12 @@ fields, except_fields, etc. These options were described previously.</dd>
 <dt>Attributes:</dt>
 <dd>DEBUG (bool): Activates debugin. 
 parameters (dict): Is a dictionary that contains parameters to manage the whoosheer object.
-#.limit: 
-#. Optimize: This option indexes all the documents again to improve search runtime. However 
+* limit: 
+*  Optimize: This option indexes all the documents again to improve search runtime. However 
 having the index optimizing everytime a new document is added may cause to register documents way too slow. 
-#.reverse= This option changes de order in which the documents are shown in the search results object.
-#. scored: This option adds a boost in the column, giving it more importance when searching is performed. 
-#. sortedby: This option let you decide the order based in a specific column. For example, price, age, etc.</dd>
+* reverse= This option changes de order in which the documents are shown in the search results object.
+*  scored: This option adds a boost in the column, giving it more importance when searching is performed. 
+*  sortedby: This option let you decide the order based in a specific column. For example, price, age, etc.</dd>
 </dl>
 <dl class="method">
 <dt id="flask_ponywhoosh.Whoosheer.add_field">
@@ -330,19 +328,19 @@ fieldspec (Name, optional): This option adds various options as were described b
 <dl class="method">
 <dt id="flask_ponywhoosh.Whoosheer.charge_documents">
 <code class="descname">charge_documents</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#flask_ponywhoosh.Whoosheer.charge_documents" title="Permalink to this definition">¶</a></dt>
-<dd><p>Charge Documents</p>
-<dl class="docutils">
-<dt>Returns:</dt>
-<dd>Index: This method allow you to charge documents you already have 
-in your database. In this way an Index would be created according to 
+<dd><dl class="docutils">
+<dt>This method allow you to charge documents you already have </dt>
+<dd>in your database. In this way an Index would be created according to 
 the model and fields registered.</dd>
+<dt>Returns:</dt>
+<dd>An index updated with new documents.</dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="flask_ponywhoosh.Whoosheer.counts">
 <code class="descname">counts</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#flask_ponywhoosh.Whoosheer.counts" title="Permalink to this definition">¶</a></dt>
-<dd><p>Counts</p>
+<dd><p>This method counts all the documents contained in  a certain registered model.</p>
 <dl class="docutils">
 <dt>Returns:</dt>
 <dd>Int: A number with all the documents a model have.</dd>
@@ -352,8 +350,7 @@ the model and fields registered.</dd>
 <dl class="method">
 <dt id="flask_ponywhoosh.Whoosheer.delete_documents">
 <code class="descname">delete_documents</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#flask_ponywhoosh.Whoosheer.delete_documents" title="Permalink to this definition">¶</a></dt>
-<dd><p>Delete_documents:
-This option let you delete documents by the given pk associated to the document.</p>
+<dd><p>Deletes all the  documents using the  pk associated to them.</p>
 <dl class="docutils">
 <dt>Returns:</dt>
 <dd>The new index with the document deleted.</dd>
@@ -363,10 +360,10 @@ This option let you delete documents by the given pk associated to the document.
 <dl class="method">
 <dt id="flask_ponywhoosh.Whoosheer.delete_field">
 <code class="descname">delete_field</code><span class="sig-paren">(</span><em>field_name</em><span class="sig-paren">)</span><a class="headerlink" href="#flask_ponywhoosh.Whoosheer.delete_field" title="Permalink to this definition">¶</a></dt>
-<dd><p>Delete Field</p>
+<dd><p>This function deletes one determined field using the command MODEL.wh.delete_field(FIELD)</p>
 <dl class="docutils">
 <dt>Args:</dt>
-<dd>field_name (TEXT): This argument let you delete some field for some model registered in the whoosheer.</dd>
+<dd>field_name (string): This argument let you delete some field for some model registered in the whoosheer.</dd>
 <dt>Returns:</dt>
 <dd>INDEX: The new schema after deleted is returned.</dd>
 </dl>
@@ -375,10 +372,10 @@ This option let you delete documents by the given pk associated to the document.
 <dl class="method">
 <dt id="flask_ponywhoosh.Whoosheer.optimize">
 <code class="descname">optimize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#flask_ponywhoosh.Whoosheer.optimize" title="Permalink to this definition">¶</a></dt>
-<dd><p>Optimize</p>
+<dd><p>The index is reindexed, optimizing the run time of searchings and space used. Everytime a document is added a new file would be created, but optimizing would reduce all to just one.</p>
 <dl class="docutils">
 <dt>Returns:</dt>
-<dd>TYPE: The index is reindexed, optimizing the run time of searchings and space used. Everytime a document is added a new file would be created, but optimizing would reduce all to just one.</dd>
+<dd>TYPE: Index optimized.</dd>
 </dl>
 </dd></dl>
 
@@ -416,16 +413,16 @@ may be changed in the config options.</dd>
 <dl class="method">
 <dt id="flask_ponywhoosh.Whoosheer.search">
 <code class="descname">search</code><span class="sig-paren">(</span><em>search_string</em>, <em>**opt</em><span class="sig-paren">)</span><a class="headerlink" href="#flask_ponywhoosh.Whoosheer.search" title="Permalink to this definition">¶</a></dt>
-<dd><p>Search:</p>
+<dd><p>The core function of the package. These are the arguments we consider.</p>
 <dl class="docutils">
 <dt>Args:</dt>
 <dd>search_string (str): This is what you are looking for in your pony database. 
 <a href="#id9"><span class="problematic" id="id10">**</span></a>opt: The following opts are available for the search function: 
-#.add_wildcars(bool): This opt allows you to search no literal queries. 
-#.fields: This opt let you filter your search result on some model by the fields you want to search.
-#.include_entity: This opt let you see not only the result and the register fields but all the instance from the entity of the database. 
-#.except_fields: Tell the searcher to not look on these fields. 
-#.use_dict: This option let you activate the dict for the items in the search result, or just view them as a list. 
+* add_wildcars(bool): This opt allows you to search no literal queries. 
+* fields: This opt let you filter your search result on some model by the fields you want to search.
+* include_entity: This opt let you see not only the result and the register fields but all the instance from the entity of the database. 
+* except_fields: Tell the searcher to not look on these fields. 
+* use_dict: This option let you activate the dict for the items in the search result, or just view them as a list. 
 We implement this because we wanted that the  first field registered of the model would be the most important one. 
 As was explained in the IndexView section.</dd>
 <dt>Returns:</dt>
@@ -448,10 +445,10 @@ As was explained in the IndexView section.</dd>
 <dl class="method">
 <dt id="flask_ponywhoosh.Whoosheer.update_documents">
 <code class="descname">update_documents</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#flask_ponywhoosh.Whoosheer.update_documents" title="Permalink to this definition">¶</a></dt>
-<dd><p>Update Documents</p>
+<dd><p>It deletes all the documents in the index and charge them again.</p>
 <dl class="docutils">
 <dt>Returns:</dt>
-<dd>Index: It deletes all the documents in the index and charge them again.</dd>
+<dd>Index: with updated documents</dd>
 </dl>
 </dd></dl>
 

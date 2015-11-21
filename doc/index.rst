@@ -382,6 +382,10 @@ To run this template, you only have to add to your own route the extension /pony
 
 So far is possible to limitate the search to those fields and models where you want to search and even for those that you want to avoid. As well we include check boxes for add_wildcard and something functions. If there are not results to show the table won't be created. 
 
+This is how it looks with the new changes.
+
+|Form| 
+
 Enjoy it! 
 
 ========
@@ -479,7 +483,9 @@ Or you can take a look in the 'http://localhost:5000/ponywhoosh'. That performs 
    :target: https://pypi.python.org/pypi/Flask-PonyWhoosh
 .. |Test| image:: https://travis-ci.org/piperod/Flask-PonyWhoosh.svg?branch=master
     :target: https://travis-ci.org/piperod/Flask-PonyWhoosh
-.. |Pony| image:: https://raw.githubusercontent.com/compiteing/flask-ponywhoosh/master/docs/_static/%3Aponywhoosh.png
+.. |Pony| image:: https://github.com/compiteing/flask-ponywhoosh/blob/master/doc/_static/searchform.png?raw=true
     :target: https://travis-ci.org/piperod/Flask-PonyWhoosh
-.. |Results| image:: https://raw.githubusercontent.com/compiteing/flask-ponywhoosh/master/docs/_static/results.png
+.. |Results| image:: https://github.com/compiteing/flask-ponywhoosh/blob/master/doc/_static/results.png?raw=true
+    :target: https://travis-ci.org/piperod/Flask-PonyWhoosh
+.. |Form| image::https://github.com/compiteing/flask-ponywhoosh/blob/master/doc/_static/searchformadvanced.png?raw=true
     :target: https://travis-ci.org/piperod/Flask-PonyWhoosh
