@@ -1,14 +1,16 @@
 '''
 
-    flask_ponywhoosh extension
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+flask_ponywhoosh extension
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    Adds capabilities to perform full-text search over your modules of Pony ORM
-    for flask applications. Enjoy it!
+Adds capabilities to perform full-text search over your modules of Pony ORM
+for flask applications. Enjoy it!
 
-    :copyright: (c) 2015 by Jonathan S. Prieto & Ivan Felipe Rodriguez.
-    :license: BSD (see LICENSE.md)
+:copyright: (c) 2015 by Jonathan S. Prieto & Ivan Felipe Rodriguez.
+:license: BSD (see LICENSE.md)
 
+Attributes:
+    basedir (TYPE): Description
 '''
 
 from collections import defaultdict
@@ -35,6 +37,17 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 class SearchForm(Form):
+    """This is the searching form that we will be use to make our search engine website.
+    
+    Attributes:
+        except_field (StringField): Fields you do not want to include in the search results.
+        fields (StringField): Fields, separated by comma,  where you want to search. 
+        models (StringField): Models, separated by comma, where you want to search. 
+        query (StringField): What you want to search. 
+        something (BooleanField): Option to literal search first, but in case there are no results available, it performs a search with wild_cards. 
+        submit (SubmitField): Button to submit the form. 
+        wildcards (BooleanField): Checkbox 
+    """
     query = StringField('What are you looking for?')
     models = StringField('Models')
     fields = StringField('Fields')
@@ -45,14 +58,32 @@ class SearchForm(Form):
 
 
 class IndexView(View):
-
+    """This is all the setting for the template index.html in the templates folder. 
+        
+        methods (list): POST and GET 
+        wh (whoosheers): The whoosheers is the object where all the whoosheer are saved. 
+    """
     methods = ['POST', 'GET']
 
     def __init__(self, wh):
+        """__init__
+        
+        Args:
+            wh (whoosheers): Initializes the Index view for the /ponywhoosh.
+        """
         self.wh = wh
         self.DEBUG = self.wh.DEBUG
 
     def dispatch_request(self):
+        """ This form is plugeable. That means that all what you need to do is to install the package and run
+        the url :: /ponywhoosh (You may change it in the config) and get the results.
+        
+        Returns:
+            Results: The results are sent to the template using bootstrap. 
+            They are renderized using whether a grid or a table, depending on what 
+            models did you register. By default the first field registered is considered
+            the one that will be contained in the tittle of each searh result.
+        """
         ctx = {'form': SearchForm()}
         query, fields = None, None
         wildcards = True
@@ -64,7 +95,7 @@ class IndexView(View):
             pprint(form.data)
 
         if form.validate_on_submit():
-            print 'entroooooo'
+            
             query = form.query.data
             models = re.split('\W+', form.models.data, flags=re.UNICODE)
             fields = re.split('\W+', form.fields.data, flags=re.UNICODE)
@@ -116,13 +147,19 @@ class IndexView(View):
 
 
 class Whoosheer(object):
+    """A top lev....
+    
+    Attributes:
+        DEBUG (bool): Activates debugin. 
+        parameters (dict): Is a dictionary that contains parameters to manage the whoosheer object.
+        * limit: 
+        *  Optimize: This option indexes all the documents again to improve search runtime. However 
+        having the index optimizing everytime a new document is added may cause to register documents way too slow. 
+        * reverse= This option changes de order in which the documents are shown in the search results object.
+        *  scored: This option adds a boost in the column, giving it more importance when searching is performed. 
+        *  sortedby: This option let you decide the order based in a specific column. For example, price, age, etc.
 
     """
-
-    Whoosheer is basically a unit of fulltext search.
-
-    """
-
     parameters = {
         'limit': 0,
         'optimize': False,
@@ -132,18 +169,46 @@ class Whoosheer(object):
     }
 
     def __init__(self, wh):
+        """Summary
+        
+        Args:
+            wh (Whoosh): Initializes de whoosheer. 
+        """
         self.wh = wh
         self.DEBUG = wh.DEBUG
 
     def add_field(self, fieldname, fieldspec=fields.TEXT):
+        """Add Field
+        
+        Args:
+            fieldname (Text): This parameters register a new field in specified model.
+            fieldspec (Name, optional): This option adds various options as were described before. 
+        
+        Returns:
+            TYPE: The new schema after deleted is returned. 
+        """
         self.index.add_field(fieldname, fieldspec)
         return self.index.schema
 
     def delete_field(self, field_name):
+        """This function deletes one determined field using the command MODEL.wh.delete_field(FIELD)
+        
+        Args:
+            field_name (string): This argument let you delete some field for some model registered in the whoosheer. 
+        
+        Returns:
+            INDEX: The new schema after deleted is returned. 
+        """
         self.index.remove_field(field_name.strip())
         return self.index.schema
 
     def delete_documents(self):
+        """
+        Deletes all the  documents using the  pk associated to them. 
+        
+        Returns:
+            The new index with the document deleted. 
+        """
         pk = unicode(self.primary)
         for doc in self.index.searcher().documents():
             if pk in doc:
@@ -151,13 +216,32 @@ class Whoosheer(object):
                 self.index.delete_by_term(pk, doc_pk)
 
     def optimize(self):
+        """ The index is reindexed, optimizing the run time of searchings and space used. Everytime a document is added a new file would be created, but optimizing would reduce all to just one. 
+        
+        
+        Returns:
+            TYPE: Index optimized. 
+        """
         self.index.optimize()
 
     def counts(self):
+        """This method counts all the documents contained in  a certain registered model. 
+        
+        Returns:
+            Int: A number with all the documents a model have. 
+        """
         return self.index.doc_count()
 
     @orm.db_session
     def charge_documents(self):
+        """
+        This method allow you to charge documents you already have 
+            in your database. In this way an Index would be created according to 
+            the model and fields registered. 
+        
+        Returns:
+            An index updated with new documents.  
+        """
         doc_count = self.index.doc_count()
         objs = orm.count(e for e in self.model)
 
@@ -177,12 +261,31 @@ class Whoosheer(object):
             writer.commit()
 
     def update_documents(self):
+        """It deletes all the documents in the index and charge them again. 
+        
+        Returns:
+            Index: with updated documents"""
         self.delete_documents()
         self.charge_documents()
 
     @orm.db_session
     def search(self, search_string, **opt):
+        """The core function of the package. These are the arguments we consider.  
 
+        
+        Args:
+            search_string (str): This is what you are looking for in your pony database. 
+            **opt: The following opts are available for the search function: 
+            * add_wildcars(bool): This opt allows you to search no literal queries. 
+            * fields: This opt let you filter your search result on some model by the fields you want to search.
+            * include_entity: This opt let you see not only the result and the register fields but all the instance from the entity of the database. 
+            * except_fields: Tell the searcher to not look on these fields. 
+            * use_dict: This option let you activate the dict for the items in the search result, or just view them as a list. 
+            We implement this because we wanted that the  first field registered of the model would be the most important one. 
+            As was explained in the IndexView section. 
+        Returns:
+            TYPE: Description
+        """
         if self.DEBUG:
             print 'VERSION -> ', __version__
             print 'opt:'
@@ -276,7 +379,17 @@ class Whoosheer(object):
             return dic
 
     def prep_search_string(self, search_string, add_wildcards=False):
-        """Prepares search string as a proper whoosh search string."""
+        """Prepares search string as a proper whoosh search string.
+        
+        Args:
+            search_string (str): it prepares the search string and see if the lenght is correct. 
+            add_wildcards (bool, optional): It runs a query for inexact queries. 
+        
+        Raises:
+            ValueError: When the search string does not have the appropriate lenght. This lenght 
+            may be changed in the config options. 
+        """
+
         s = search_string.strip()
         try:
             s = unicode(s)
@@ -295,6 +408,15 @@ class Whoosheer(object):
         return s
 
     def to_bool(self, v):
+        """to bool. 
+
+        
+        Args:
+            v (TYPE): This takes some of the commonly used bool declaratories like, True, true, v, t , y or yes and converted in to just one. Avoiding int . 
+        
+        Returns:
+            TYPE: It returns a bool field. 
+        """
         if isinstance(v, bool):
             return v
         if isinstance(v, unicode) or isinstance(v, str):
@@ -304,6 +426,15 @@ class Whoosheer(object):
         return False
 
     def parse_opts_searcher(self, opts, parameters):
+        """parse_opts_searcher
+        
+        Args:
+            opts (Args): it takes the opts saved on the search object 
+            parameters (TYPE): Takes care that the opts are actually parameters available for the search. 
+        
+        Returns:
+            TYPE: Description
+        """
         assert isinstance(opts, dict)
         res = {}
         for k, v in opts.items():
@@ -326,17 +457,31 @@ class Whoosheer(object):
 
 class Whoosh(object):
 
-    """A top level class that allows to register whoosheers."""
+    """A top level class that allows to register whoosheers.
+    
+    Attributes:
+        #.DEBUG (bool): Description
+        #.entities (dict): This is a dictionary to store entities from db.
+        #.index_path_root (str): this is the name where the folder of the whoosheers are going to be stored.
+        #.route (TYPE): This config let you set the route for the url to run the html template.
+        #.search_string_min_len (int): This item let you config the minimun string value possible to perform search. 
+        #.template_path (TYPE): Is the path where the folder of templates will be store. 
+        #.writer_timeout (int): Is the time when the writer should stop the searching. 
+    """
 
     _whoosheers = {}
     index_path_root = 'whooshee'
     writer_timeout = 2
     entities = {}
-    search_string_min_len = 20
+    search_string_min_len = 2
     DEBUG = False
 
     def __init__(self, app=None):
-
+        """Summary
+        
+        Args:
+            app (TYPE, optional): Description
+        """
         if app is not None:
             self.init_app(app)
 
@@ -344,6 +489,14 @@ class Whoosh(object):
             os.makedirs(self.index_path_root)
 
     def init_app(self, app):
+        """Initializes the App. 
+        
+        Args:
+            app (TYPE): Description
+        
+        Returns:
+            TYPE: Description
+        """
         self.DEBUG = app.config.get('PONYWHOOSH_DEBUG', False)
         self.index_path_root = app.config.get('WHOOSHEE_DIR',  'whooshee')
         self.search_string_min_len = app.config.get(
@@ -374,15 +527,28 @@ class Whoosh(object):
         )
 
     def delete_whoosheers(self):
+        """This set to empty all the whosheers registered. 
+        
+        Returns:
+            TYPE: This empty all the whoosheers. 
+        """
         self._whoosheers = {}
 
     def whoosheers(self):
+        """Summary
+        
+        Returns:
+            TYPE: This returns all the whoosheers items stored. 
+        """
         return [v for k, v in self._whoosheers.items()]
 
     def create_index(self, wh):
         """Creates and opens index for given whoosheer.
-
+        
         If the index already exists, it just opens it, otherwise it creates it first.
+        
+        Args:
+            wh (TYPE): All the whoosheers stored.
         """
         index_path = os.path.join(self.index_path_root, wh.index_subdir)
 
@@ -395,11 +561,15 @@ class Whoosh(object):
         wh.index = index
 
     def register_whoosheer(self, wh):
-        """Registers a given whoosheer:
-
+        """
+        Registers a given whoosheer:
+        
         * Creates and opens an index for it (if it doesn't exist yet)
         * Sets some default values on it (unless they're already set)
         * Replaces query class of every whoosheer's model by WhoosheeQuery
+        
+        Args:
+            wh (TYPE): Description
         """
         if not hasattr(wh, 'index_subdir'):
             wh.index_subdir = wh.__name__
@@ -411,6 +581,10 @@ class Whoosh(object):
     def register_model(self, *index_fields, **kw):
         """Registers a single model for fulltext search. This basically creates
         a simple Whoosheer for the model and calls self.register_whoosheer on it.
+        
+        Args:
+            *index_fields: all the fields indexed from the model. 
+            **kw: The options for each field, sortedby, stored... 
         """
 
         mwh = Whoosheer(wh=self)
@@ -418,7 +592,15 @@ class Whoosh(object):
         mwh.index_fields  = index_fields
 
         def inner(model):
-
+            """This look for the types of each field registered in the whoosher, whether if it is 
+            Numeric, datetime or Boolean. 
+            
+            Args:
+                model (TYPE): Description
+            
+            Returns:
+                TYPE: Description
+            """
             mwh.index_subdir = model._table_
             if not mwh.index_subdir:
                 mwh.index_subdir = model.__name__
@@ -458,6 +640,15 @@ class Whoosh(object):
             self.register_whoosheer(mwh)
 
             def _middle_save_(obj, status):
+                """Summary
+                
+                Args:
+                    obj (TYPE): Description
+                    status (TYPE): Description
+                
+                Returns:
+                    TYPE: Description
+                """
                 writer = mwh.index.writer(timeout=self.writer_timeout)
 
                 attrs = {mwh.primary: obj.get_pk()}
@@ -493,6 +684,16 @@ class Whoosh(object):
 
     @orm.db_session
     def search(self, *arg, **kw):
+        """Search function. This allows you to search using the following arguments.
+        
+        Args:
+            *arg: The search string. 
+            **kw: The options available for searching: include_entity, add_wildcards, something, 
+            fields, except_fields, etc. These options were described previously. 
+        
+        Returns:
+            TYPE: Description
+        """
         output = {
             'runtime': 0,
             'results': {},
@@ -541,13 +742,42 @@ class Whoosh(object):
 
 @orm.db_session
 def search(model, *arg, **kw):
+    """Summary
+    
+    Args:
+        model (TYPE): Description
+        *arg: Description
+        **kw: Description
+    
+    Returns:
+        TYPE: Description
+    """
     return model._wh_.search(*arg, **kw)
 
 
 @orm.db_session
 def delete_field(model, *arg):
+    """Delete_field 
+    
+    Args:
+        model (TYPE): Is the model from where you want to delete an specific field. 
+        *arg: Fiedls. 
+    
+    Returns:
+        TYPE: model without the desired field. 
+    """
     return model._wh_.delete_field(*arg)
 
 
 def full_search(wh, *arg, **kw):
+    """ This function search in every model registered. And portrays the result in a dictionary where the keys are the models. 
+    
+    Args:
+        wh (Whoosheer): This is where all the whoosheers are stored. 
+        *arg: The search string. 
+        **kw: The options available for a single search wildcards, something, fields, models, etc. 
+    
+    Returns:
+        TYPE: Dictionary with all the the results for the models. 
+    """
     return wh.search(*arg, **kw)

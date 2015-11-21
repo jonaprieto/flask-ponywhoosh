@@ -7,6 +7,8 @@ This package integrate the amazing power of ``Whoosh`` with ``Pony ORM``
 inside ``Flask``. Source code and issue tracking at
 http://github.com/piperod/Flask-PonyWhoosh.
 
+.. toctree::
+    :maxdepth: 4
 ============
 Installation
 ============
@@ -20,6 +22,8 @@ or
 .. code:: bash
 
     git clone https://github.com/piperod/Flask-PonyWhoosh.git
+
+
 
 
 =====
@@ -52,12 +56,12 @@ As you could see in the previous example, you should declare as strings these fi
 further explanations on the application of these parameters. 
  
 =================
-What's new? 0.1.5
+What's new? 0.1.6
 =================
 
-We've decided to go one step forward. We wanted have ready for you a default view and a template where you can actually search and  see the results in a pretty organized way. So right now the parametrizable route '/ponywhoosh' would let you search  in a visual interactive interface!
+We have been working hard to improve the searching html. In this version a beautiful template has been developed with the help of our new contributor Alegomez. 
 
-This will be further explained in the bonus section. 
+We hope you like it. 
 
 For other updates, see ``CHANGELOG.rst``.
 
@@ -289,6 +293,7 @@ The ``search()`` function returns a dictionary with selected information.
   * 'pk': the primary key
 
 
+If you want the items shown as a list rather than a dictionary. You can use the option use_dict: this option by default is set True. However if you choose false, results will look something like ('field', 'result')
   
 ====================
 Full Search Function
@@ -362,7 +367,7 @@ There are some special features avalaible for models from the database:
 * ``counts``: This function counts all the documents existing in an indexes. 
 
 =================
-BONUS:/ponywhoosh ! 
+Bonus:/ponywhoosh ! 
 =================
 
 We  aknowledged  that  we could do better in how the results were shown, for this reason we thought that it would be nice and useful to get ready for you a fully interactive and visual interface where you can perform the searches for your own website. So,  right now is by  default available at the route '<your_url>/ponywhoosh'. This route  would get you to  this html template:
@@ -456,6 +461,15 @@ Try something like the following sentences:
                     Attributes[5], Attributes[2]],
      'matched_terms': {'deporte': ['chulo', 'lucha']}}
                  }}
+
+===
+API
+===
+
+.. automodule:: flask_ponywhoosh  
+    :members:
+
+
 Or you can take a look in the 'http://localhost:5000/ponywhoosh'. That performs a full_search in all the whoosheers.
    
 

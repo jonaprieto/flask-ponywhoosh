@@ -29,8 +29,9 @@ import shlex
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
+sys.path.insert(0, os.path.abspath('..'))
 extensions = [
-    'sphinx.ext.autodoc',
+    'sphinx.ext.autodoc','sphinx.ext.doctest'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -112,7 +113,7 @@ todo_include_todos = False
 # a list of builtin themes.
 sys.path.append(os.path.abspath('_themes'))
 html_theme_path = ['_themes']
-html_theme = 'flask_small'
+# html_theme = 'flask_small'
 
 
 # Theme options are theme-specific and customize the look and feel of a theme
