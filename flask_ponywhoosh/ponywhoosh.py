@@ -292,7 +292,7 @@ class PonyWhoosh(object):
             runtime += res['runtime']
             cant += res['cant_results']
 
-            output['results'][index._path] = {
+            output['results'][index._name] = {
                 'items': res['results'],
                 'matched_terms': res['matched_terms']
             }
