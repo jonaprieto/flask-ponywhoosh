@@ -5,7 +5,7 @@ import tempfile
 from unittest import TestCase
 
 from flask import Flask
-from flask_ponywhoosh import Whoosh, search, full_search
+from flask_ponywhoosh import PonyWhoosh, search, full_search
 from pony.orm import *
 import whoosh
 
@@ -17,20 +17,20 @@ class BaseTestCases(object):
         def __init__(self, *args, **kwargs):
             super(BaseTestCases.BaseTest, self).__init__(*args, **kwargs)
             self.app = Flask(__name__)
-            self.app.config['WHOOSHEE_DIR'] = tempfile.mkdtemp()
-            self.app.config['TESTING'] = True
+            self.app.config['PONYWHOOSH_INDEXES_PATH'] = tempfile.mkdtemp()
+            self.app.config['DEBUG'] = True
 
         def setUp(self):
             self.db = Database()
 
-            @self.wh.register_model('name', 'age', stored=True, sortable=True)
+            @self.pw.register_model('name', 'age', stored=True, sortable=True)
             class User(self.db.Entity):
                 id = PrimaryKey(int, auto=True)
                 name = Required(unicode)
                 age = Optional(int)
                 attributes = Set('Attribute')
 
-            @self.wh.register_model('weight', 'sport', 'name', stored=True, sortable=True)
+            @self.pw.register_model('weight', 'sport', 'name', stored=True, sortable=True)
             class Attribute(self.db.Entity):
                 id = PrimaryKey(int, auto=True)
                 name = Optional(unicode)
@@ -57,8 +57,8 @@ class BaseTestCases(object):
                 name=u'ejote', user=self.u3, weight=u'65', sport=u'futbol shaulin')
 
         def tearDown(self):
-            shutil.rmtree(self.app.config['WHOOSHEE_DIR'], ignore_errors=True)
-            self.wh.delete_whoosheers()
+            shutil.rmtree(self.app.config['PONYWHOOSH_INDEXES_PATH'], ignore_errors=True)
+            self.pw.delete_indexes()
             self.db.drop_all_tables(with_all_data=True)
             # os.remove('test.sqlite')
 
@@ -68,67 +68,59 @@ class BaseTestCases(object):
 
         def test_search(self):
             self.fixtures()
-            found = self.User._wh_.search('harol', include_entity=True)
+            found = self.User._pw_index_.search('harol', include_entity=True)
             self.assertEqual(found['cant_results'], 1)
             self.assertEqual(self.u3.id, found['results'][0]['entity']['id'])
 
         def test_search_something(self):
             self.fixtures()
-            found = self.User._wh_.search(
-                'har', something=True, include_entity=True)
+            found = self.User._pw_index_.search('har', something=True, include_entity=True)
             self.assertEqual(found['cant_results'], 1)
 
         def test_search_sortedby(self):
             self.fixtures()
-            found = self.Attribute._wh_.search(
-                'lun', add_wildcards=True, sortedby="weight", include_entity=True)
+            found = self.Attribute._pw_index_.search('lun', add_wildcards=True, sortedby="weight", include_entity=True)
             self.assertEqual(self.a2.id, found['results'][0]['entity']['id'])
             self.assertEqual(self.a1.id, found['results'][1]['entity']['id'])
 
         def test_full_search_without_wildcards(self):
             self.fixtures()
 
-            found = full_search(self.wh, "fel")
+            found = full_search(self.pw, "fel")
             self.assertEqual(found['cant_results'], 0)
 
         def test_full_search_with_wildcards(self):
             self.fixtures()
 
-            found = full_search(
-                self.wh, "fel", add_wildcards=True, include_entity=True)
+            found = full_search(self.pw, "fel", add_wildcards=True, include_entity=True)
             self.assertEqual(found['cant_results'], 4)
 
         def test_fields(self):
             self.fixtures()
-            results = full_search(
-                self.wh, "felun", include_entity=True, fields=["name"])
+            results = full_search(self.pw, "felun", include_entity=True, fields=["name"])
             self.assertEqual(results['cant_results'], 2)
 
         def test_models(self):
             self.fixtures()
-            results = full_search(
-                self.wh, "felun", include_entity=True, models=['User'])
+            results = full_search(self.pw, "felun", include_entity=True, models=['User'])
             self.assertEqual(results['cant_results'], 1)
 
         def test_except_field(self):
             self.fixtures()
-            results = full_search(self.wh, "felun", except_fields=["name"])
+            results = full_search(self.pw, "felun", except_fields=["name"])
             self.assertEqual(results['cant_results'], 0)
-
-        
-
 
 class TestsWithApp(BaseTestCases.BaseTest):
 
     def setUp(self):
-        self.wh = Whoosh(self.app)
+        self.pw = PonyWhoosh(self.app)
         super(TestsWithApp, self).setUp()
 
 
 class TestsWithInitApp(BaseTestCases.BaseTest):
 
     def setUp(self):
-        self.wh = Whoosh()
-        self.wh.init_app(self.app)
+        self.pw = PonyWhoosh()
+        self.pw.init_app(self.app)
 
         super(TestsWithInitApp, self).setUp()

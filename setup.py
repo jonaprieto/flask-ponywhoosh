@@ -1,24 +1,28 @@
-"""
-Flask-PonyWhoosh
--------------
+'''
 
-Whoosh extension to Flask/PonyORM
-"""
+    flask_ponywhoosh extension
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    Perform full-text searches over your database with Pony ORM and PonyWhoosh,
+    for flask applications.
+
+    :copyright: (c) 2015-2016 by Jonathan S. Prieto & Ivan Felipe Rodriguez.
+    :license: BSD (see LICENSE.md)
+
+'''
 
 from __future__ import absolute_import, print_function
 
-import io
-import os
-import re
 from glob import glob
-from os.path import basename
-from os.path import dirname
-from os.path import join
-from os.path import relpath
-from os.path import splitext
-from __version__ import __version__
-from setuptools import find_packages
-from setuptools import setup
+import os
+from os.path import basename, dirname, join, relpath, splitext
+import re
+
+from flask_ponywhoosh import __version__
+
+import io
+from setuptools import find_packages, setup
+
 
 
 def read(*names, **kwargs):
@@ -30,18 +34,18 @@ def read(*names, **kwargs):
 setup(
     name='Flask-PonyWhoosh',
     version=__version__,
-    url='https://github.com/piperod/Flask-PonyWhoosh',
+    url='https://github.com/compiteing/Flask-PonyWhoosh',
     license='BSD',
     author='Jonathan S. Prieto. & Ivan Felipe Rodriguez',
     author_email='prieto.jona@gmail.com',
-    description='Flask Pony Whoosh all in one. Perform your full text search.',
+    description='Perform your full-text searches on your database. Pony, Whoosh and Flask. All in one.',
     long_description='%s\n%s' % (
         read('README.rst'), re.sub(':obj:`~?(.*?)`', r'``\1``', read('CHANGELOG.rst'))),
     py_modules=['flask_ponywhoosh'],
     zip_safe=False,
     include_package_data=True,
     platforms='any',
-    keywords=['flask', 'pony', 'whoosh', 'search'],
+    keywords=['flask', 'pony', 'whoosh', 'search', 'full-text', 'elastic', 'engine'],
     install_requires=[x.strip() for x in
         open(os.path.join(os.path.dirname(__file__),
             'requirements.txt'))],
