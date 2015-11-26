@@ -291,14 +291,14 @@ class PonyWhoosh(object):
             res = index.search(*arg, **kw)
             runtime += res['runtime']
             cant += res['cant_results']
-
-            output['results'][index._name] = {
-                'items': res['results'],
-                'matched_terms': res['matched_terms']
-            }
-            for k, ts in res['matched_terms'].items():
-                for t in ts:
-                    ma[k].add(t)
+            if res['cant_results'] > 0:
+                output['results'][index._name] = {
+                    'items': res['results'],
+                    'matched_terms': res['matched_terms']
+                }
+                for k, ts in res['matched_terms'].items():
+                    for t in ts:
+                        ma[k].add(t)
 
         output['runtime'] = runtime
         output['matched_terms'] = {k: list(v) for k, v in ma.items()}

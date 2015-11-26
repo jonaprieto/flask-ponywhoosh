@@ -245,7 +245,6 @@ class PonyWhooshIndex(object):
                         ans['entity'] = [(k, dic_entity[k])
                                          for k in self._fields]
                     ans['model'] = self._name
-
                 dic['results'].append(ans)
 
             if dic['cant_results'] == 0 and self.to_bool(opt.get('something', False)):
