@@ -1,13 +1,13 @@
-Welcome to Flask-PonyWhoosh's Source Code Repository!
+Welcome to Flask-PonyWhoosh!
 =====================================================
 
 |PyPI Package latest release| |PyPI Package monthly downloads| |Test|
 
-This package integrate the amazing power of ``Whoosh`` with ``Pony ORM``
-inside ``Flask``. Source code and issue tracking at
-http://github.com/compiteing/Flask-PonyWhoosh.
+Perform full-text searches on your database with `Pony ORM` powered by
+`Whoosh` and `Flask`. It can be easily pluggable in your `flask` app. Look at `examples' folder.
 
-Please take a look to the official documentation up-date:
+Please take a look to the official documentation up to date:
+
     -  http://pythonhosted.org/Flask-PonyWhoosh/
     -  https://pypi.python.org/pypi/Flask-PonyWhoosh
 
@@ -18,11 +18,12 @@ Installation
 
     pip install flask-ponywhoosh
 
-or
+or use the develop (unstable) version:
 
 .. code:: bash
 
     git clone https://github.com/compiteing/Flask-PonyWhoosh.git
+
 
 What's new? 0.1.6
 -----------------

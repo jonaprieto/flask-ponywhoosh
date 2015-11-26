@@ -11,7 +11,7 @@ include AUTHORS.rst
 include CHANGELOG.rst
 include LICENSE
 include README.rst
-include templates/*
+include flask_ponywhoosh/*
 
 include tox.ini 
 

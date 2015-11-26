@@ -44,6 +44,5 @@ nosetests.xml
 *.sqlite
 .idea
 venv/
-whooshee/
-whooshees/
+ponywhoosh_indexes/
 results.txt

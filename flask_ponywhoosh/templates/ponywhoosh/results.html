@@ -86,7 +86,7 @@ hr{
 						</h3>
 					</div>
 					<div class="col-md-6 col-sm-6 col-xs-10">
-						<form method='POST' action="/ponywhoosh" class="navbar-text" role="search">
+						<form method='POST' action="/ponywhoosh/" class="navbar-text" role="search">
 				{{ form.hidden_tag() }}
 				<div class="input-group input-form input-sear">
 				 {{form.query(class="form-control form-respo",placeholder="....", size="130px" )}}
@@ -103,7 +103,7 @@ hr{
 					<li><a>{{form.except_field.label}}</a></li>
 					<li><a>{{form.except_field(class= "form-control")}}</a></li>
 					<li class="divider"></li>
-					<li><a>{{form.wildcards.label}} : {{form.wildcards(class= "css_class")}}</a></li>
+					<li><a>{{form.add_wildcards.label}} : {{form.add_wildcards(class= "css_class")}}</a></li>
 					<li><a>{{form.something.label}}:{{form.something(class= "css_class")}}</a></li>
 					</ul>
 				</span>
