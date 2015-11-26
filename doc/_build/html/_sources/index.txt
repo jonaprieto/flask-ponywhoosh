@@ -7,8 +7,10 @@ This package integrate the amazing power of ``Whoosh`` with ``Pony ORM``
 inside ``Flask``. Source code and issue tracking at
 http://github.com/piperod/Flask-PonyWhoosh.
 
+
 .. toctree::
     :maxdepth: 4
+
 ============
 Installation
 ============
@@ -164,6 +166,7 @@ the model. (Refer to the *Usage* section above)
      'runtime': 0.0012810230255126953}
 
 In synthesis, the options available are: ``sortedby``, ``scored``, ``limit``, ``optimize``, ``reverse``. Which are widely described in the whoosh documentation.
+
 
 Searching by field:
 *******************
@@ -366,9 +369,9 @@ There are some special features avalaible for models from the database:
 * ``update_documents``: This function deletes all the documents and recharges them again. 
 * ``counts``: This function counts all the documents existing in an indexes. 
 
-=================
+====================
 Bonus:/ponywhoosh ! 
-=================
+====================
 
 We  aknowledged  that  we could do better in how the results were shown, for this reason we thought that it would be nice and useful to get ready for you a fully interactive and visual interface where you can perform the searches for your own website. So,  right now is by  default available at the route '<your_url>/ponywhoosh'. This route  would get you to  this html template:
 

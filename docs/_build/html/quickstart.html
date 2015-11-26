@@ -1,0 +1,254 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Usage &mdash; Python  documentation</title>
+    
+    <link rel="stylesheet" href="_static/flasky.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Python  documentation" href="index.html" />
+    <link rel="next" title="App Full Example" href="contexts.html" />
+    <link rel="prev" title="User’s Guide" href="index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">
+  
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="contexts.html" title="App Full Example"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="User’s Guide"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Python  documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="usage">
+<span id="quickstart"></span><h1>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h1>
+<p>Import the library where you define your Entities.</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">flask_ponywhoosh</span> <span class="kn">import</span> <span class="n">Whoosh</span>
+<span class="n">wh</span> <span class="o">=</span> <span class="n">Whoosh</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>And for each entity wrap it up with the decorator
+<code class="docutils literal"><span class="pre">&#64;wh.register_model(*args,**kw)</span></code>. like the following example:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="nd">@wh.register_model</span><span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">,</span><span class="s">&#39;age&#39;</span><span class="p">,</span> <span class="n">sortable</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>  <span class="n">stored</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">Entity</span><span class="p">):</span>
+    <span class="n">_table_</span> <span class="o">=</span> <span class="s">&#39;User&#39;</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">PrimaryKey</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">auto</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">Required</span><span class="p">(</span><span class="nb">unicode</span><span class="p">)</span>
+    <span class="n">tipo</span> <span class="o">=</span> <span class="n">Optional</span><span class="p">(</span><span class="nb">unicode</span><span class="p">)</span>
+    <span class="n">age</span> <span class="o">=</span> <span class="n">Optional</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">entries</span> <span class="o">=</span> <span class="n">Set</span><span class="p">(</span><span class="s">&quot;Entry&quot;</span><span class="p">)</span>
+    <span class="n">attributes</span> <span class="o">=</span> <span class="n">Set</span><span class="p">(</span><span class="s">&quot;Attributes&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>As you could see in the previous example, you should declare as strings these fields where you want whoosh to store the searcheables (<code class="docutils literal"><span class="pre">name</span></code>, <code class="docutils literal"><span class="pre">age</span></code>, etc.). All the parameters from whoosh are available, You just have to listed separating them with commas: sortable, stored, scored, etc. Refer to whoosh documentation for
+further explanations on the application of these parameters.</p>
+</div>
+<div class="section" id="searching">
+<h1>Searching<a class="headerlink" href="#searching" title="Permalink to this headline">¶</a></h1>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">PonyModel</span><span class="o">.</span><span class="n">_wh_</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>There are several options to perform a search with <code class="docutils literal"><span class="pre">flask_ponywhoosh</span></code>. For instance, to execute a  simple search, choose the entity where you want to perform the search and then  try
+something like the following code over a view function, or even from the shell,</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">app</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">User</span><span class="o">.</span><span class="n">_wh_</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">&quot;felipe&quot;</span><span class="p">)</span>
+<span class="go">{&#39;cant_results&#39;: 2,</span>
+<span class="go"> &#39;facet_names&#39;: [],</span>
+<span class="go"> &#39;matched_terms&#39;: {&#39;name&#39;: [&#39;felipe&#39;]},</span>
+<span class="go"> &#39;results&#39;: [{&#39;docnum&#39;: 4L,</span>
+<span class="go">              &#39;rank&#39;: 0,</span>
+<span class="go">              &#39;pk&#39;: 5,</span>
+<span class="go">              &#39;score&#39;: 2.540445040947149},</span>
+<span class="go">             {&#39;docnum&#39;: 11L,</span>
+<span class="go">              &#39;rank&#39;: 1,</span>
+<span class="go">              &#39;pk&#39;: 12,</span>
+<span class="go">              &#39;score&#39;: 2.540445040947149}],</span>
+<span class="go"> &#39;runtime&#39;: 0.001981973648071289}</span>
+</pre></div>
+</div>
+<p>If you would prefer, you may use the function <code class="docutils literal"><span class="pre">search()</span></code>,  which will run the same function but is quite more handy when writing</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">flask_ponywhoosh</span> <span class="kn">import</span> <span class="n">search</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">app</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">search</span><span class="p">(</span><span class="n">User</span><span class="p">,</span><span class="s">&quot;felipe&quot;</span><span class="p">)</span>
+<span class="go">{&#39;cant_results&#39;: 2,</span>
+<span class="go"> &#39;facet_names&#39;: [],</span>
+<span class="go"> &#39;matched_terms&#39;: {&#39;name&#39;: [&#39;felipe&#39;]},</span>
+<span class="go"> &#39;results&#39;: [{&#39;docnum&#39;: 4L,</span>
+<span class="go">              &#39;rank&#39;: 0,</span>
+<span class="go">              &#39;pk&#39; : 5,</span>
+<span class="go">              &#39;score&#39;: 2.540445040947149},</span>
+<span class="go">             {&#39;docnum&#39;: 11L,</span>
+<span class="go">              &#39;rank&#39;: 1,</span>
+<span class="go">              &#39;pk&#39; : 12,</span>
+<span class="go">              &#39;score&#39;: 2.540445040947149}],</span>
+<span class="go"> &#39;runtime&#39;: 0.001981973648071289}</span>
+</pre></div>
+</div>
+<p>The function <code class="docutils literal"><span class="pre">search()</span></code> takes up to three arguments.
+1. A ponymodel, the databse entity where you want to perform the search.
+2. The <code class="docutils literal"><span class="pre">search_string</span></code>, what  you are looking for; and,
+3. The arguments, some additional options for more refined searching.</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">search</span><span class="p">(</span><span class="n">PonyModel</span><span class="p">,</span> <span class="s">&quot;query&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For example, if  you want  the results to be sorted by some specific searcheable field,
+you have to indicate so, by adding the argument <code class="docutils literal"><span class="pre">sortedby=&quot;field&quot;</span></code>.</p>
+<p>In this case the search results object would show as a score the value of the item you choose for sorting. Please note that in order for
+one field to be sortable, you must indicate it when you are registering
+the model. (Refer to the <em>Usage</em> section above)</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">app</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">flask_ponywhoosh</span> <span class="kn">import</span> <span class="n">search</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">search</span><span class="p">(</span><span class="n">User</span><span class="p">,</span><span class="s">&quot;harol&quot;</span><span class="p">,</span> <span class="n">sortedby</span><span class="o">=</span><span class="s">&quot;age&quot;</span><span class="p">)</span>
+<span class="go">{&#39;cant_results&#39;: 2,</span>
+<span class="go"> &#39;facet_names&#39;: [],</span>
+<span class="go"> &#39;matched_terms&#39;: {&#39;name&#39;: [&#39;felipe&#39;]},</span>
+<span class="go"> &#39;results&#39;: [{&#39;docnum&#39;: 4L,</span>
+<span class="go">              &#39;rank&#39;: 0,</span>
+<span class="go">              &#39;pk&#39; : 5,,</span>
+<span class="go">              &#39;score&#39;: &#39;19&#39;},</span>
+<span class="go">             {&#39;docnum&#39;: 11L,</span>
+<span class="go">              &#39;rank&#39;: 1,</span>
+<span class="go">              &#39;pk&#39; : 12,,</span>
+<span class="go">              &#39;score&#39;: &#39;19&#39;}],</span>
+<span class="go"> &#39;runtime&#39;: 0.0012810230255126953}</span>
+</pre></div>
+</div>
+<p>In synthesis, the options available are: <code class="docutils literal"><span class="pre">sortedby</span></code>, <code class="docutils literal"><span class="pre">scored</span></code>, <code class="docutils literal"><span class="pre">limit</span></code>, <code class="docutils literal"><span class="pre">optimize</span></code>, <code class="docutils literal"><span class="pre">reverse</span></code>. Which are widely described in the whoosh documentation.</p>
+<div class="section" id="searching-by-field">
+<h2>Searching by field:<a class="headerlink" href="#searching-by-field" title="Permalink to this headline">¶</a></h2>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">search</span><span class="p">(</span><span class="n">PonyModel</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="s">&quot;field_name&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>By default the function <code class="docutils literal"><span class="pre">search()</span></code> performs a multifield parser query, i.e.  you will be searching in all the fields you have declared when you registered the model. However, sometimes you would like to perform searching in just one or some of all the fields.
+For these reasons we implemented the following extra options: The first one is refered as <code class="docutils literal"><span class="pre">field</span></code> all you have to do is indicate in which field you want to search. The output would be a results object containing only the information found in that field. And <code class="docutils literal"><span class="pre">fields</span></code> where you should write a list with all the fields you want to search.</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">search</span><span class="p">(</span><span class="n">User</span><span class="p">,</span><span class="s">&quot;harol&quot;</span><span class="p">,</span><span class="n">field</span><span class="o">=</span><span class="s">&quot;name&quot;</span><span class="p">)</span>
+<span class="go">     {&#39;cant_results&#39;: 4,</span>
+<span class="go">     &#39;facet_names&#39;: [],</span>
+<span class="go">     &#39;matched_terms&#39;: {&#39;name&#39;: [&#39;harol&#39;]},</span>
+<span class="go">     &#39;results&#39;: [{&#39;docnum&#39;: 1L,</span>
+<span class="go">                  &#39;pk&#39;: u&#39;7&#39;,</span>
+<span class="go">                  &#39;rank&#39;: 0,</span>
+<span class="go">                  &#39;score&#39;: 2.0296194171811583},</span>
+<span class="go">                 {&#39;docnum&#39;: 5L,</span>
+<span class="go">                  &#39;pk&#39;: u&#39;6&#39;,</span>
+<span class="go">                  &#39;rank&#39;: 1,</span>
+<span class="go">                  &#39;score&#39;: 2.0296194171811583},</span>
+<span class="go">                 {&#39;docnum&#39;: 12L,</span>
+<span class="go">                  &#39;pk&#39;: u&#39;13&#39;,</span>
+<span class="go">                  &#39;rank&#39;: 2,</span>
+<span class="go">                  &#39;score&#39;: 2.0296194171811583},</span>
+<span class="go">                 {&#39;docnum&#39;: 13L,</span>
+<span class="go">                  &#39;pk&#39;: u&#39;14&#39;,</span>
+<span class="go">                  &#39;rank&#39;: 3,</span>
+<span class="go">                  &#39;score&#39;: 2.0296194171811583}],</span>
+<span class="go">     &#39;runtime&#39;: 0.005359172821044922}</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">search</span><span class="p">(</span><span class="n">Attribute</span><span class="p">,</span><span class="s">&quot;tejo&quot;</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;sport&quot;</span><span class="p">,</span><span class="s">&quot;name&quot;</span><span class="p">])</span>
+<span class="go">    {&#39;cant_results&#39;: 4,</span>
+<span class="go">     &#39;facet_names&#39;: [],</span>
+<span class="go">     &#39;matched_terms&#39;: {&#39;name&#39;: [&#39;tejo&#39;], &#39;sport&#39;: [&#39;tejo&#39;]},</span>
+<span class="go">     &#39;results&#39;: [{&#39;docnum&#39;: 1L,</span>
+<span class="go">                  &#39;pk&#39;: u&#39;7&#39;,</span>
+<span class="go">                  &#39;rank&#39;: 0,</span>
+<span class="go">                  &#39;score&#39;: 5.500610730717037},</span>
+<span class="go">                 {&#39;docnum&#39;: 6L,</span>
+<span class="go">                  &#39;pk&#39;: u&#39;1&#39;,</span>
+<span class="go">                  &#39;rank&#39;: 1,</span>
+<span class="go">                  &#39;score&#39;: 5.500610730717037}],</span>
+<span class="go">     &#39;runtime&#39;: 0.006212949752807617}</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><p class="logo"><a href="index.html">
+  <img class="logo" src="_static/logo.png" alt="Logo"
+    style="margin-left: -5px"/>
+</a></p>
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Usage</a></li>
+<li><a class="reference internal" href="#searching">Searching</a><ul>
+<li><a class="reference internal" href="#searching-by-field">Searching by field:</a></li>
+</ul>
+</li>
+</ul>
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">User&#8217;s Guide</a></li>
+      <li>Next: <a href="contexts.html" title="next chapter">App Full Example</a></li>
+  </ul></li>
+</ul>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/quickstart.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  <div class="footer">
+    &copy; Copyright 2015, Jonathan S. Prieto C. & Ivan Felipe Rodriguez.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div>
+  
+  </body>
+</html>
