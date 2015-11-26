@@ -93,7 +93,7 @@ class PonyWhoosh(object):
         app.jinja_loader = loader
         app.add_url_rule(
             self.url_route,
-            view_func=IndexView.as_view('ponywhoosh', wh=self)
+            view_func=IndexView.as_view('ponywhoosh', pw=self)
         )
 
     def delete_indexes(self):

@@ -14,19 +14,13 @@ class IndexView(View):
     """This is all the setting for the template index.html in the templates folder. 
 
         methods (list): POST and GET 
-        wh (whoosheer): The whoosheer is the object where all the whoosheer are saved. 
     """
 
     methods = ['POST', 'GET']
 
-    def __init__(self, ponywhoosh):
-        """
-
-        Args:
-            wh (whoosheers): Initializes the Index view for the /ponywhoosh.
-        """
-        self._pw = ponywhoosh
-        self.debug = self._wh.debug
+    def __init__(self, pw):
+        self._pw = pw
+        self.debug = self._pw.debug
 
     def dispatch_request(self):
         """ This form is plugeable. That means that all what you need to do is to install the package and run
