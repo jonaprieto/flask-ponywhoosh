@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Quick Start &mdash; Python  documentation</title>
+    <title>Searching &mdash; Python  documentation</title>
     
     <link rel="stylesheet" href="_static/flasky.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="Python  documentation" href="index.html" />
     <link rel="next" title="The arguments add_wildcards and something" href="add_wildcards.html" />
-    <link rel="prev" title="Changelog" href="changelog.html" />
+    <link rel="prev" title="What’s new? 0.1.6" href="whatsnew.html" />
    
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
@@ -45,7 +45,7 @@
           <a href="add_wildcards.html" title="The arguments add_wildcards and something"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="changelog.html" title="Changelog"
+          <a href="whatsnew.html" title="What’s new? 0.1.6"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">Python  documentation</a> &raquo;</li> 
       </ul>
@@ -56,38 +56,15 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="quick-start">
-<span id="quickstart"></span><h1>Quick Start<a class="headerlink" href="#quick-start" title="Permalink to this headline">¶</a></h1>
-<p>Import the Flask_ponywhoosh library in the file you have the database entities.</p>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">flask_ponywhoosh</span> <span class="kn">import</span> <span class="n">Whoosh</span>
-<span class="n">wh</span> <span class="o">=</span> <span class="n">Whoosh</span><span class="p">()</span>
-</pre></div>
-</div>
-<p>For each entity wrap it up with the decorator
-<code class="docutils literal"><span class="pre">&#64;wh.register_model(*args,**kw)</span></code>. Specifying what attributes would be searcheables. For exa:</p>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="nd">@wh.register_model</span><span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">,</span><span class="s">&#39;age&#39;</span><span class="p">,</span> <span class="n">sortable</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>  <span class="n">stored</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-<span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">Entity</span><span class="p">):</span>
-    <span class="n">_table_</span> <span class="o">=</span> <span class="s">&#39;User&#39;</span>
-    <span class="nb">id</span> <span class="o">=</span> <span class="n">PrimaryKey</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">auto</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-    <span class="n">name</span> <span class="o">=</span> <span class="n">Required</span><span class="p">(</span><span class="nb">unicode</span><span class="p">)</span>
-    <span class="n">tipo</span> <span class="o">=</span> <span class="n">Optional</span><span class="p">(</span><span class="nb">unicode</span><span class="p">)</span>
-    <span class="n">age</span> <span class="o">=</span> <span class="n">Optional</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
-    <span class="n">entries</span> <span class="o">=</span> <span class="n">Set</span><span class="p">(</span><span class="s">&quot;Entry&quot;</span><span class="p">)</span>
-    <span class="n">attributes</span> <span class="o">=</span> <span class="n">Set</span><span class="p">(</span><span class="s">&quot;Attributes&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>As you could see in the previous example, you should declare as strings these fields where you want whoosh to store the searcheables (<code class="docutils literal"><span class="pre">name</span></code>, <code class="docutils literal"><span class="pre">age</span></code>, etc.). All the parameters from whoosh are available, You just have to listed separating them with commas: sortable, stored, scored, etc. Refer to whoosh documentation for
-further explanations on the application of these parameters.</p>
-</div>
-<div class="section" id="searching">
-<h1>Searching<a class="headerlink" href="#searching" title="Permalink to this headline">¶</a></h1>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="n">PonyModel</span><span class="o">.</span><span class="n">_wh_</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+  <div class="section" id="searching">
+<span id="quickstart"></span><h1>Searching<a class="headerlink" href="#searching" title="Permalink to this headline">¶</a></h1>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">PonyModel</span><span class="o">.</span><span class="n">_pw_</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>There are several options to perform a search with <code class="docutils literal"><span class="pre">flask_ponywhoosh</span></code>. For instance, to execute a  simple search, choose the entity where you want to perform the search and then  try
 something like the following code over a view function, or even from the shell,</p>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">app</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">User</span><span class="o">.</span><span class="n">_wh_</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">&quot;felipe&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">User</span><span class="o">.</span><span class="n">_pw_</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">&quot;felipe&quot;</span><span class="p">)</span>
 <span class="go">{&#39;cant_results&#39;: 2,</span>
 <span class="go"> &#39;facet_names&#39;: [],</span>
 <span class="go"> &#39;matched_terms&#39;: {&#39;name&#39;: [&#39;felipe&#39;]},</span>
@@ -208,8 +185,7 @@ For these reasons we implemented the following extra options: The first one is r
 </a></p>
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Quick Start</a></li>
-<li><a class="reference internal" href="#searching">Searching</a><ul>
+<li><a class="reference internal" href="#">Searching</a><ul>
 <li><a class="reference internal" href="#searching-by-field">Searching by field:</a></li>
 </ul>
 </li>
@@ -217,7 +193,7 @@ For these reasons we implemented the following extra options: The first one is r
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="changelog.html" title="previous chapter">Changelog</a></li>
+      <li>Previous: <a href="whatsnew.html" title="previous chapter">What&#8217;s new? 0.1.6</a></li>
       <li>Next: <a href="add_wildcards.html" title="next chapter">The arguments <code class="docutils literal"><span class="pre">add_wildcards</span></code> and <code class="docutils literal"><span class="pre">something</span></code></a></li>
   </ul></li>
 </ul>

@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>What’s new? 0.1.6 &mdash; Python  documentation</title>
+    <title>Configuration &mdash; Python  documentation</title>
     
     <link rel="stylesheet" href="_static/flasky.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -24,8 +24,6 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="Python  documentation" href="index.html" />
-    <link rel="next" title="Quick Start" href="quickstart.html" />
-    <link rel="prev" title="Configuration" href="config.html" />
    
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
@@ -41,12 +39,6 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="quickstart.html" title="Quick Start"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="config.html" title="Configuration"
-             accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">Python  documentation</a> &raquo;</li> 
       </ul>
     </div>  
@@ -56,11 +48,17 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="what-s-new-0-1-6">
-<span id="whatsnew"></span><h1>What&#8217;s new? 0.1.6<a class="headerlink" href="#what-s-new-0-1-6" title="Permalink to this headline">¶</a></h1>
-<p>We have been working hard to improve the searching html. In this version a beautiful template has been developed with the help of our new contributor Alegomez.</p>
-<p>We hope you like it.</p>
-<p>For other updates, see <code class="docutils literal"><span class="pre">CHANGELOG.rst</span></code>.</p>
+  <div class="section" id="configuration">
+<h1>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h1>
+<p>From a flask configuration, you can add the following options.</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;WHOOSHEE_DIR&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;whooshes&#39;</span>
+<span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;PONYWHOOSH_DEBUG&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;WHOSHEE_MIN_STRING_LEN&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;WHOOSHEE_WRITER_TIMEOUT&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;WHOOSHEE_URL&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;/ponywhoosh&#39;</span>
+</pre></div>
+</div>
+<p>This configurations set up the default folder to save the whoshees, if you want to activate debug, the minimun lenght of the string in the query, the time out (stop searching if is taking so much) and the route where you might charge the default template for searching (available from version 0.1.5.)</p>
 </div>
 
 
@@ -74,14 +72,12 @@
 </a></p><h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="config.html" title="previous chapter">Configuration</a></li>
-      <li>Next: <a href="quickstart.html" title="next chapter">Quick Start</a></li>
   </ul></li>
 </ul>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/whatsnew.txt"
+      <li><a href="_sources/getting.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>

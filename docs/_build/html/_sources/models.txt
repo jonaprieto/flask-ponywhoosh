@@ -1,7 +1,7 @@
 .. _models:
 
 ================================
-The method ``PonyModel._wh_.``
+The method ``PonyModel._pw_.``
 ================================
 
 There are some special features avalaible for models from the database: 

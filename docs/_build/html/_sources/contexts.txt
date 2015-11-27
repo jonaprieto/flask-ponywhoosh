@@ -41,7 +41,7 @@ Try something like the following sentences:
 
     >>> from app import *
     >>> from flask_ponywhoosh import full_search
-    >>> full_search(wh,"ch")
+    >>> full_search(pw,"ch")
     { 'matched_terms': {'name': ['chuck'], 
                         'deporte': ['chulo', 'lucha']}, 
       'runtime': 0.0033812522888183594  

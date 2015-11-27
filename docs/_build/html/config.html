@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Configuration &mdash; Python  documentation</title>
+    <title>Getting Started: &mdash; Python  documentation</title>
     
     <link rel="stylesheet" href="_static/flasky.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -24,8 +24,8 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="Python  documentation" href="index.html" />
-    <link rel="next" title="The method PonyModel._wh_." href="models.html" />
-    <link rel="prev" title="What’s new? 0.1.6" href="whatsnew.html" />
+    <link rel="next" title="What’s new? 0.1.6" href="whatsnew.html" />
+    <link rel="prev" title="Welcome to Flask-PonyWhoosh’s documentation!" href="index.html" />
    
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
@@ -42,10 +42,10 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="models.html" title="The method PonyModel._wh_."
+          <a href="whatsnew.html" title="What’s new? 0.1.6"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="whatsnew.html" title="What’s new? 0.1.6"
+          <a href="index.html" title="Welcome to Flask-PonyWhoosh’s documentation!"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">Python  documentation</a> &raquo;</li> 
       </ul>
@@ -56,9 +56,26 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="configuration">
-<h1>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h1>
-<p>From a flask configuration, you can add the following options.</p>
+  <div class="section" id="getting-started">
+<h1>Getting Started:<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<div class="code python highlight-python"><div class="highlight"><pre>pip install flask-ponywhoosh
+</pre></div>
+</div>
+<p>or</p>
+<div class="code bash highlight-python"><div class="highlight"><pre>git clone https://github.com/piperod/Flask-PonyWhoosh.git
+</pre></div>
+</div>
+</div>
+<div class="section" id="flask-app-configuration">
+<h2>Flask-App Configuration<a class="headerlink" href="#flask-app-configuration" title="Permalink to this headline">¶</a></h2>
+<p>In the file you are running  your app, you can initialize the
+FlaskPonywhoosh and set up the general configurations.</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">flask_ponywhoosh</span> <span class="kn">import</span> <span class="n">Ponywhoosh</span>
+<span class="n">Ponywhoosh</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+</pre></div>
+</div>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;WHOOSHEE_DIR&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;whooshes&#39;</span>
 <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;PONYWHOOSH_DEBUG&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
 <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;WHOSHEE_MIN_STRING_LEN&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span>
@@ -66,7 +83,31 @@
 <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;WHOOSHEE_URL&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;/ponywhoosh&#39;</span>
 </pre></div>
 </div>
-<p>This configurations set up the default folder to save the whoshees, if you want to activate debug, the minimun lenght of the string in the query, the time out (stop searching if is taking so much) and the route where you might charge the default template for searching (available from version 0.1.5.)</p>
+<p>These configurations set up the default folder to save the Indexes, if you want to activate debug, the minimun lenght of the string in the query, the time out (stop searching if is taking so much) and the route where you might charge the default template for searching (available from version 0.1.5.)</p>
+</div>
+<div class="section" id="database-config">
+<h2>Database Config<a class="headerlink" href="#database-config" title="Permalink to this headline">¶</a></h2>
+<p>Import the Flask_ponywhoosh library in the file you have the database entities.</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">flask_ponywhoosh</span> <span class="kn">import</span> <span class="n">Whoosh</span>
+<span class="n">pw</span> <span class="o">=</span> <span class="n">Whoosh</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>For each entity wrap it up with the decorator
+<code class="docutils literal"><span class="pre">&#64;wh.register_model(*args,**kw)</span></code>. Specifying what attributes would be searcheables. For exa:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="nd">@wh.register_model</span><span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">,</span><span class="s">&#39;age&#39;</span><span class="p">,</span> <span class="n">sortable</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>  <span class="n">stored</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">Entity</span><span class="p">):</span>
+    <span class="n">_table_</span> <span class="o">=</span> <span class="s">&#39;User&#39;</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">PrimaryKey</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">auto</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">Required</span><span class="p">(</span><span class="nb">unicode</span><span class="p">)</span>
+    <span class="n">tipo</span> <span class="o">=</span> <span class="n">Optional</span><span class="p">(</span><span class="nb">unicode</span><span class="p">)</span>
+    <span class="n">age</span> <span class="o">=</span> <span class="n">Optional</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">entries</span> <span class="o">=</span> <span class="n">Set</span><span class="p">(</span><span class="s">&quot;Entry&quot;</span><span class="p">)</span>
+    <span class="n">attributes</span> <span class="o">=</span> <span class="n">Set</span><span class="p">(</span><span class="s">&quot;Attributes&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>As you could see in the previous example, you should declare as strings these fields where you want whoosh to store the searcheables (<code class="docutils literal"><span class="pre">name</span></code>, <code class="docutils literal"><span class="pre">age</span></code>, etc.). All the parameters from whoosh are available, You just have to listed separating them with commas: sortable, stored, scored, etc. Refer to whoosh documentation for
+further explanations on the application of these parameters.</p>
+</div>
 </div>
 
 
@@ -77,11 +118,21 @@
         <div class="sphinxsidebarwrapper"><p class="logo"><a href="index.html">
   <img class="logo" src="_static/logo.png" alt="Logo"
     style="margin-left: -5px"/>
-</a></p><h3>Related Topics</h3>
+</a></p>
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Getting Started:</a><ul>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#flask-app-configuration">Flask-App Configuration</a></li>
+<li><a class="reference internal" href="#database-config">Database Config</a></li>
+</ul>
+</li>
+</ul>
+<h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="whatsnew.html" title="previous chapter">What&#8217;s new? 0.1.6</a></li>
-      <li>Next: <a href="models.html" title="next chapter">The method <code class="docutils literal"><span class="pre">PonyModel._wh_.</span></code></a></li>
+      <li>Previous: <a href="index.html" title="previous chapter">Welcome to Flask-PonyWhoosh&#8217;s documentation!</a></li>
+      <li>Next: <a href="whatsnew.html" title="next chapter">What&#8217;s new? 0.1.6</a></li>
   </ul></li>
 </ul>
   <div role="note" aria-label="source link">

@@ -1,33 +1,5 @@
 .. _quickstart:
 
-===========
-Quick Start
-===========
-
-Import the Flask_ponywhoosh library in the file you have the database entities. 
-
-.. code:: python
-
-    from flask_ponywhoosh import Whoosh
-    wh = Whoosh()
-
-For each entity wrap it up with the decorator
-``@wh.register_model(*args,**kw)``. Specifying what attributes would be searcheables. For exa:
-
-.. code:: python
-
-    @wh.register_model('name','age', sortable=True,  stored=True)
-    class User(db.Entity):
-        _table_ = 'User'
-        id = PrimaryKey(int, auto=True)
-        name = Required(unicode)
-        tipo = Optional(unicode)
-        age = Optional(int)
-        entries = Set("Entry")
-        attributes = Set("Attributes")
-
-As you could see in the previous example, you should declare as strings these fields where you want whoosh to store the searcheables (``name``, ``age``, etc.). All the parameters from whoosh are available, You just have to listed separating them with commas: sortable, stored, scored, etc. Refer to whoosh documentation for
-further explanations on the application of these parameters.
 
 =========
 Searching
