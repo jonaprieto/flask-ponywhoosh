@@ -1,21 +1,31 @@
+
+Welcome to Flask-PonyWhoosh's documentation!
+============================================
+
+ |PyPI Package latest release| |PyPI Package monthly downloads| |Test|
+
+ This package integrate the amazing power of ``Whoosh`` with ``Pony ORM``
+ inside ``Flask``. Source code and issue tracking at
+ http://github.com/piperod/Flask-PonyWhoosh.
+
+
 User's Guide
 ------------
 
-This part of the documentation will show you how to get started in using
-Flask-PonyWhoosh with Flask.
 
 .. toctree::
    :maxdepth: 2
 
-   quickstart
-   contexts
-   whatsnew
    config
+   whatsnew
+   quickstart
+   add_wildcards
    models
    queries
-   add_wildcards
-   changelog
    signals
+   contexts
+   changelog
+   
 
 
 

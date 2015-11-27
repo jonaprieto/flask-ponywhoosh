@@ -1,18 +1,18 @@
 .. _quickstart:
 
-=====
-Usage
-=====
+===========
+Quick Start
+===========
 
-Import the library where you define your Entities.
+Import the Flask_ponywhoosh library in the file you have the database entities. 
 
 .. code:: python
 
     from flask_ponywhoosh import Whoosh
     wh = Whoosh()
 
-And for each entity wrap it up with the decorator
-``@wh.register_model(*args,**kw)``. like the following example:
+For each entity wrap it up with the decorator
+``@wh.register_model(*args,**kw)``. Specifying what attributes would be searcheables. For exa:
 
 .. code:: python
 

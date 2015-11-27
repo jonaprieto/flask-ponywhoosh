@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Usage &mdash; Python  documentation</title>
+    <title>Quick Start &mdash; Python  documentation</title>
     
     <link rel="stylesheet" href="_static/flasky.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -24,8 +24,8 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="Python  documentation" href="index.html" />
-    <link rel="next" title="App Full Example" href="contexts.html" />
-    <link rel="prev" title="User’s Guide" href="index.html" />
+    <link rel="next" title="The arguments add_wildcards and something" href="add_wildcards.html" />
+    <link rel="prev" title="Changelog" href="changelog.html" />
    
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
@@ -42,10 +42,10 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="contexts.html" title="App Full Example"
+          <a href="add_wildcards.html" title="The arguments add_wildcards and something"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="index.html" title="User’s Guide"
+          <a href="changelog.html" title="Changelog"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">Python  documentation</a> &raquo;</li> 
       </ul>
@@ -56,15 +56,15 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="usage">
-<span id="quickstart"></span><h1>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h1>
-<p>Import the library where you define your Entities.</p>
+  <div class="section" id="quick-start">
+<span id="quickstart"></span><h1>Quick Start<a class="headerlink" href="#quick-start" title="Permalink to this headline">¶</a></h1>
+<p>Import the Flask_ponywhoosh library in the file you have the database entities.</p>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">flask_ponywhoosh</span> <span class="kn">import</span> <span class="n">Whoosh</span>
 <span class="n">wh</span> <span class="o">=</span> <span class="n">Whoosh</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>And for each entity wrap it up with the decorator
-<code class="docutils literal"><span class="pre">&#64;wh.register_model(*args,**kw)</span></code>. like the following example:</p>
+<p>For each entity wrap it up with the decorator
+<code class="docutils literal"><span class="pre">&#64;wh.register_model(*args,**kw)</span></code>. Specifying what attributes would be searcheables. For exa:</p>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="nd">@wh.register_model</span><span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">,</span><span class="s">&#39;age&#39;</span><span class="p">,</span> <span class="n">sortable</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>  <span class="n">stored</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">Entity</span><span class="p">):</span>
     <span class="n">_table_</span> <span class="o">=</span> <span class="s">&#39;User&#39;</span>
@@ -208,7 +208,7 @@ For these reasons we implemented the following extra options: The first one is r
 </a></p>
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Usage</a></li>
+<li><a class="reference internal" href="#">Quick Start</a></li>
 <li><a class="reference internal" href="#searching">Searching</a><ul>
 <li><a class="reference internal" href="#searching-by-field">Searching by field:</a></li>
 </ul>
@@ -217,8 +217,8 @@ For these reasons we implemented the following extra options: The first one is r
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="index.html" title="previous chapter">User&#8217;s Guide</a></li>
-      <li>Next: <a href="contexts.html" title="next chapter">App Full Example</a></li>
+      <li>Previous: <a href="changelog.html" title="previous chapter">Changelog</a></li>
+      <li>Next: <a href="add_wildcards.html" title="next chapter">The arguments <code class="docutils literal"><span class="pre">add_wildcards</span></code> and <code class="docutils literal"><span class="pre">something</span></code></a></li>
   </ul></li>
 </ul>
   <div role="note" aria-label="source link">
