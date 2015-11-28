@@ -2,14 +2,20 @@
 Bonus:/ponywhoosh ! 
 ====================
 
+To run this template, you only have to add to your own route the extension /ponywhoosh  and it would redirect you to the personalized view for your own searches. It is possible to change this '/ponywhoosh' route, take a look in the Flask settings section. 
+
+So far is possible to limitate the search to those fields and models where you want to search and even for those that you want to avoid. As well we include check boxes for add_wildcard and something functions. If there are not results to show the table won't be created.
+
+Search Form
+***********
 |Pony|
 
 We  aknowledged  that  we could do better rendering  the results, for this reason we thought that it would be nice and useful to get ready for you a fully interactive and visual interface where you can perform the searches for your own website. So  right now is by  default available at the route '<your_url>/ponywhoosh'. 
 
 
 
-Advanced search
-***************
+Advanced search form
+********************
 
 |Form| 
 
@@ -25,6 +31,7 @@ In this advanced form you can filter your search using the options available fro
 
 It is available in the top of the view, like this: 
 
+|TopForm
 
 Results
 *******
@@ -32,9 +39,11 @@ Results
 
 |Results|
 
-To run this template, you only have to add to your own route the extension /ponywhoosh  and it would redirect you to the personalized view for your own searches. It is possible to change this '/ponywhoosh' route, take a look in the Flask settings section. 
+The result template renderizes all the results in the following way:
+	In the upper part you will see tabs containing all the Indexes where Ponywhoos found something. 
 
-So far is possible to limitate the search to those fields and models where you want to search and even for those that you want to avoid. As well we include check boxes for add_wildcard and something functions. If there are not results to show the table won't be created. 
+	There are two options to view the resuls. Like a card or like a table. In the first one you would see 3 cards by line, showing the main results attributes. When you are registering the models, they would be the 3 first fields you register. 
+ 
 
 This is how it looks with the new changes.
 

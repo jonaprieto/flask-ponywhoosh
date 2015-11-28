@@ -24,8 +24,8 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="Python  documentation" href="index.html" />
-    <link rel="next" title="The arguments add_wildcards and something" href="add_wildcards.html" />
-    <link rel="prev" title="What’s new? 0.1.6" href="whatsnew.html" />
+    <link rel="next" title="Bonus:/ponywhoosh !" href="bonus.html" />
+    <link rel="prev" title="Getting Started:" href="config.html" />
    
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
@@ -42,10 +42,10 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="add_wildcards.html" title="The arguments add_wildcards and something"
+          <a href="bonus.html" title="Bonus:/ponywhoosh !"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="whatsnew.html" title="What’s new? 0.1.6"
+          <a href="config.html" title="Getting Started:"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">Python  documentation</a> &raquo;</li> 
       </ul>
@@ -58,6 +58,13 @@
             
   <div class="section" id="searching">
 <span id="quickstart"></span><h1>Searching<a class="headerlink" href="#searching" title="Permalink to this headline">¶</a></h1>
+<p>After you have registered the indexes where you want to store the searcheables. You can perform some testing by entering to the shell of your aplication:</p>
+<div class="code bash highlight-python"><div class="highlight"><pre>$ python app.py shell
+</pre></div>
+</div>
+<p>However if you&#8217;d rather  prefer to &#8220;see&#8221; the results, you may access to the route &#8216;/ponywhoosh/&#8217; available when you run the server.</p>
+<div class="section" id="testing-on-the-shell">
+<h2>Testing on the shell.<a class="headerlink" href="#testing-on-the-shell" title="Permalink to this headline">¶</a></h2>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="n">PonyModel</span><span class="o">.</span><span class="n">_pw_</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -97,6 +104,9 @@ something like the following code over a view function, or even from the shell,<
 <span class="go"> &#39;runtime&#39;: 0.001981973648071289}</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="search">
+<h2>Search():<a class="headerlink" href="#search" title="Permalink to this headline">¶</a></h2>
 <p>The function <code class="docutils literal"><span class="pre">search()</span></code> takes up to three arguments.
 1. A ponymodel, the databse entity where you want to perform the search.
 2. The <code class="docutils literal"><span class="pre">search_string</span></code>, what  you are looking for; and,
@@ -127,6 +137,19 @@ the model. (Refer to the <em>Usage</em> section above)</p>
 </pre></div>
 </div>
 <p>In synthesis, the options available are: <code class="docutils literal"><span class="pre">sortedby</span></code>, <code class="docutils literal"><span class="pre">scored</span></code>, <code class="docutils literal"><span class="pre">limit</span></code>, <code class="docutils literal"><span class="pre">optimize</span></code>, <code class="docutils literal"><span class="pre">reverse</span></code>. Which are widely described in the whoosh documentation.</p>
+</div>
+<div class="section" id="the-attribute-pw">
+<h2>The Attribute <code class="docutils literal"><span class="pre">_pw_.</span></code><a class="headerlink" href="#the-attribute-pw" title="Permalink to this headline">¶</a></h2>
+<p>There are some special features avalaible for models from the database. You just have to call the model <code class="docutils literal"><span class="pre">PonyModel._pw_.</span></code>:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">add_field</span></code>: This function is to add a desired field in the index.</li>
+<li><code class="docutils literal"><span class="pre">charge_documents</span></code>: This function let you charge an index from an  existing database.</li>
+<li><code class="docutils literal"><span class="pre">delete_documents</span></code>: This function deletes all the documents stored in certain whoosh index.</li>
+<li><code class="docutils literal"><span class="pre">delete_field</span></code>: This function works in case that you want to erase a determined field from a schema.</li>
+<li><code class="docutils literal"><span class="pre">update_documents</span></code>: This function deletes all the documents and recharges them again.</li>
+<li><code class="docutils literal"><span class="pre">counts</span></code>: This function counts all the documents existing in an index.</li>
+</ul>
+</div>
 <div class="section" id="searching-by-field">
 <h2>Searching by field:<a class="headerlink" href="#searching-by-field" title="Permalink to this headline">¶</a></h2>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="n">search</span><span class="p">(</span><span class="n">PonyModel</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="s">&quot;field_name&quot;</span><span class="p">)</span>
@@ -172,6 +195,80 @@ For these reasons we implemented the following extra options: The first one is r
 </pre></div>
 </div>
 </div>
+<div class="section" id="add-wildcards-and-something">
+<h2>add_wildcards and something<a class="headerlink" href="#add-wildcards-and-something" title="Permalink to this headline">¶</a></h2>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">search</span><span class="p">(</span><span class="n">PonyModel</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">add_wildcards</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Whoosh  sets a wildcard <code class="docutils literal"><span class="pre">*</span></code>,``?``,``!`` by default to perform search for inexact terms, however sometimes  is desirable to search by exact terms instead. For this reason we added two more options: <code class="docutils literal"><span class="pre">add_wildcards</span></code> and <code class="docutils literal"><span class="pre">something</span></code>.</p>
+<p>The option <em>add_wildcards</em> (by default False)  is a boolean argument that tells the searcher whether it should or not include wild cards. For example, if you want to search &#8220;harol&#8221; when <code class="docutils literal"><span class="pre">add_wildcards=False</span></code>, and you search by &#8220;har&#8221; the results would be 0. If <code class="docutils literal"><span class="pre">add_wildcards=True</span></code> , then &#8220;har&#8221; would be fair enough to get the result &#8220;harol&#8221;  because searching was performed  using wild cards.</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">search</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="s">&quot;har&quot;</span><span class="p">,</span> <span class="n">add_wildcards</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="go">  {&#39;cant_results&#39;: 0,</span>
+<span class="go">   &#39;facet_names&#39;: [],</span>
+<span class="go">   &#39;matched_terms&#39;: {},</span>
+<span class="go">   &#39;results&#39;: [],</span>
+<span class="go">   &#39;runtime&#39;: 0.0003230571746826172</span>
+<span class="go">   }</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">search</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="s">&quot;har&quot;</span><span class="p">,</span> <span class="n">add_wildcards</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="go">  {&#39;cant_results&#39;: 4,</span>
+<span class="go">   &#39;facet_names&#39;: [],</span>
+<span class="go">   &#39;matched_terms&#39;: {&#39;name&#39;: [&#39;harol&#39;]},</span>
+<span class="go">   &#39;results&#39;: [{&#39;docnum&#39;: 1L,</span>
+<span class="go">                &#39;pk&#39;: u&#39;7&#39;,</span>
+<span class="go">                &#39;rank&#39;: 0,</span>
+<span class="go">                &#39;score&#39;: 2.0296194171811583},</span>
+<span class="go">               {&#39;docnum&#39;: 5L,</span>
+<span class="go">                &#39;pk&#39;: u&#39;6&#39;,</span>
+<span class="go">                &#39;rank&#39;: 1,</span>
+<span class="go">                &#39;score&#39;: 2.0296194171811583},</span>
+<span class="go">               {&#39;docnum&#39;: 12L,</span>
+<span class="go">                &#39;pk&#39;: u&#39;13&#39;,</span>
+<span class="go">                &#39;rank&#39;: 2,</span>
+<span class="go">                &#39;score&#39;: 2.0296194171811583},</span>
+<span class="go">               {&#39;docnum&#39;: 13L,</span>
+<span class="go">                &#39;pk&#39;: u&#39;14&#39;,</span>
+<span class="go">                &#39;rank&#39;: 3,</span>
+<span class="go">                &#39;score&#39;: 2.0296194171811583}],</span>
+<span class="go">   &#39;runtime&#39;: 0.014926910400390625}</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">something=True</span></code> option, would run first a search with
+<code class="docutils literal"><span class="pre">add_wildcards=False</span></code> value, but in case results are empty it would automatically run a search adding wildcards to the result.</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">search</span><span class="p">(</span><span class="n">Attribute</span><span class="p">,</span> <span class="s">&quot;tejo&quot;</span><span class="p">,</span> <span class="n">something</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+<span class="go">  {&#39;cant_results&#39;: 4,</span>
+<span class="go">   &#39;facet_names&#39;: [],</span>
+<span class="go">   &#39;matched_terms&#39;: {&#39;name&#39;: [&#39;tejo&#39;], &#39;sport&#39;: [&#39;tejo&#39;]},</span>
+<span class="go">   &#39;results&#39;: [{&#39;docnum&#39;: 1L,</span>
+<span class="go">                &#39;pk&#39;: u&#39;7&#39;,</span>
+<span class="go">                &#39;rank&#39;: 0,</span>
+<span class="go">                &#39;score&#39;: 5.500610730717037},</span>
+<span class="go">               {&#39;docnum&#39;: 6L,</span>
+<span class="go">                &#39;pk&#39;: u&#39;1&#39;,</span>
+<span class="go">                &#39;rank&#39;: 1,</span>
+<span class="go">                &#39;score&#39;: 5.500610730717037}],</span>
+<span class="go">   &#39;runtime&#39;: 0.0036530494689941406}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="the-output-dictionary">
+<h2>The output dictionary<a class="headerlink" href="#the-output-dictionary" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal"><span class="pre">search()</span></code> function returns a dictionary with selected information.</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">cant_results</span></code>: is the total number of documents collected by the searcher.</li>
+<li><code class="docutils literal"><span class="pre">facet_names</span></code>: is useful with the option <code class="docutils literal"><span class="pre">groupedby</span></code>, because it returns the item used to group the results.</li>
+<li><code class="docutils literal"><span class="pre">matched_terms</span></code>: is a dictionary that saves the searcheable field and the match given by the query.</li>
+<li><code class="docutils literal"><span class="pre">runtime</span></code>: how much time the searcher took to find it.</li>
+<li><code class="docutils literal"><span class="pre">results</span></code>: is  a dictionary&#8217;s list for the individual results. i.e. a dictionary for every single result, containing:<ul>
+<li>&#8216;rank&#8217;: the position of the result,</li>
+<li>&#8216;result&#8217;: indicating the primary key and the correspond value of the item,</li>
+<li>&#8216;score&#8217;: the score for the item in the search, and</li>
+<li>&#8216;pk&#8217;: the primary key</li>
+</ul>
+</li>
+</ul>
+<p>If you want the items shown as a list rather than a dictionary. You can use the option use_dict: this option by default is set True. However if you choose false, results will look something like (&#8216;field&#8217;, &#8216;result&#8217;)</p>
+</div>
 </div>
 
 
@@ -186,15 +283,20 @@ For these reasons we implemented the following extra options: The first one is r
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Searching</a><ul>
+<li><a class="reference internal" href="#testing-on-the-shell">Testing on the shell.</a></li>
+<li><a class="reference internal" href="#search">Search():</a></li>
+<li><a class="reference internal" href="#the-attribute-pw">The Attribute <code class="docutils literal"><span class="pre">_pw_.</span></code></a></li>
 <li><a class="reference internal" href="#searching-by-field">Searching by field:</a></li>
+<li><a class="reference internal" href="#add-wildcards-and-something">add_wildcards and something</a></li>
+<li><a class="reference internal" href="#the-output-dictionary">The output dictionary</a></li>
 </ul>
 </li>
 </ul>
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="whatsnew.html" title="previous chapter">What&#8217;s new? 0.1.6</a></li>
-      <li>Next: <a href="add_wildcards.html" title="next chapter">The arguments <code class="docutils literal"><span class="pre">add_wildcards</span></code> and <code class="docutils literal"><span class="pre">something</span></code></a></li>
+      <li>Previous: <a href="config.html" title="previous chapter">Getting Started:</a></li>
+      <li>Next: <a href="bonus.html" title="next chapter">Bonus:/ponywhoosh !</a></li>
   </ul></li>
 </ul>
   <div role="note" aria-label="source link">

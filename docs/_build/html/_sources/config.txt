@@ -43,6 +43,7 @@ These configurations set up the default folder to save the Indexes, if you want 
 
 Database Config
 ***************
+
 Import the Flask_ponywhoosh library in the file you have the database entities.
 
 .. code:: python
@@ -51,7 +52,7 @@ Import the Flask_ponywhoosh library in the file you have the database entities.
     pw = Whoosh()
 
 For each entity wrap it up with the decorator
-``@wh.register_model(*args,**kw)``. Specifying what attributes would be searcheables. For exa:
+``@wh.register_model(*args,**kw)``. Specifying what attributes would be searcheables. For example:
 
 .. code:: python
 
@@ -67,3 +68,8 @@ For each entity wrap it up with the decorator
 
 As you could see in the previous example, you should declare as strings these fields where you want whoosh to store the searcheables (``name``, ``age``, etc.). All the parameters from whoosh are available, You just have to listed separating them with commas: sortable, stored, scored, etc. Refer to whoosh documentation for
 further explanations on the application of these parameters.
+
+The first field you register (in the example, 'name'), would be the main field for you. In that way when you render the template '/ponywhoosh', the cards results would show this field as the main one.  
+
+Searching:for the first  time
+*****************************
