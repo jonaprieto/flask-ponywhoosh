@@ -65,9 +65,10 @@
 <p>However if you&#8217;d rather  prefer to &#8220;see&#8221; the results, you may access to the route &#8216;/ponywhoosh/&#8217; available when you run the server.</p>
 <div class="section" id="testing-on-the-shell">
 <h2>Testing on the shell.<a class="headerlink" href="#testing-on-the-shell" title="Permalink to this headline">¶</a></h2>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="n">PonyModel</span><span class="o">.</span><span class="n">_pw_</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-</pre></div>
-</div>
+<p><a class="reference external" href="https://pypi.python.org/pypi/Flask-PonyWhoosh"><img alt="model" src="https://github.com/compiteing/flask-ponywhoosh/blob/master/images/modelsearch.gif?raw=true" /></a>
+.. code :: python</p>
+<blockquote>
+<div>PonyModel._pw_.search(query, <a href="#id1"><span class="problematic" id="id2">**</span></a>kwargs)</div></blockquote>
 <p>There are several options to perform a search with <code class="docutils literal"><span class="pre">flask_ponywhoosh</span></code>. For instance, to execute a  simple search, choose the entity where you want to perform the search and then  try
 something like the following code over a view function, or even from the shell,</p>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">app</span> <span class="kn">import</span> <span class="o">*</span>
@@ -107,6 +108,7 @@ something like the following code over a view function, or even from the shell,<
 </div>
 <div class="section" id="search">
 <h2>Search():<a class="headerlink" href="#search" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://pypi.python.org/pypi/Flask-PonyWhoosh"><img alt="first" src="https://github.com/compiteing/flask-ponywhoosh/blob/master/images/searchfirsttime.gif?raw=true" /></a></p>
 <p>The function <code class="docutils literal"><span class="pre">search()</span></code> takes up to three arguments.
 1. A ponymodel, the databse entity where you want to perform the search.
 2. The <code class="docutils literal"><span class="pre">search_string</span></code>, what  you are looking for; and,
@@ -152,9 +154,10 @@ the model. (Refer to the <em>Usage</em> section above)</p>
 </div>
 <div class="section" id="searching-by-field">
 <h2>Searching by field:<a class="headerlink" href="#searching-by-field" title="Permalink to this headline">¶</a></h2>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="n">search</span><span class="p">(</span><span class="n">PonyModel</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="s">&quot;field_name&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
+<p><a class="reference external" href="https://pypi.python.org/pypi/Flask-PonyWhoosh"><img alt="byfield" src="https://github.com/compiteing/flask-ponywhoosh/blob/master/images/searchingbyfield.gif?raw=true" /></a>
+.. code:: python</p>
+<blockquote>
+<div>search(PonyModel, query, field=&#8221;field_name&#8221;)</div></blockquote>
 <p>By default the function <code class="docutils literal"><span class="pre">search()</span></code> performs a multifield parser query, i.e.  you will be searching in all the fields you have declared when you registered the model. However, sometimes you would like to perform searching in just one or some of all the fields.
 For these reasons we implemented the following extra options: The first one is refered as <code class="docutils literal"><span class="pre">field</span></code> all you have to do is indicate in which field you want to search. The output would be a results object containing only the information found in that field. And <code class="docutils literal"><span class="pre">fields</span></code> where you should write a list with all the fields you want to search.</p>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">search</span><span class="p">(</span><span class="n">User</span><span class="p">,</span><span class="s">&quot;harol&quot;</span><span class="p">,</span><span class="n">field</span><span class="o">=</span><span class="s">&quot;name&quot;</span><span class="p">)</span>
@@ -197,6 +200,7 @@ For these reasons we implemented the following extra options: The first one is r
 </div>
 <div class="section" id="add-wildcards-and-something">
 <h2>add_wildcards and something<a class="headerlink" href="#add-wildcards-and-something" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://pypi.python.org/pypi/Flask-PonyWhoosh"><img alt="wildcards" src="https://github.com/compiteing/flask-ponywhoosh/blob/master/images/addwildcards.gif?raw=true" /></a></p>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="n">search</span><span class="p">(</span><span class="n">PonyModel</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">add_wildcards</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -267,7 +271,11 @@ For these reasons we implemented the following extra options: The first one is r
 </ul>
 </li>
 </ul>
-<p>If you want the items shown as a list rather than a dictionary. You can use the option use_dict: this option by default is set True. However if you choose false, results will look something like (&#8216;field&#8217;, &#8216;result&#8217;)</p>
+</div>
+<div class="section" id="use-dict">
+<h2>use_dict:<a class="headerlink" href="#use-dict" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://pypi.python.org/pypi/Flask-PonyWhoosh"><img alt="usedict" src="https://github.com/compiteing/flask-ponywhoosh/blob/master/images/use_dict.gif?raw=true" /></a></p>
+<p>If you want that the  items look like a list rather than a dictionary. You can use the option use_dict: this option by default is set True. However if you choose false, results will look something like (&#8216;field&#8217;, &#8216;result&#8217;)</p>
 </div>
 </div>
 
@@ -289,6 +297,7 @@ For these reasons we implemented the following extra options: The first one is r
 <li><a class="reference internal" href="#searching-by-field">Searching by field:</a></li>
 <li><a class="reference internal" href="#add-wildcards-and-something">add_wildcards and something</a></li>
 <li><a class="reference internal" href="#the-output-dictionary">The output dictionary</a></li>
+<li><a class="reference internal" href="#use-dict">use_dict:</a></li>
 </ul>
 </li>
 </ul>

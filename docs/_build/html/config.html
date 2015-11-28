@@ -57,7 +57,7 @@
           <div class="body" role="main">
             
   <div class="section" id="getting-started">
-<h1>Getting Started:<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
+<span id="config"></span><h1>Getting Started:<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
 <div class="code python highlight-python"><div class="highlight"><pre>pip install flask-ponywhoosh
@@ -70,6 +70,7 @@
 </div>
 <div class="section" id="flask-app-configuration">
 <h2>Flask-App Configuration<a class="headerlink" href="#flask-app-configuration" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://pypi.python.org/pypi/Flask-PonyWhoosh"><img alt="appconfig" src="https://github.com/compiteing/flask-ponywhoosh/blob/master/images/flaskappconfig.gif?raw=true" /></a></p>
 <p>In the file you are running  your app, you can initialize the
 FlaskPonywhoosh and set up the general configurations.</p>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">flask_ponywhoosh</span> <span class="kn">import</span> <span class="n">Ponywhoosh</span>
@@ -85,8 +86,9 @@ FlaskPonywhoosh and set up the general configurations.</p>
 </div>
 <p>These configurations set up the default folder to save the Indexes, if you want to activate debug, the minimun lenght of the string in the query, the time out (stop searching if is taking so much) and the route where you might charge the default template for searching (available from version 0.1.5.)</p>
 </div>
-<div class="section" id="database-config">
-<h2>Database Config<a class="headerlink" href="#database-config" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="database-configuration">
+<h2>Database Configuration<a class="headerlink" href="#database-configuration" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://pypi.python.org/pypi/Flask-PonyWhoosh"><img alt="database" src="https://github.com/compiteing/flask-ponywhoosh/blob/master/images/databaseconfig.gif?raw=true" /></a></p>
 <p>Import the Flask_ponywhoosh library in the file you have the database entities.</p>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">flask_ponywhoosh</span> <span class="kn">import</span> <span class="n">Whoosh</span>
 <span class="n">pw</span> <span class="o">=</span> <span class="n">Ponywhoosh</span><span class="p">()</span>
@@ -110,7 +112,9 @@ further explanations on the application of these parameters.</p>
 <p>The first field you register (in the example, &#8216;name&#8217;), would be the main field for you. In that way when you render the template &#8216;/ponywhoosh&#8217;, the cards results would show this field as the main one.</p>
 </div>
 <div class="section" id="searching-for-the-first-time">
-<h2>Searching:for the first  time<a class="headerlink" href="#searching-for-the-first-time" title="Permalink to this headline">¶</a></h2>
+<h2>Searching: for the first  time<a class="headerlink" href="#searching-for-the-first-time" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://pypi.python.org/pypi/Flask-PonyWhoosh"><img alt="first" src="https://github.com/compiteing/flask-ponywhoosh/blob/master/images/searchfirsttime.gif?raw=true" /></a></p>
+<p>In the shell view you can search using the &#8220;search()&#8221; function. Running our example, let us suppose  we are looking for the word &#8220;applied&#8221; in the model Department. After we run our example.py with the shell, we should follow the following steps:</p>
 </div>
 </div>
 
@@ -128,8 +132,8 @@ further explanations on the application of these parameters.</p>
 <li><a class="reference internal" href="#">Getting Started:</a><ul>
 <li><a class="reference internal" href="#installation">Installation</a></li>
 <li><a class="reference internal" href="#flask-app-configuration">Flask-App Configuration</a></li>
-<li><a class="reference internal" href="#database-config">Database Config</a></li>
-<li><a class="reference internal" href="#searching-for-the-first-time">Searching:for the first  time</a></li>
+<li><a class="reference internal" href="#database-configuration">Database Configuration</a></li>
+<li><a class="reference internal" href="#searching-for-the-first-time">Searching: for the first  time</a></li>
 </ul>
 </li>
 </ul>

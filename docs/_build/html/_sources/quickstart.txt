@@ -15,6 +15,7 @@ However if you'd rather  prefer to "see" the results, you may access to the rout
 Testing on the shell.
 *********************
 
+|model|
 .. code :: python
     
    PonyModel._pw_.search(query, **kwargs)
@@ -61,6 +62,9 @@ If you would prefer, you may use the function ``search()``,  which will run the 
 
 Search():
 *********
+
+|first|
+
 The function ``search()`` takes up to three arguments.
 1. A ponymodel, the databse entity where you want to perform the search.
 2. The ``search_string``, what  you are looking for; and,
@@ -112,7 +116,7 @@ There are some special features avalaible for models from the database. You just
 
 Searching by field:
 *******************
-
+|byfield|
 .. code:: python 
 
     search(PonyModel, query, field="field_name")
@@ -160,6 +164,8 @@ For these reasons we implemented the following extra options: The first one is r
 
 add_wildcards and something 
 ***************************
+
+|wildcards|
 
 .. code :: python
     
@@ -236,6 +242,27 @@ The ``search()`` function returns a dictionary with selected information.
   * 'score': the score for the item in the search, and
   * 'pk': the primary key Or the sets of primary keys. 
 
+use_dict:
+*********
 
-If you want the items shown as a list rather than a dictionary. You can use the option use_dict: this option by default is set True. However if you choose false, results will look something like ('field', 'result')
+|usedict|
+
+If you want that the  items look like a list rather than a dictionary. You can use the option use_dict: this option by default is set True. However if you choose false, results will look something like ('field', 'result')
   
+.. |model| image:: https://github.com/compiteing/flask-ponywhoosh/blob/master/images/modelsearch.gif?raw=true
+   :target: https://pypi.python.org/pypi/Flask-PonyWhoosh
+
+.. |wildcards| image:: https://github.com/compiteing/flask-ponywhoosh/blob/master/images/addwildcards.gif?raw=true
+   :target: https://pypi.python.org/pypi/Flask-PonyWhoosh
+
+.. |byfield| image:: https://github.com/compiteing/flask-ponywhoosh/blob/master/images/searchingbyfield.gif?raw=true
+   :target: https://pypi.python.org/pypi/Flask-PonyWhoosh
+.. |database| image:: https://github.com/compiteing/flask-ponywhoosh/blob/master/images/databaseconfig.gif?raw=true
+   :target: https://pypi.python.org/pypi/Flask-PonyWhoosh
+
+.. |usedict| image:: https://github.com/compiteing/flask-ponywhoosh/blob/master/images/use_dict.gif?raw=true
+   :target: https://pypi.python.org/pypi/Flask-PonyWhoosh
+   
+.. |first| image:: https://github.com/compiteing/flask-ponywhoosh/blob/master/images/searchfirsttime.gif?raw=true
+   :target: https://pypi.python.org/pypi/Flask-PonyWhoosh
+

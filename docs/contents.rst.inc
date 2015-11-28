@@ -13,6 +13,7 @@ User's Guide
    quickstart
    bonus
    contexts
+   api
    changelog
    
 
