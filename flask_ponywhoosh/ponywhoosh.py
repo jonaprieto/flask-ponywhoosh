@@ -1,15 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # @Author: d555
-"""
-
-    PonyWhoosh Package
-    ~~~~~~~~~~~~~~~~
-
-    :copyright: (c) 2015-2016 by Jonathan S. Prieto & Ivan Felipe Rodriguez.
-    :license: BSD (see LICENSE.md)
-
-"""
 
 from collections import defaultdict
 import os
