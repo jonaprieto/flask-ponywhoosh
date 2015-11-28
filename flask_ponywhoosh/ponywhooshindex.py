@@ -219,13 +219,17 @@ class PonyWhooshIndex(object):
                 'facet_names': results.facet_names(),
             }
 
-            dic['results'] = []
-            
+            if dic['cant_results'] == 0 and self.to_bool(opt.get('something', False)):
+                opt['add_wildcards'] = True
+                opt['something'] = False
+                return self.search(search_string, **opt)
+
+            dic['results'] = {}
 
             for r in results:
                 params = {k:r[k] for k in self._primary_key}
                 ans = {
-                    'pk': params.values(),
+                    'pk': tuple(params.values()),
                     'score': r.score,
                 }
                 
@@ -239,13 +243,8 @@ class PonyWhooshIndex(object):
                         ans['other_fields'] = [(k, dic_entity[k]) for k in fields_missing]
                         ans['entity'] = [(k, dic_entity[k]) for k in self._fields]
                     ans['model'] = self._name
-                dic['results'].append(ans)
-
-            if dic['cant_results'] == 0 and self.to_bool(opt.get('something', False)):
-                opt['add_wildcards'] = True
-                opt['something'] = False
-                return self.search(search_string, **opt)
-            return dic
+                dic['results'][ans['pk']] = ans
+            return dic.values()
 
     def prep_search_string(self, search_string, add_wildcards=False):
         """Prepares search string as a proper whoosh search string.
