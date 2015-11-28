@@ -224,7 +224,7 @@ class PonyWhooshIndex(object):
                 opt['something'] = False
                 return self.search(search_string, **opt)
 
-            dic['results'] = {}
+            value_results = {}
 
             for r in results:
                 params = {k:r[k] for k in self._primary_key}
@@ -243,8 +243,10 @@ class PonyWhooshIndex(object):
                         ans['other_fields'] = [(k, dic_entity[k]) for k in fields_missing]
                         ans['entity'] = [(k, dic_entity[k]) for k in self._fields]
                     ans['model'] = self._name
-                dic['results'][ans['pk']] = ans
-            return dic.values()
+                value_results[ans['pk']] = ans
+            
+            dic["results"] = value_results
+            return dic
 
     def prep_search_string(self, search_string, add_wildcards=False):
         """Prepares search string as a proper whoosh search string.
