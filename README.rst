@@ -1,5 +1,8 @@
-Welcome to Flask-PonyWhoosh!
-============================
+Flask-PonyWhoosh
+================
+Perform full-text searches on your database with Pony ORM powered by Whoosh and Flask. It can be easily pluggable in your flask app. Look at examples’ folder.
+
+
 
 |PyPI Package latest release| |PyPI Package monthly downloads| |Test|
 
@@ -10,13 +13,22 @@ Install package, import and start adding what fields of your models in your data
 .. image:: https://github.com/compiteing/flask-ponywhoosh/blob/master/images/databaseconfig.gif?raw=true
    :target: https://pypi.python.org/pypi/Flask-PonyWhoosh
    :width: 200px 
+   :scale: 90%
    :align: center 
    :height: 100px 
    :alt: PonyWhoosh
 
-If you setted all things right. Run a server and visit a rout by default to the search engine.
 
-    |gif|
+If you want with flask, you can a server and visit a route by default `/ponywhoosh` to the search engine. (you can change it if you need)
+
+
+.. image:: http://g.recordit.co/6MnvKNod6y.gif
+   :target: https://pypi.python.org/pypi/Flask-PonyWhoosh
+   :width: 200px 
+   :scale: 90%
+   :align: center 
+   :height: 100px 
+   :alt: PonyWhoosh
 
 Perform full-text searches on your database with Pony ORM powered by
 Whoosh and Flask. It can be easily pluggable in your flask app. Look at
@@ -112,5 +124,3 @@ Changelog
    :target: https://pypi.python.org/pypi/Flask-PonyWhoosh
 .. |Test| image:: https://travis-ci.org/piperod/Flask-PonyWhoosh.svg?branch=master
    :target: https://travis-ci.org/piperod/Flask-PonyWhoosh
-   
-.. |gif| image:: http://g.recordit.co/6MnvKNod6y.gif
