@@ -2,6 +2,7 @@ Welcome to Flask-PonyWhoosh!
 ============================
 
 |PyPI Package latest release| |PyPI Package monthly downloads| |Test|
+|database| |gif|
 
 Perform full-text searches on your database with Pony ORM powered by
 Whoosh and Flask. It can be easily pluggable in your flask app. Look at
@@ -102,3 +103,6 @@ Changelog
    :target: https://pypi.python.org/pypi/Flask-PonyWhoosh
 .. |Test| image:: https://travis-ci.org/piperod/Flask-PonyWhoosh.svg?branch=master
    :target: https://travis-ci.org/piperod/Flask-PonyWhoosh
+.. |database| image:: https://github.com/compiteing/flask-ponywhoosh/blob/master/images/databaseconfig.gif?raw=true
+   :target: https://pypi.python.org/pypi/Flask-PonyWhoosh
+.. |gif| image:: http://g.recordit.co/6MnvKNod6y.gif
