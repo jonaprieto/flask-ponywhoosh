@@ -32,7 +32,7 @@ from pprint import pprint
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 __author__ = "Jonathan S. Prieto & Ivan F. Rodriguez"
-__version__ = "0.1.6a"
+__version__ = "0.1.6b"
 
 __all__ = ['PonyWhoosh']
 
