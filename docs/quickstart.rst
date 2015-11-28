@@ -235,7 +235,9 @@ The ``search()`` function returns a dictionary with selected information.
   * 'result': indicating the primary key and the correspond value of the item, 
   * 'score': the score for the item in the search, and
   * 'pk': the primary key Or the sets of primary keys. 
+  
+use_dict:
+*********
 
-
-If you want the items shown as a list rather than a dictionary. You can use the option use_dict: this option by default is set True. However if you choose false, results will look something like ('field', 'result')
+If you want that the  items look like a list rather than a dictionary. You can use the option use_dict: this option by default is set True. However if you choose false, results will look something like ('field', 'result')
   

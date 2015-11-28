@@ -71,5 +71,10 @@ further explanations on the application of these parameters.
 
 The first field you register (in the example, 'name'), would be the main field for you. In that way when you render the template '/ponywhoosh', the cards results would show this field as the main one.  
 
-Searching:for the first  time
-*****************************
+Searching: for the first  time
+******************************
+
+In the shell view you can search using the "search()" function. Running our example, let us suppose  we are looking for the word "applied" in the model Department. After we run our example.py with the shell, we should follow the following steps:
+
+
+
