@@ -18,6 +18,7 @@ from whoosh import qparser
 from collections import defaultdict
 import whoosh 
 import re
+from pprint import pprint
 
 class PonyWhooshIndex(object):
 
@@ -168,10 +169,6 @@ class PonyWhooshIndex(object):
         Returns:
             dict: Description
         """
-        if self.debug:
-            print 'VERSION -> ', __version__
-            print 'opt:'
-            pprint(opt)
 
         prepped_string = self.prep_search_string(
             search_string, self.to_bool(opt.get('add_wildcards', False)))
@@ -226,11 +223,11 @@ class PonyWhooshIndex(object):
             pk = unicode(self._primary_key)
             for r in results:
                 ans = {
-                    'pk': r[pk],
-                    'rank': r.rank,
+                    # 'pk': r[pk],
+                    # 'rank': r.rank,
                     'score': r.score,
-                    'docnum': r.docnum
                 }
+                
                 if self.to_bool(opt.get('include_entity', False)):
                     parms = {pk: r[pk]}
                     entity = self._model.get(**parms)

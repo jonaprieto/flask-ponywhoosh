@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # @Author: d555
 
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 import os
 
 from flask import Flask, jsonify, render_template
@@ -11,7 +11,7 @@ from flask.ext.script import Manager, Shell
 from pony.orm import *
 from pony.orm.serialization import to_json
 
-from ..flask_ponywhoosh import PonyWhoosh, full_search
+from flask_ponywhoosh import PonyWhoosh, full_search
 
 
 app = Flask(__name__)
@@ -85,7 +85,7 @@ class Student(db.Entity):
     group = Required(Group)
     courses = Set(Course)
 
-db.bind('sqlite', 'university.sqlite', create_db=True)
+db.bind('sqlite', ':memory:', create_db=True)
 #db.bind('mysql', host="localhost", user="pony", passwd="pony", db="university1")
 #db.bind('postgres', user='pony', password='pony', host='localhost', database='university1')
 #db.bind('oracle', 'university1/pony@localhost')

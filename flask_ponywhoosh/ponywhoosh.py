@@ -3,7 +3,7 @@
 # @Author: d555
 """
 
-    PonyWhoosh Class
+    PonyWhoosh Package
     ~~~~~~~~~~~~~~~~
 
     :copyright: (c) 2015-2016 by Jonathan S. Prieto & Ivan Felipe Rodriguez.
@@ -18,6 +18,9 @@ import sys
 
 import jinja2
 from pony import orm
+from pony.orm.serialization import to_dict
+import json
+
 from ponywhooshindex import PonyWhooshIndex
 from views import IndexView
 from whoosh import fields as whoosh_module_fields
@@ -26,6 +29,11 @@ from whoosh import qparser
 import whoosh
 
 basedir = os.path.abspath(os.path.dirname(__file__))
+
+__author__ = "Jonathan S. Prieto & Ivan F. Rodriguez"
+__version__ = "0.1.6"
+
+__all__ = ['PonyWhoosh']
 
 
 class PonyWhoosh(object):
@@ -178,27 +186,50 @@ class PonyWhoosh(object):
             self._entities[index._name] = model
 
             index._schema_attrs = {}
+
+            index._primary_key_is_composite = False
             index._primary_key = None
-            index._primary_key_type = int
+            index._primary_key_type = None
 
             lista = {} # FIX: the name, is not helpful
-            for field in model._attrs_:
-                if field == model._pk_:
-                    index._primary_key = field.name
-                    index._primary_key_type = field.py_type
-                    index._schema_attrs[field.name] = whoosh.fields.ID(stored=True, unique=True)
 
-                if field.name in index._fields:
-                    if field.is_string == False and field.is_relation == False:
-                        if field.py_type.__name__ in ['int', 'float']:
-                            index._schema_attrs[field.name] = whoosh.fields.NUMERIC(**kw)
-                        elif field.py_type.__name__ == 'datetime':
-                            index._schema_attrs[field.name] = whoosh.fields.DATETIME(**kw)
-                        elif field.py_type.__name__ == 'bool':
-                            index._schema_attrs[field.name] = whoosh.fields.BOOLEAN(stored=True)
-                        lista[field.name] = field.py_type.__name__
-                    else:
-                        index._schema_attrs[field.name] = whoosh.fields.TEXT(**kw)
+            for field in model._attrs_:
+                if field.is_relation:
+                    continue
+                
+                assert hasattr(field, "name") and hasattr(field, "py_type")
+                
+                fname = field.name
+                if hasattr(field.name, "__name__"):
+                    fname = field.name.__name__
+                
+                # we're not supporting this kind of data
+                ftype = field.py_type.__name__
+                if ftype in ['date', 'datetime', 'datetime.date']:
+                    continue
+
+                fwhoosh = fwhoosh = whoosh.fields.TEXT(**kw)
+
+                if field == model._pk_:
+                    index._primary_key = fname
+                    index._primary_key_type = ftype
+                    fwhoosh = whoosh.fields.ID(stored=True, unique=True)
+
+                if fname in index._fields:
+                    if not field.is_string:
+                        if ftype in ['int', 'float']:
+                            fwhoosh = whoosh.fields.NUMERIC(**kw)
+                        elif ftype == 'bool':
+                            fwhoosh = whoosh.fields.BOOLEAN(stored=True)
+                        lista[fname] = ftype
+
+                index._schema_attrs[fname] = fwhoosh
+  
+
+            if model._pk_is_composite_:
+                index._primary_key_is_composite = True
+                index._primary_key = model._pk_columns_
+                index._primary_key_type = 'list'
 
             index._schema = whoosh.fields.Schema(**index._schema_attrs)
 
@@ -215,21 +246,25 @@ class PonyWhoosh(object):
                     TYPE: Description
                 """
                 writer = index._whoosh.writer(timeout=self.writer_timeout)
+                
+                # is_composite
 
-                attrs = {index._primary_key: obj.get_pk()}
-                for f in index._schema_attrs.keys():
-                    attrs[f] = getattr(obj, f)
+                dict_obj = obj.to_dict()
 
-                    try:
-                        attrs[f] = unicode(attrs[f])
-                    except Exception, e:
-                        print e
 
-                    if attrs[f] in ['None', 'nan']:
-                        attrs[f] = u'0'
+                # if not index._primary_key_is_composite:
+                #     attrs[index._primary_key] = obj.get_pk()
 
-                    if f in lista:
-                        attrs[f] = getattr(obj, f)
+                print dict_obj, "***"
+                print index._schema_attrs.keys(), "<<<"
+
+                def dump(v):
+                    if isinstance(v, (int, str, unicode)):
+                        return unicode(
+
+                attrs = {k:dump(v) for k, v in dict_obj.iteritems() if k in index._schema_attrs.keys()}
+                print attrs
+                   
 
                 if status == 'inserted':
                     writer.add_document(**attrs)
