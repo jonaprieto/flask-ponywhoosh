@@ -27,6 +27,7 @@ from whoosh import fields as whoosh_module_fields
 from whoosh import index as whoosh_module_index
 from whoosh import qparser
 import whoosh
+from pprint import pprint
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -323,6 +324,7 @@ class PonyWhoosh(object):
                 for k, ts in res['matched_terms'].items():
                     for t in ts:
                         ma[k].add(t)
+            pprint(res)
 
         output['runtime'] = runtime
         output['matched_terms'] = {k: list(v) for k, v in ma.items()}

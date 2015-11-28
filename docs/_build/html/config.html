@@ -89,12 +89,12 @@ FlaskPonywhoosh and set up the general configurations.</p>
 <h2>Database Config<a class="headerlink" href="#database-config" title="Permalink to this headline">¶</a></h2>
 <p>Import the Flask_ponywhoosh library in the file you have the database entities.</p>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">flask_ponywhoosh</span> <span class="kn">import</span> <span class="n">Whoosh</span>
-<span class="n">pw</span> <span class="o">=</span> <span class="n">Whoosh</span><span class="p">()</span>
+<span class="n">pw</span> <span class="o">=</span> <span class="n">Ponywhoosh</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>For each entity wrap it up with the decorator
-<code class="docutils literal"><span class="pre">&#64;wh.register_model(*args,**kw)</span></code>. Specifying what attributes would be searcheables. For example:</p>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="nd">@wh.register_model</span><span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">,</span><span class="s">&#39;age&#39;</span><span class="p">,</span> <span class="n">sortable</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>  <span class="n">stored</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<code class="docutils literal"><span class="pre">&#64;pw.register_model(*args,**kw)</span></code>. Specifying what attributes would be searcheables. For example:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="nd">@pw.register_model</span><span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">,</span><span class="s">&#39;age&#39;</span><span class="p">,</span> <span class="n">sortable</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>  <span class="n">stored</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">Entity</span><span class="p">):</span>
     <span class="n">_table_</span> <span class="o">=</span> <span class="s">&#39;User&#39;</span>
     <span class="nb">id</span> <span class="o">=</span> <span class="n">PrimaryKey</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">auto</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>

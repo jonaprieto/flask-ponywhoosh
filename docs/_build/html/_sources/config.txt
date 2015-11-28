@@ -49,14 +49,14 @@ Import the Flask_ponywhoosh library in the file you have the database entities.
 .. code:: python
 
     from flask_ponywhoosh import Whoosh
-    pw = Whoosh()
+    pw = Ponywhoosh()
 
 For each entity wrap it up with the decorator
-``@wh.register_model(*args,**kw)``. Specifying what attributes would be searcheables. For example:
+``@pw.register_model(*args,**kw)``. Specifying what attributes would be searcheables. For example:
 
 .. code:: python
 
-    @wh.register_model('name','age', sortable=True,  stored=True)
+    @pw.register_model('name','age', sortable=True,  stored=True)
     class User(db.Entity):
         _table_ = 'User'
         id = PrimaryKey(int, auto=True)
