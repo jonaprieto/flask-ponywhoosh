@@ -190,8 +190,7 @@ class PonyWhoosh(object):
             index._primary_key_is_composite =  model._pk_is_composite_
             index._primary_key = [f.name for f in model._pk_attrs_]
             index._primary_key_type = 'list'
-            print model, index._primary_key
-            lista = {} # FIX: the name, is not helpful
+            type_attribute = {} 
 
             for field in model._attrs_:
                 if field.is_relation:
@@ -225,7 +224,7 @@ class PonyWhoosh(object):
                         elif ftype == 'bool':
                             fwhoosh = whoosh.fields.BOOLEAN(stored=True)
 
-                lista[fname] = ftype
+                type_attribute[fname] = ftype
                 index._schema_attrs[fname] = fwhoosh
                 kw["stored"] = stored
 

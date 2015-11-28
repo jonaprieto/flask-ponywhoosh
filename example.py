@@ -85,7 +85,7 @@ class Student(db.Entity):
     group = Required(Group)
     courses = Set(Course)
 
-db.bind('sqlite', ':memory:', create_db=True)
+db.bind('sqlite', 'example.sqlite', create_db=True)
 #db.bind('mysql', host="localhost", user="pony", passwd="pony", db="university1")
 #db.bind('postgres', user='pony', password='pony', host='localhost', database='university1')
 #db.bind('oracle', 'university1/pony@localhost')
