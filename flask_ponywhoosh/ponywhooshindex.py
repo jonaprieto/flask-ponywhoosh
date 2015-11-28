@@ -220,34 +220,35 @@ class PonyWhooshIndex(object):
             }
 
             dic['results'] = []
-            pk = unicode(self._primary_key)
+            # pk = unicode(self._primary_key)
             for r in results:
-                ans = {
-                    # 'pk': r[pk],
-                    # 'rank': r.rank,
-                    'score': r.score,
-                }
+                print ">>>", r.score
+                print ">>>", r.__dict__
+                print ">>>", r.reader.stored_fields(r.docnum)
+                # ans = {
+                #     'score': r.score,
+                # }
                 
-                if self.to_bool(opt.get('include_entity', False)):
-                    parms = {pk: r[pk]}
-                    entity = self._model.get(**parms)
-                    dic_entity = entity.to_dict()
-                    if opt.get('use_dict', True):
-                        ans['entity'] = dic_entity
-                    else:
-                        fields_missing = set(
-                            dic_entity.keys()) - set(self._fields)
-                        ans['other_fields'] = [(k, dic_entity[k])
-                                               for k in fields_missing]
-                        ans['entity'] = [(k, dic_entity[k])
-                                         for k in self._fields]
-                    ans['model'] = self._name
-                dic['results'].append(ans)
+                # if self.to_bool(opt.get('include_entity', False)):
+                #     parms = {k:
+                #     entity = self._model.get(**parms)
+                #     dic_entity = entity.to_dict()
+                #     if opt.get('use_dict', True):
+                #         ans['entity'] = dic_entity
+                #     else:
+                #         fields_missing = set(
+                #             dic_entity.keys()) - set(self._fields)
+                #         ans['other_fields'] = [(k, dic_entity[k])
+                #                                for k in fields_missing]
+                #         ans['entity'] = [(k, dic_entity[k])
+                #                          for k in self._fields]
+                #     ans['model'] = self._name
+                # dic['results'].append(ans)
 
-            if dic['cant_results'] == 0 and self.to_bool(opt.get('something', False)):
-                opt['add_wildcards'] = True
-                opt['something'] = False
-                return self.search(search_string, **opt)
+            # if dic['cant_results'] == 0 and self.to_bool(opt.get('something', False)):
+            #     opt['add_wildcards'] = True
+            #     opt['something'] = False
+            #     return self.search(search_string, **opt)
             return dic
 
     def prep_search_string(self, search_string, add_wildcards=False):

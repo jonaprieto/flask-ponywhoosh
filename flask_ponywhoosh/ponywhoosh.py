@@ -187,10 +187,10 @@ class PonyWhoosh(object):
 
             index._schema_attrs = {}
 
-            index._primary_key_is_composite = False
-            index._primary_key = None
-            index._primary_key_type = None
-
+            index._primary_key_is_composite =  model._pk_is_composite_
+            index._primary_key = [f.name for f in model._pk_attrs_]
+            index._primary_key_type = 'list'
+            print model, index._primary_key
             lista = {} # FIX: the name, is not helpful
 
             for field in model._attrs_:
@@ -202,16 +202,19 @@ class PonyWhoosh(object):
                 fname = field.name
                 if hasattr(field.name, "__name__"):
                     fname = field.name.__name__
-                
+
+                stored = kw.get("stored", False)
+                if fname in index._primary_key:
+                    kw["stored"] = True
                 # we're not supporting this kind of data
                 ftype = field.py_type.__name__
                 if ftype in ['date', 'datetime', 'datetime.date']:
+                    kw["stored"] = stored
                     continue
 
                 fwhoosh = fwhoosh = whoosh.fields.TEXT(**kw)
 
                 if field == model._pk_:
-                    index._primary_key = fname
                     index._primary_key_type = ftype
                     fwhoosh = whoosh.fields.ID(stored=True, unique=True)
 
@@ -221,15 +224,10 @@ class PonyWhoosh(object):
                             fwhoosh = whoosh.fields.NUMERIC(**kw)
                         elif ftype == 'bool':
                             fwhoosh = whoosh.fields.BOOLEAN(stored=True)
-                        lista[fname] = ftype
 
+                lista[fname] = ftype
                 index._schema_attrs[fname] = fwhoosh
-  
-
-            if model._pk_is_composite_:
-                index._primary_key_is_composite = True
-                index._primary_key = model._pk_columns_
-                index._primary_key_type = 'list'
+                kw["stored"] = stored
 
             index._schema = whoosh.fields.Schema(**index._schema_attrs)
 
@@ -246,25 +244,17 @@ class PonyWhoosh(object):
                     TYPE: Description
                 """
                 writer = index._whoosh.writer(timeout=self.writer_timeout)
-                
-                # is_composite
 
                 dict_obj = obj.to_dict()
 
+                def dumps(v):
+                    if isinstance(v, int):
+                        return unicode(v)
+                    if isinstance(v, float):
+                        return '%.9f' % v
+                    return unicode(v)
 
-                # if not index._primary_key_is_composite:
-                #     attrs[index._primary_key] = obj.get_pk()
-
-                print dict_obj, "***"
-                print index._schema_attrs.keys(), "<<<"
-
-                def dump(v):
-                    if isinstance(v, (int, str, unicode)):
-                        return unicode(
-
-                attrs = {k:dump(v) for k, v in dict_obj.iteritems() if k in index._schema_attrs.keys()}
-                print attrs
-                   
+                attrs = {k: dumps(v) for k, v in dict_obj.iteritems() if k in index._schema_attrs.keys()}
 
                 if status == 'inserted':
                     writer.add_document(**attrs)
