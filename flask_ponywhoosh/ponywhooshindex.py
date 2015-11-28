@@ -2,16 +2,6 @@
 # -*- coding: utf-8 -*-
 # @Author: d555
 
-"""
-
-    PonyWhooshIndex Class
-    ~~~~~~~~~~~~~~~~
-
-    :copyright: (c) 2015-2016 by Jonathan S. Prieto & Ivan Felipe Rodriguez.
-    :license: BSD (see LICENSE.md)
-
-"""
-
 from pony import orm
 from whoosh import fields as whoosh_module_fields
 from whoosh import qparser
