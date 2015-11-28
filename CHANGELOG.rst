@@ -2,6 +2,10 @@
 Changelog
 =========
 
+0.1.6x (2015-10-20)
+-----------------------------------------
+* Fixed minor bugs
+
 0.1.6 (2015-10-20)
 -----------------------------------------
 * `use_dict` option to render dictionary. By default is `False`.

@@ -1,0 +1,177 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Getting Started: &mdash; Python  documentation</title>
+    
+    <link rel="stylesheet" href="_static/flasky.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Python  documentation" href="index.html" />
+    <link rel="next" title="Searching" href="quickstart.html" />
+    <link rel="prev" title="What’s new? 0.1.6" href="whatsnew.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">
+  
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="quickstart.html" title="Searching"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="whatsnew.html" title="What’s new? 0.1.6"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Python  documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="getting-started">
+<span id="config"></span><h1>Getting Started:<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<div class="code python highlight-python"><div class="highlight"><pre>pip install flask-ponywhoosh
+</pre></div>
+</div>
+<p>or</p>
+<div class="code bash highlight-python"><div class="highlight"><pre>git clone https://github.com/piperod/Flask-PonyWhoosh.git
+</pre></div>
+</div>
+</div>
+<div class="section" id="flask-app-configuration">
+<h2>Flask-App Configuration<a class="headerlink" href="#flask-app-configuration" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://pypi.python.org/pypi/Flask-PonyWhoosh"><img alt="appconfig" src="https://github.com/compiteing/flask-ponywhoosh/blob/master/images/flaskappconfig.gif?raw=true" /></a></p>
+<p>In the file you are running  your app, you can initialize the
+FlaskPonywhoosh and set up the general configurations.</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">flask_ponywhoosh</span> <span class="kn">import</span> <span class="n">Ponywhoosh</span>
+<span class="n">Ponywhoosh</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;WHOOSHEE_DIR&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;whooshes&#39;</span>
+<span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;PONYWHOOSH_DEBUG&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;WHOSHEE_MIN_STRING_LEN&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;WHOOSHEE_WRITER_TIMEOUT&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;WHOOSHEE_URL&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;/ponywhoosh&#39;</span>
+</pre></div>
+</div>
+<p>These configurations set up the default folder to save the Indexes, if you want to activate debug, the minimun lenght of the string in the query, the time out (stop searching if is taking so much) and the route where you might charge the default template for searching (available from version 0.1.5.)</p>
+</div>
+<div class="section" id="database-configuration">
+<h2>Database Configuration<a class="headerlink" href="#database-configuration" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://pypi.python.org/pypi/Flask-PonyWhoosh"><img alt="database" src="https://github.com/compiteing/flask-ponywhoosh/blob/master/images/databaseconfig.gif?raw=true" /></a></p>
+<p>Import the Flask_ponywhoosh library in the file you have the database entities.</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">flask_ponywhoosh</span> <span class="kn">import</span> <span class="n">Whoosh</span>
+<span class="n">pw</span> <span class="o">=</span> <span class="n">Ponywhoosh</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>For each entity wrap it up with the decorator
+<code class="docutils literal"><span class="pre">&#64;pw.register_model(*args,**kw)</span></code>. Specifying what attributes would be searcheables. For example:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="nd">@pw.register_model</span><span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">,</span><span class="s">&#39;age&#39;</span><span class="p">,</span> <span class="n">sortable</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>  <span class="n">stored</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">Entity</span><span class="p">):</span>
+    <span class="n">_table_</span> <span class="o">=</span> <span class="s">&#39;User&#39;</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">PrimaryKey</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">auto</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">Required</span><span class="p">(</span><span class="nb">unicode</span><span class="p">)</span>
+    <span class="n">tipo</span> <span class="o">=</span> <span class="n">Optional</span><span class="p">(</span><span class="nb">unicode</span><span class="p">)</span>
+    <span class="n">age</span> <span class="o">=</span> <span class="n">Optional</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">entries</span> <span class="o">=</span> <span class="n">Set</span><span class="p">(</span><span class="s">&quot;Entry&quot;</span><span class="p">)</span>
+    <span class="n">attributes</span> <span class="o">=</span> <span class="n">Set</span><span class="p">(</span><span class="s">&quot;Attributes&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>As you could see in the previous example, you should declare as strings these fields where you want whoosh to store the searcheables (<code class="docutils literal"><span class="pre">name</span></code>, <code class="docutils literal"><span class="pre">age</span></code>, etc.). All the parameters from whoosh are available, You just have to listed separating them with commas: sortable, stored, scored, etc. Refer to whoosh documentation for
+further explanations on the application of these parameters.</p>
+<p>The first field you register (in the example, &#8216;name&#8217;), would be the main field for you. In that way when you render the template &#8216;/ponywhoosh&#8217;, the cards results would show this field as the main one.</p>
+</div>
+<div class="section" id="searching-for-the-first-time">
+<h2>Searching: for the first  time<a class="headerlink" href="#searching-for-the-first-time" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://pypi.python.org/pypi/Flask-PonyWhoosh"><img alt="first" src="https://github.com/compiteing/flask-ponywhoosh/blob/master/images/searchfirsttime.gif?raw=true" /></a></p>
+<p>In the shell view you can search using the &#8220;search()&#8221; function. Running our example, let us suppose  we are looking for the word &#8220;applied&#8221; in the model Department. After we run our example.py with the shell, we should follow the following steps:</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><p class="logo"><a href="index.html">
+  <img class="logo" src="_static/logo.png" alt="Logo"
+    style="margin-left: -5px"/>
+</a></p>
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Getting Started:</a><ul>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#flask-app-configuration">Flask-App Configuration</a></li>
+<li><a class="reference internal" href="#database-configuration">Database Configuration</a></li>
+<li><a class="reference internal" href="#searching-for-the-first-time">Searching: for the first  time</a></li>
+</ul>
+</li>
+</ul>
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="whatsnew.html" title="previous chapter">What&#8217;s new? 0.1.6</a></li>
+      <li>Next: <a href="quickstart.html" title="next chapter">Searching</a></li>
+  </ul></li>
+</ul>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/config.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  <div class="footer">
+    &copy; Copyright 2015, Jonathan S. Prieto C. & Ivan Felipe Rodriguez.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div>
+  
+  </body>
+</html>
