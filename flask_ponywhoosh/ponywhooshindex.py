@@ -245,7 +245,7 @@ class PonyWhooshIndex(object):
                     ans['model'] = self._name
                 value_results[ans['pk']] = ans
             
-            dic["results"] = value_results
+            dic["results"] = value_results.values()
             return dic
 
     def prep_search_string(self, search_string, add_wildcards=False):
