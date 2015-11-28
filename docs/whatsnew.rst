@@ -4,9 +4,10 @@
 What's new? 0.1.6
 =================
 
-We have been working hard to improve the searching html. In this version a beautiful template has been developed with the help of our new contributor Alegomez. 
+- We have been working hard to improve the searching html. In this version we exposed a beautiful view based on a template developed our new contributor @alegomez. 
+- Composite primary keys are now supported. 
+- Refactoring of the entire package code to future updates and ideas
 
-Composite primary keys are now supported. 
 
 We hope you like it. 
 

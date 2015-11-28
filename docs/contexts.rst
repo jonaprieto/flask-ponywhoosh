@@ -3,7 +3,7 @@
 App Full Example
 =================
 
--  ``app.py`` for running the flask app.
+-  ``example.py`` for running the flask app.
 
 
 Running the App
@@ -15,12 +15,11 @@ Running the App
     virtualenv --no-site-packages venv
     source venv/bin/activate
     pip install -r requirements.txt
-    python app.py runserver
+    python example.py runserver
 
 After that, you could visit the following urls.
 
--  ``http://localhost:5000/fixtures`` to create entries for database
-   examples.
+
 -  ``http://localhost:5000/update`` to perform an update in an entity
    with ``id=1``.
 -  ``http://localhost:5000/`` to see the entities from database.
