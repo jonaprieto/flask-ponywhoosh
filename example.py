@@ -11,7 +11,7 @@ from flask.ext.script import Manager, Shell
 from pony.orm import *
 from pony.orm.serialization import to_json
 
-from flask_ponywhoosh import PonyWhoosh, full_search
+from flask_ponywhoosh import PonyWhoosh
 
 
 app = Flask(__name__)
@@ -40,7 +40,7 @@ app.config['SECRET_KEY'] = 'hard to guess string'
 
 
 bootstrap = Bootstrap(app)
-pw = PonyWhoosh(app)  # this is our whoosh instance
+pw = PonyWhoosh(app) 
 
 
 db = Database()
