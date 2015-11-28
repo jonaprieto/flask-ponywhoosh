@@ -230,6 +230,7 @@ class PonyWhooshIndex(object):
                 params = {k:r[k] for k in self._primary_key}
                 ans = {
                     'pk': tuple(params.values()),
+                    'docnum' : r.docnum,
                     'score': r.score,
                 }
                 
