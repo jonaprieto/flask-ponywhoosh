@@ -24,8 +24,8 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="Python  documentation" href="index.html" />
-    <link rel="next" title="What’s new? 0.1.6" href="whatsnew.html" />
-    <link rel="prev" title="Welcome to Flask-PonyWhoosh’s documentation!" href="index.html" />
+    <link rel="next" title="Searching" href="quickstart.html" />
+    <link rel="prev" title="What’s new? 0.1.6" href="whatsnew.html" />
    
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
@@ -42,10 +42,10 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="whatsnew.html" title="What’s new? 0.1.6"
+          <a href="quickstart.html" title="Searching"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="index.html" title="Welcome to Flask-PonyWhoosh’s documentation!"
+          <a href="whatsnew.html" title="What’s new? 0.1.6"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">Python  documentation</a> &raquo;</li> 
       </ul>
@@ -93,7 +93,7 @@ FlaskPonywhoosh and set up the general configurations.</p>
 </pre></div>
 </div>
 <p>For each entity wrap it up with the decorator
-<code class="docutils literal"><span class="pre">&#64;wh.register_model(*args,**kw)</span></code>. Specifying what attributes would be searcheables. For exa:</p>
+<code class="docutils literal"><span class="pre">&#64;wh.register_model(*args,**kw)</span></code>. Specifying what attributes would be searcheables. For example:</p>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="nd">@wh.register_model</span><span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">,</span><span class="s">&#39;age&#39;</span><span class="p">,</span> <span class="n">sortable</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>  <span class="n">stored</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">Entity</span><span class="p">):</span>
     <span class="n">_table_</span> <span class="o">=</span> <span class="s">&#39;User&#39;</span>
@@ -107,6 +107,10 @@ FlaskPonywhoosh and set up the general configurations.</p>
 </div>
 <p>As you could see in the previous example, you should declare as strings these fields where you want whoosh to store the searcheables (<code class="docutils literal"><span class="pre">name</span></code>, <code class="docutils literal"><span class="pre">age</span></code>, etc.). All the parameters from whoosh are available, You just have to listed separating them with commas: sortable, stored, scored, etc. Refer to whoosh documentation for
 further explanations on the application of these parameters.</p>
+<p>The first field you register (in the example, &#8216;name&#8217;), would be the main field for you. In that way when you render the template &#8216;/ponywhoosh&#8217;, the cards results would show this field as the main one.</p>
+</div>
+<div class="section" id="searching-for-the-first-time">
+<h2>Searching:for the first  time<a class="headerlink" href="#searching-for-the-first-time" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -125,14 +129,15 @@ further explanations on the application of these parameters.</p>
 <li><a class="reference internal" href="#installation">Installation</a></li>
 <li><a class="reference internal" href="#flask-app-configuration">Flask-App Configuration</a></li>
 <li><a class="reference internal" href="#database-config">Database Config</a></li>
+<li><a class="reference internal" href="#searching-for-the-first-time">Searching:for the first  time</a></li>
 </ul>
 </li>
 </ul>
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="index.html" title="previous chapter">Welcome to Flask-PonyWhoosh&#8217;s documentation!</a></li>
-      <li>Next: <a href="whatsnew.html" title="next chapter">What&#8217;s new? 0.1.6</a></li>
+      <li>Previous: <a href="whatsnew.html" title="previous chapter">What&#8217;s new? 0.1.6</a></li>
+      <li>Next: <a href="quickstart.html" title="next chapter">Searching</a></li>
   </ul></li>
 </ul>
   <div role="note" aria-label="source link">

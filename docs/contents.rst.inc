@@ -7,14 +7,11 @@ User's Guide
 
 .. toctree::
    :maxdepth: 2
-
-   config
+   
    whatsnew
+   config
    quickstart
-   add_wildcards
-   models
-   queries
-   signals
+   bonus
    contexts
    changelog
    

@@ -58,10 +58,15 @@
             
   <div class="section" id="bonus-ponywhoosh">
 <h1>Bonus:/ponywhoosh !<a class="headerlink" href="#bonus-ponywhoosh" title="Permalink to this headline">¶</a></h1>
+<p>To run this template, you only have to add to your own route the extension /ponywhoosh  and it would redirect you to the personalized view for your own searches. It is possible to change this &#8216;/ponywhoosh&#8217; route, take a look in the Flask settings section.</p>
+<p>So far is possible to limitate the search to those fields and models where you want to search and even for those that you want to avoid. As well we include check boxes for add_wildcard and something functions. If there are not results to show the table won&#8217;t be created.</p>
+<div class="section" id="search-form">
+<h2>Search Form<a class="headerlink" href="#search-form" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference external" href="https://travis-ci.org/piperod/Flask-PonyWhoosh"><img alt="Pony" src="https://github.com/compiteing/flask-ponywhoosh/blob/master/docs/_static/searchform.png?raw=true" /></a></p>
 <p>We  aknowledged  that  we could do better rendering  the results, for this reason we thought that it would be nice and useful to get ready for you a fully interactive and visual interface where you can perform the searches for your own website. So  right now is by  default available at the route &#8216;&lt;your_url&gt;/ponywhoosh&#8217;.</p>
-<div class="section" id="advanced-search">
-<h2>Advanced search<a class="headerlink" href="#advanced-search" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="advanced-search-form">
+<h2>Advanced search form<a class="headerlink" href="#advanced-search-form" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference external" href="https://travis-ci.org/piperod/Flask-PonyWhoosh"><img alt="Form" src="https://github.com/compiteing/flask-ponywhoosh/blob/master/docs/_static/searchformadvanced.png?raw=true" /></a></p>
 <p>In this advanced form you can filter your search using the options available from whoosh (query, fields, add wildcards or something, and models).</p>
 <blockquote>
@@ -71,12 +76,17 @@
 <p>Models: The models input is a StringField where you can type, separated by commas, all the models where you want to search.</p>
 </div></blockquote>
 <p>It is available in the top of the view, like this:</p>
+<p><a href="#id1"><span class="problematic" id="id2">|</span></a>TopForm</p>
 </div>
 <div class="section" id="results">
 <h2>Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference external" href="https://travis-ci.org/piperod/Flask-PonyWhoosh"><img alt="Results" src="https://github.com/compiteing/flask-ponywhoosh/blob/master/docs/_static/results.png?raw=true" /></a></p>
-<p>To run this template, you only have to add to your own route the extension /ponywhoosh  and it would redirect you to the personalized view for your own searches. It is possible to change this &#8216;/ponywhoosh&#8217; route, take a look in the Flask settings section.</p>
-<p>So far is possible to limitate the search to those fields and models where you want to search and even for those that you want to avoid. As well we include check boxes for add_wildcard and something functions. If there are not results to show the table won&#8217;t be created.</p>
+<dl class="docutils">
+<dt>The result template renderizes all the results in the following way:</dt>
+<dd><p class="first">In the upper part you will see tabs containing all the Indexes where Ponywhoos found something.</p>
+<p class="last">There are two options to view the resuls. Like a card or like a table. In the first one you would see 3 cards by line, showing the main results attributes. When you are registering the models, they would be the 3 first fields you register.</p>
+</dd>
+</dl>
 <p>This is how it looks with the new changes.</p>
 <p>Enjoy it!</p>
 </div>
@@ -94,7 +104,8 @@
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Bonus:/ponywhoosh !</a><ul>
-<li><a class="reference internal" href="#advanced-search">Advanced search</a></li>
+<li><a class="reference internal" href="#search-form">Search Form</a></li>
+<li><a class="reference internal" href="#advanced-search-form">Advanced search form</a></li>
 <li><a class="reference internal" href="#results">Results</a></li>
 </ul>
 </li>
@@ -109,7 +120,7 @@
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/signals.txt"
+      <li><a href="_sources/bonus.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
