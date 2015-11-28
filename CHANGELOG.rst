@@ -4,6 +4,12 @@ Changelog
 
 0.1.6 (2015-10-20)
 -----------------------------------------
+* `use_dict` option to render dictionary. By default is `False`.
+* `include_entity` option on searches. By default is `False`
+* Introduccing `._pw_index_` attribute per each Entity
+* Whoosh renamed by PonyWhoosh, with all config variables as well.
+* `pk` on results for search is a list nowadays
+* Support for Composite Primary Keys on Entity
 * Improvements of Front-End Example Search Page and Results Page
 * New contribuitor, alegomezc64 to make the design/js of front pages.
 

@@ -9,6 +9,7 @@ from flask_ponywhoosh import PonyWhoosh, search, full_search
 from pony.orm import *
 import whoosh
 
+from pprint import pprint
 
 class BaseTestCases(object):
 
@@ -49,12 +50,9 @@ class BaseTestCases(object):
             self.u2 = self.User(name=u'felipe', age=u'19')
             self.u3 = self.User(name=u'harol', age=u'16')
             self.u4 = self.User(name=u'felun', age=u'16')
-            self.a1 = self.Attribute(
-                name=u'felun', user=self.u1, weight=u'80', sport=u'tejo')
-            self.a2 = self.Attribute(
-                name=u'galun', user=self.u2, weight=u'75', sport=u'lucha de felinas')
-            self.a3 = self.Attribute(
-                name=u'ejote', user=self.u3, weight=u'65', sport=u'futbol shaulin')
+            self.a1 = self.Attribute(name=u'felun', user=self.u1, weight=u'80', sport=u'tejo')
+            self.a2 = self.Attribute(name=u'galun', user=self.u2, weight=u'75', sport=u'lucha de felinas')
+            self.a3 = self.Attribute(name=u'ejote', user=self.u3, weight=u'65', sport=u'futbol shaulin')
 
         def tearDown(self):
             shutil.rmtree(self.app.config['PONYWHOOSH_INDEXES_PATH'], ignore_errors=True)
@@ -80,8 +78,8 @@ class BaseTestCases(object):
         def test_search_sortedby(self):
             self.fixtures()
             found = self.Attribute._pw_index_.search('lun', add_wildcards=True, sortedby="weight", include_entity=True)
-            self.assertEqual(self.a2.id, found['results'][0]['entity']['id'])
-            self.assertEqual(self.a1.id, found['results'][1]['entity']['id'])
+            self.assertEqual(self.a1.id, found['results'][0]['entity']['id'])
+            self.assertEqual(self.a2.id, found['results'][1]['entity']['id'])
 
         def test_full_search_without_wildcards(self):
             self.fixtures()

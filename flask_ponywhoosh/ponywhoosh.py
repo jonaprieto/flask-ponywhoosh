@@ -324,7 +324,6 @@ class PonyWhoosh(object):
                 for k, ts in res['matched_terms'].items():
                     for t in ts:
                         ma[k].add(t)
-            pprint(res)
 
         output['runtime'] = runtime
         output['matched_terms'] = {k: list(v) for k, v in ma.items()}

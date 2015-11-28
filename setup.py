@@ -38,7 +38,7 @@ setup(
     license='BSD',
     author='Jonathan S. Prieto. & Ivan Felipe Rodriguez',
     author_email='prieto.jona@gmail.com',
-    description='Perform your full-text searches on your database. Pony, Whoosh and Flask. All in one.',
+    description='Perform your full-text searches on your database. Pony and Whoosh with Flask. All in one.',
     long_description='%s\n%s' % (
         read('README.rst'), re.sub(':obj:`~?(.*?)`', r'``\1``', read('CHANGELOG.rst'))),
     py_modules=['flask_ponywhoosh'],

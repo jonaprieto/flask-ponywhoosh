@@ -142,12 +142,6 @@ def populate_database():
     commit()
 
 
-def print_students(students):
-    for s in students:
-        print(s.name)
-    print()
-
-
 @app.route("/")
 @db_session
 def index():
