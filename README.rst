@@ -1,6 +1,8 @@
 Flask-PonyWhoosh
 ================
 |PyPI Package latest release| |PyPI Package monthly downloads| |Test|
+
+
 Perform full-text searches on your database with Pony ORM powered by Whoosh and Flask. It can be easily pluggable in your flask app. Look at examples’ folder.
 
 
@@ -11,7 +13,6 @@ Install package, import and start adding what fields of your models in your data
    :target: https://pypi.python.org/pypi/Flask-PonyWhoosh
    :scale: 70%
    :align: center 
-   :height: 100px 
    :alt: PonyWhoosh
 
 
@@ -20,9 +21,8 @@ If you want with flask, you can a server and visit a route by default `/ponywhoo
 
 .. image:: http://g.recordit.co/6MnvKNod6y.gif
    :target: https://pypi.python.org/pypi/Flask-PonyWhoosh
-   :scale: 70%
+   :scale: 30%
    :align: center 
-   :height: 100px 
    :alt: PonyWhoosh
 
 Perform full-text searches on your database with Pony ORM powered by
