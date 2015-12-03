@@ -5,7 +5,8 @@ import tempfile
 from unittest import TestCase
 
 from flask import Flask
-from flask_ponywhoosh import PonyWhoosh, search, full_search
+from flask_ponywhoosh import PonyWhoosh
+from flask_ponywhoosh import search, full_search
 from pony.orm import *
 
 from pprint import pprint

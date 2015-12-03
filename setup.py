@@ -43,10 +43,8 @@ setup(
     zip_safe=False,
     include_package_data=True,
     platforms='any',
-    keywords=['flask', 'pony', 'whoosh', 'search', 'full-text', 'elastic', 'engine'],
-    install_requires=[x.strip() for x in
-        open(os.path.join(os.path.dirname(__file__),
-            'requirements.txt'))],
+    keywords=['flask', 'pony', 'whoosh', 'ponywhoosh', 'search', 'full-text', 'elastic', 'engine', 'searchable'],
+    install_requires=['flask', 'ponywhoosh', 'flask-bootstrap', 'flask-wtf'],
     classifiers=[
         'Environment :: Web Environment',
         'Intended Audience :: Developers',

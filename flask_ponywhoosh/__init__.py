@@ -14,7 +14,9 @@ import os
 import jinja2
 
 from ponywhoosh import PonyWhoosh as MyPonyWhoosh
-from ponywhoosh.utils import search, full_search, delete_field
+from ponywhoosh import search, full_search, delete_field
+from views import IndexView
+
 
 
 __author__ = "Jonathan S. Prieto & Ivan F. Rodriguez"
@@ -33,7 +35,8 @@ class PonyWhoosh(MyPonyWhoosh):
 
 
     def __init__(self, app=None):
-    	super(self).__init__()
+    	super(PonyWhoosh, self).__init__()
+
         if app is not None:
             self.init_app(app)
 
