@@ -39,7 +39,7 @@ setup(
     description='Perform your full-text searches on your database. Pony and Whoosh with Flask. All in one.',
     long_description='%s\n%s' % (
         read('README.rst'), re.sub(':obj:`~?(.*?)`', r'``\1``', read('CHANGELOG.rst'))),
-    packages =['flask_ponywhoosh',],
+    packages =find_packages(),
     zip_safe=False,
     include_package_data=True,
     platforms='any',
