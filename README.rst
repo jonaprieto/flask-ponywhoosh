@@ -117,5 +117,5 @@ Changelog
    :target: https://pypi.python.org/pypi/Flask-PonyWhoosh
 .. |PyPI Package monthly downloads| image:: http://img.shields.io/pypi/dm/Flask-PonyWhoosh.png?style=flat
    :target: https://pypi.python.org/pypi/Flask-PonyWhoosh
-.. |Test| image:: https://travis-ci.org/compiteing/Flask-PonyWhoosh.svg?branch=master
-   :target: https://travis-ci.org/compiteing/Flask-PonyWhoosh
+.. |Test| image:: https://travis-ci.org/compiteing/ponywhoosh.svg?branch=master
+    :target: https://travis-ci.org/compiteing/ponywhoosh
