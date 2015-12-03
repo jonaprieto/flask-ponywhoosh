@@ -18,8 +18,6 @@ import os
 from os.path import basename, dirname, join, relpath, splitext
 import re
 
-from flask_ponywhoosh import __version__
-
 import io
 from setuptools import find_packages, setup
 
@@ -33,7 +31,7 @@ def read(*names, **kwargs):
 
 setup(
     name='Flask-PonyWhoosh',
-    version=__version__,
+    version="0.1.8",
     url='https://github.com/compiteing/Flask-PonyWhoosh',
     license='BSD',
     author='Jonathan S. Prieto. & Ivan Felipe Rodriguez',
@@ -41,7 +39,7 @@ setup(
     description='Perform your full-text searches on your database. Pony and Whoosh with Flask. All in one.',
     long_description='%s\n%s' % (
         read('README.rst'), re.sub(':obj:`~?(.*?)`', r'``\1``', read('CHANGELOG.rst'))),
-    py_modules=['flask_ponywhoosh'],
+    packages =['flask_ponywhoosh',],
     zip_safe=False,
     include_package_data=True,
     platforms='any',
@@ -65,3 +63,5 @@ setup(
 # git tag v...
 # python setup.py register -r pypi
 # python setup.py sdist upload -r pypi
+# python setup.py build_sphinx
+# python setup.py upload_sphinx

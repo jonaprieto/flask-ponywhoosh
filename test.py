@@ -7,7 +7,6 @@ from unittest import TestCase
 from flask import Flask
 from flask_ponywhoosh import PonyWhoosh, search, full_search
 from pony.orm import *
-import whoosh
 
 from pprint import pprint
 

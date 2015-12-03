@@ -11,10 +11,7 @@
 
 '''
 
-from ponywhoosh import PonyWhoosh
-from utils import search, full_search, delete_field
+from ponywhoosh import PonyWhoosh, search, full_search, delete_field
 
 __author__ = "Jonathan S. Prieto & Ivan F. Rodriguez"
-__version__ = "0.1.6c"
-
 __all__ = ['PonyWhoosh', 'search', 'full_search', 'delete_field']

@@ -1,8 +1,4 @@
-bpython==0.14.2
+ponywhoosh
 Flask==0.10.1
 Flask-Bootstrap==3.3.5.6
 Flask-WTF==0.12
-Jinja2==2.8
-pony==0.6.1
-Whoosh==2.7.0
-WTForms==2.0.2

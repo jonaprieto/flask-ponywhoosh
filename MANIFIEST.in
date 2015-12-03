@@ -11,7 +11,10 @@ include AUTHORS.rst
 include CHANGELOG.rst
 include LICENSE
 include README.rst
-include flask_ponywhoosh/*
+include docs/_build/html *.*
+include example.py
+include flask_ponywhoosh *.*
+include flask_ponywhoosh/templates *.*
 
 include tox.ini 
 
