@@ -18,7 +18,7 @@ Testing on the shell.
 |model|
 .. code :: python
     
-   PonyModel._pw_.search(query, **kwargs)
+   PonyModel.search(query, **kwargs)
 
 There are several options to perform a search with ``flask_ponywhoosh``. For instance, to execute a  simple search, choose the entity where you want to perform the search and then  try
 something like the following code over a view function, or even from the shell,
@@ -26,7 +26,7 @@ something like the following code over a view function, or even from the shell,
 .. code:: python
 
   >>> from app import *
-  >>> User._pw_.search("felipe")
+  >>> User.search("felipe")
   {'cant_results': 2,
    'facet_names': [],
    'matched_terms': {'name': ['felipe']},

@@ -68,11 +68,11 @@
 <p><a class="reference external" href="https://pypi.python.org/pypi/Flask-PonyWhoosh"><img alt="model" src="https://github.com/compiteing/flask-ponywhoosh/blob/master/images/modelsearch.gif?raw=true" /></a>
 .. code :: python</p>
 <blockquote>
-<div>PonyModel._pw_.search(query, <a href="#id1"><span class="problematic" id="id2">**</span></a>kwargs)</div></blockquote>
+<div>PonyModel.search(query, <a href="#id1"><span class="problematic" id="id2">**</span></a>kwargs)</div></blockquote>
 <p>There are several options to perform a search with <code class="docutils literal"><span class="pre">flask_ponywhoosh</span></code>. For instance, to execute a  simple search, choose the entity where you want to perform the search and then  try
 something like the following code over a view function, or even from the shell,</p>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">app</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">User</span><span class="o">.</span><span class="n">_pw_</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">&quot;felipe&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">User</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">&quot;felipe&quot;</span><span class="p">)</span>
 <span class="go">{&#39;cant_results&#39;: 2,</span>
 <span class="go"> &#39;facet_names&#39;: [],</span>
 <span class="go"> &#39;matched_terms&#39;: {&#39;name&#39;: [&#39;felipe&#39;]},</span>

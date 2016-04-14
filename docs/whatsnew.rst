@@ -1,12 +1,11 @@
 .. _whatsnew:
 
 =================
-What's new? 0.1.6
+What's new? 0.2.1
 =================
 
-- We have been working hard to improve the searching html. In this version we exposed a beautiful view based on a template developed our new contributor @alegomez. 
-- Composite primary keys are now supported. 
-- Refactoring of the entire package code to future updates and ideas
+- Pony Updated
+- PonyModel.search() instead of PonyModel._pw_.search()
 
 
 We hope you like it. 
