@@ -46,7 +46,6 @@ nosetests.xml
 venv/
 ponywhoosh_indexes/
 results.txt
-/docs/
 /docs/_build/
 /docs/_build/docstrees/
 /docs/_build/html
