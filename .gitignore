@@ -46,4 +46,8 @@ nosetests.xml
 venv/
 ponywhoosh_indexes/
 results.txt
-docs/_build/html/html.zip
+/docs/
+/docs/_build/
+/docs/_build/docstrees/
+/docs/_build/html
+.DS_Store
