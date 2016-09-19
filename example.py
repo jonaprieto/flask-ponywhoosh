@@ -6,8 +6,8 @@ from datetime import datetime, timedelta, date
 import os
 
 from flask import Flask, jsonify, render_template
-from flask.ext.bootstrap import Bootstrap
-from flask.ext.script import Manager, Shell
+from flask_bootstrap import Bootstrap
+from flask_script import Manager, Shell
 from pony.orm import *
 from pony.orm.serialization import to_json
 
