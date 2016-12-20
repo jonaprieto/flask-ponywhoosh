@@ -13,10 +13,10 @@
 
 import re
 
-from pprint       import pprint
-from flask        import render_template
-from flask.views  import View
-from form         import SearchForm
+from pprint                   import pprint
+from flask                    import render_template
+from flask.views              import View
+from form                     import SearchForm
 
 
 class IndexView(View):
@@ -99,6 +99,6 @@ class IndexView(View):
 
     return render_template(
       'ponywhoosh/index.html'
-      , form=form,
+      , form=form
       , query=query
     )

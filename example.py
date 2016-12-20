@@ -148,7 +148,7 @@ def populate_database():
   c6 = Course(
       name="Quantum Mechanics"
     , semester=3
-    , dept=d3,
+    , dept=d3
     , lect_hours=40
     , lab_hours=30
     , credits=5
