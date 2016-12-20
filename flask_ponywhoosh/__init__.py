@@ -34,7 +34,7 @@ class PonyWhoosh(MyPonyWhoosh):
 
 
   def __init__(self, app=None):
-  	super(PonyWhoosh, self).__init__()
+    super(PonyWhoosh, self).__init__()
 
     if app is not None:
       self.init_app(app)

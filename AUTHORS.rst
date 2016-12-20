@@ -2,5 +2,5 @@
 Authors
 =======
 
-* Jonathan Steven Prieto C. - http://github.com/d555
-* Ivan Felipe Rodriguez. - http://github.com/piperod
+* Jonathan Prieto-Cubides   - http://github.com/jonaprieto
+* Felipe Rodriguez          - http://github.com/piperod

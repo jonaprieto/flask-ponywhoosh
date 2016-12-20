@@ -9,13 +9,13 @@ include .pylintrc
 
 include AUTHORS.rst
 include CHANGELOG.rst
-include LICENSE
-include README.rst
 include docs/_build/html *.*
 include example.py
 include flask_ponywhoosh *.*
 include flask_ponywhoosh/templates *.*
+include LICENSE
+include README.rst
 
-include tox.ini 
+include tox.ini
 
 global-exclude *.py[co] __pycache__ *.so *.pyd
