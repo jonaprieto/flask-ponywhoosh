@@ -1,6 +1,6 @@
 
 {%extends "ponywhoosh/base.html"%}
-{% import "bootstrap/wtf.html" as wtf %} 
+{% import "bootstrap/wtf.html" as wtf %}
 {% block styles %}
 {{super()}}
 <style>
@@ -15,7 +15,7 @@
 }
 .navbar-two{
 	background-color: #F5F5F5;
-}	
+}
  .navbar-vinc{
  	font-size: 20px;
  }
@@ -28,7 +28,7 @@ hr{
 }
 .btn-prew{
 	margin-left: 1030px;
-	margin-bottom: -30px; 
+	margin-bottom: -30px;
 }
 .secon{
 	margin-left: 830px;
@@ -36,11 +36,11 @@ hr{
 #view-more{
 	margin-left: 1050px;
 	margin-top: -30px;
-	margin-bottom: 10px; 
+	margin-bottom: 10px;
 }
 #view-eye{
 	margin-left: -13px;
-	margin-bottom: -15px; 
+	margin-bottom: -15px;
 }
 .caption-result{
 	background-color: #F7F7F7;
@@ -58,7 +58,7 @@ hr{
 
 @media screen and (max-width: 768px) {
 	.navbar-two {
-		height: 50px; 
+		height: 50px;
 		padding: 10px;
 	}
 	.navbar-vinc {
@@ -71,7 +71,7 @@ hr{
 
 }
 </style>
-{% endblock %}	
+{% endblock %}
 
 {% block title %}Flask-PonyWhoosh{% endblock %}
 {% block navbar %}
@@ -86,12 +86,18 @@ hr{
 						</h3>
 					</div>
 					<div class="col-md-6 col-sm-6 col-xs-10">
-						<form method='POST' action="/ponywhoosh/" class="navbar-text" role="search">
+						<form method='POST'
+							  action="/ponywhoosh/"
+							  class="navbar-text"
+							  role="search">
 				{{ form.hidden_tag() }}
 				<div class="input-group input-form input-sear">
-				 {{form.query(class="form-control form-respo",placeholder="....", size="130px" )}}
+				 {{form.query(class="form-control form-respo",placeholder="...", size="130px")}}
 				<span class="input-group-btn">
-				<button class="btn btn-primary" value="search"><span class="glyphicon glyphicon-search"></span></button>
+				<button class="btn btn-primary"
+						value="search">
+						<span class="glyphicon glyphicon-search"></span>
+				</button>
 				<button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
 				<span class="caret"></span>
 				</button>
@@ -103,26 +109,32 @@ hr{
 					<li><a>{{form.except_field.label}}</a></li>
 					<li><a>{{form.except_field(class= "form-control")}}</a></li>
 					<li class="divider"></li>
-					<li><a>{{form.add_wildcards.label}} : {{form.add_wildcards(class= "css_class")}}</a></li>
-					<li><a>{{form.something.label}}:{{form.something(class= "css_class")}}</a></li>
+					<li>
+						<a>
+						{{form.add_wildcards.label}} : {{form.add_wildcards(class= "css_class")}}
+						</a>
+					</li>
+					<li>
+						<a>{{form.something.label}}:{{form.something(class= "css_class")}}
+						</a>
+					</li>
 					</ul>
 				</span>
 				</div>
 				</form>
 					</div>
 					<div class="col-md-12 col-sm-12 col-xs-12 hidden">
-						
 					</div>
 				</div>
-						
+
 			</div>
 		</div>
-		<!-- Prueba del 2° navbar -->		
+		<!-- Prueba del 2° navbar -->
 		<nav>
 		<div class="navbar-header navbar-two col-md-12 col-sm-12 col-xs-12">
 		{%for label in labels %}
 			<li class="navbar-text navbar-vinc active"
-				id="navbar-model-{{label}}" 
+				id="navbar-model-{{label}}"
 				style="color:#333">{{label}}</li>
 		{%endfor%}
 		</div>
@@ -146,7 +158,8 @@ hr{
     </a>
 
 	</div>
-	<div class="secon"><h5><small>Time of Search ({{results['runtime']}} seg)</small></h5></div>
+	<div class="secon"><h5><small>Time of Search ({{results['runtime']}} seg)
+		</small></h5></div>
 <hr>
 
 <div id="panel-results">
@@ -159,8 +172,11 @@ hr{
 		<div class="col-xs-12 col-md-3">
 			<div class="thumbnail">
 				<div class="caption caption-{{label}}">
-					<h4 class="caption-result"><a>{{result['entity'][0][1]}}</a> <small>{{result['entity'][0][0]}}</small></h4>
-					
+					<h4 class="caption-result"><a>{{result['entity'][0][1]}}</a>
+						<small>
+							{{result['entity'][0][0]}}
+						</small></h4>
+
 					{%for s in result["entity"][1:] %}
 						<table class="table">
 						<tr>
@@ -169,9 +185,10 @@ hr{
 					    </tr>
 						</table>
 					{%endfor%}
-					
+
 					<a href="#seccion-{{result['model']}}-{{result['docnum']}}"
-					 class="btn btn-default btn-sm" id="view-eye" data-toggle="collapse"> <span class="glyphicon glyphicon-eye-open glyphicon-view"></span> </a>
+					 class="btn btn-default btn-sm" id="view-eye" data-toggle="collapse">
+					 <span class="glyphicon glyphicon-eye-open glyphicon-view"></span> </a>
 					<div class="collapse" id="seccion-{{result['model']}}-{{result['docnum']}}">
 						<br>
 						<div class="well">
@@ -186,7 +203,7 @@ hr{
 						</div>
 					</div>
 				</div>
-	
+
 			</div>
 		</div>
 		{%endfor%}
@@ -197,33 +214,40 @@ hr{
 					<div class="panel panel-default">
 						<div class="panel-heading" role="tab" style="padding: 5px">
 							<h4 class="panel-title">
-								<a href="#seccion1-{{result['model']}}-{{result['docnum']}}" data-toggle="collapse" data-parent="#accordion">
+								<a href="#seccion1-{{result['model']}}-{{result['docnum']}}"
+									data-toggle="collapse" data-parent="#accordion">
 									<h4 class="title-panel">
-										{{result['entity'][0][1]}} <small><i>{{result['entity'][0][0]}} </i></small>
+										{{result['entity'][0][1]}}
+										<small>
+											<i>
+												{{result['entity'][0][0]}}
+											</i>
+										</small>
 									</h4>
 										<div id="view-more">
-											<span id="down" class=" glyphicon glyphicon-chevron-down" ></span>
+											<span id="down" class=" glyphicon glyphicon-chevron-down">
+
+											</span>
 										</div>
 								</a>
 							</h4>
 						</div>
-			
-						<div class="panel-collapse collapse" id="seccion1-{{result['model']}}-{{result['docnum']}}">
+
+						<div class="panel-collapse collapse"
+								 id="seccion1-{{result['model']}}-{{result['docnum']}}">
 							<div class="panel-body">
 							<div class="table responsive">
 							<table class="table table-striped table-bordered table-hover">
-					
-						
 									{%for s in result["entity"][1:] %}
 									<tr>
 									<th>{{s[0]}}</th>
 									<td>{{s[1]}}</td>
-									</tr>  
+									</tr>
 									{%endfor%}
 									{%for s in result["other_fields"] %}
 									<tr>
 									<th>{{s[0]}}</th>
-								    <td>{{s[1]}}</td>										
+								    <td>{{s[1]}}</td>
 									</tr>
 			                        {%endfor%}
 							       </table>
@@ -273,9 +297,6 @@ $('#btn-list').click(function() {
 	contenido = $('#model-'+modelo_activo+'.view-list').html();
     $('#panel-results').html(contenido);
 });
-
-
-
 
 </script>
 {% endblock scripts %}
