@@ -1,6 +1,6 @@
 Flask-PonyWhoosh
 ================
-|PyPI Package latest release| |PyPI Package monthly downloads| |Test|
+|PyPI Package the latest release| |PyPI Package monthly downloads| |Test|
 
 QUICK START:
 ============
@@ -34,7 +34,7 @@ Then you can run the example using:
 
     python example.py  runserver
 
-Then open you browser at 127.0.0.1:5000/ponywhoosh To see as demonstrated in the Demo section.
+Then open your browser at 127.0.0.1:5000/ponywhoosh To see as demonstrated in the Demo section.
 
 DEMO:
 =====
@@ -62,7 +62,7 @@ If you want with flask, you can a server and visit a route by default `/ponywhoo
 
 Perform full-text searches on your database with Pony ORM powered by Whoosh and Flask. It can be easily pluggable in your flask app. Look at examples' folder.
 
-Please take a look to the official documentation up to date:
+Please take a look at the official documentation up to date:
 
     -  http://pythonhosted.org/Flask-PonyWhoosh/
     -  https://pypi.python.org/pypi/Flask-PonyWhoosh
@@ -81,7 +81,7 @@ or use the develop (unstable) version:
     git clone https://github.com/compiteing/Flask-PonyWhoosh.git
 
 
-.. |PyPI Package latest release| image:: http://img.shields.io/pypi/v/Flask-PonyWhoosh.png?style=flat
+.. |PyPI Package the latest release| image:: http://img.shields.io/pypi/v/Flask-PonyWhoosh.png?style=flat
    :target: https://pypi.python.org/pypi/Flask-PonyWhoosh
    :scale: 30%
 .. |PyPI Package monthly downloads| image:: http://img.shields.io/pypi/dm/Flask-PonyWhoosh.png?style=flat

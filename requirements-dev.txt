@@ -1,5 +1,0 @@
-flask
-ponywhoosh
-flask-bootstrap
-flask-script
-flask-wtf
