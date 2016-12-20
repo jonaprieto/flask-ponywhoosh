@@ -2,11 +2,12 @@ Flask-PonyWhoosh
 ================
 |PyPI Package latest release| |PyPI Package monthly downloads| |Test|
 
+
 QUICK START: 
 ============
 
 Instalation:
-************
+============
 
 .. code:: python
 
@@ -17,7 +18,7 @@ Instalation:
     git clone https://github.com/compiteing/Flask-PonyWhoosh.git
 
 Requirements:
-*************
+=============
 
 You can install the requirements using pip:
 
@@ -26,7 +27,7 @@ You can install the requirements using pip:
     pip install -r requirements.txt
 
 Example.py: 
-***********
+===========
 
 Then you can run the example using: 
 
@@ -83,10 +84,10 @@ or use the develop (unstable) version:
 
 .. |PyPI Package latest release| image:: http://img.shields.io/pypi/v/Flask-PonyWhoosh.png?style=flat
    :target: https://pypi.python.org/pypi/Flask-PonyWhoosh
-   :scale: 30%
+  
 .. |PyPI Package monthly downloads| image:: http://img.shields.io/pypi/dm/Flask-PonyWhoosh.png?style=flat
    :target: https://pypi.python.org/pypi/Flask-PonyWhoosh
-   :scale: 30%
+   
 .. |Test| image:: https://travis-ci.org/compiteing/flask-ponywhoosh.svg?branch=master
     :target: https://travis-ci.org/compiteing/flask-ponywhoosh
-    :scale: 30%
+    
