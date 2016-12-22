@@ -1,3 +1,9 @@
+.. image:: https://github.com/compiteing/flask-ponywhoosh/blob/develop/docs/_static/logo.png
+   :target: https://pypi.python.org/pypi/Flask-PonyWhoosh
+   :scale: 100%
+   :align: center
+   :alt: PonyWhoosh
+
 Flask-PonyWhoosh
 ================
 |PyPI Package latest release| |Test|
@@ -7,7 +13,7 @@ your database you want to search.
 We included some templates for the search engine.
 
 
-Install:
+Install
 -------
 
 
@@ -25,21 +31,16 @@ The hard way:
     $ cd flask-ponywhoosh
     $ python setup.py install
 
-Example:
+Example
 --------
 
-
-Clone this repository in order to run the example or just download the source.
+After install the package. Clone this repository in order to run the
+example or just download the source.
 
 .. code:: bash
 
     $ git clone https://github.com/compiteing/flask-ponywhoosh.git
     $ cd flask-ponywhoosh
-
-    pip install -r requirements.txt
-
-Example.py:
-
 
 Then, you can run the example using:
 
@@ -91,16 +92,7 @@ If you want with flask, you can a server and visit a route by default `/ponywhoo
 
 .. |PyPI Package latest release| image:: http://img.shields.io/pypi/v/Flask-PonyWhoosh.png?style=flat
 
-Please take a look to the official up to date documentation:
-
-    -  http://pythonhosted.org/Flask-PonyWhoosh/
-    -  https://pypi.python.org/pypi/Flask-PonyWhoosh
-
-.. |PyPI Package latest release| image:: http://img.shields.io/pypi/v/Flask-PonyWhoosh.png?style=flat
-   :target: https://pypi.python.org/pypi/Flask-PonyWhoosh
-
-.. |PyPI Package monthly downloads| image:: http://img.shields.io/pypi/dm/Flask-PonyWhoosh.png?style=flat
-   :target: https://pypi.python.org/pypi/Flask-PonyWhoosh
-
 .. |Test| image:: https://travis-ci.org/compiteing/flask-ponywhoosh.svg?branch=master
     :target: https://travis-ci.org/compiteing/flask-ponywhoosh
+
+

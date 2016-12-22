@@ -31,7 +31,7 @@ def read(*names, **kwargs):
   ).read()
 
 setup(
-    name='Flask-PonyWhoosh'
+    name='flask-ponywhoosh'
   , version="0.2.1"
   , url='https://github.com/compiteing/flask-ponywhoosh'
   , license='MIT'
@@ -45,14 +45,33 @@ setup(
       , read('CHANGELOG.rst')
       )
     )
-  , packages =find_packages()
+  , packages=find_packages()
   , zip_safe=False
   , include_package_data=True
   , platforms='any'
-  , keywords=['flask', 'pony', 'whoosh', 'ponywhoosh', 'search', 'full-text', 'elastic', 'engine', 'searchable']
-  , install_requires=['flask', 'ponywhoosh', 'flask-bootstrap', 'flask-wtf']
-  ,  classifiers=[
-      'Environment :: Web Environment'
+  , keywords=
+    [ 'elastic'
+    , 'engine'
+    , 'flask'
+    , 'flask-sqlalchemy'
+    , 'flask-whooshalchemy'
+    , 'mysql'
+    , 'pony'
+    , 'ponyorm'
+    , 'ponywhoosh'
+    , 'search'
+    , 'searchable'
+    , 'sqlite3'
+    , 'whoosh'
+    ]
+  , install_requires=
+    [ 'flask-bootstrap'
+    , 'flask-wtf'
+    , 'ponywhoosh'
+    , 'flask'
+    ]
+  ,  classifiers=
+    [ 'Environment :: Web Environment'
     , 'Intended Audience :: Developers'
     , 'License :: OSI Approved :: MIT License'
     , 'Operating System :: OS Independent'
@@ -66,6 +85,5 @@ setup(
 # Pasos para subir a pypi
 # git tag v...
 # python setup.py register -r pypi
-# python setup.py sdist upload -r pypi
+# python setup.py sdist
 # python setup.py build_sphinx
-# python setup.py upload_sphinx
