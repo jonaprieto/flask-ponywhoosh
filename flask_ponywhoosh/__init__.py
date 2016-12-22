@@ -28,7 +28,7 @@ class PonyWhoosh(MyPonyWhoosh):
   debug           = False
   indexes_path    = 'ponywhoosh_indexes'
   writer_timeout  = 2
-  url_route       = '/ponywhoosh/'
+  url_route       = '/search/'
   template_path   = os.path.join(basedir, 'templates')
   search_string_min_len = 2
 
@@ -73,8 +73,13 @@ class PonyWhoosh(MyPonyWhoosh):
       , jinja2.FileSystemLoader(self.template_path)
     ])
 
+    # indexView = IndexView()
+
     app.jinja_loader = loader
     app.add_url_rule(
         self.url_route
-      , view_func=IndexView.as_view('ponywhoosh/', pw=self)
+      , view_func=IndexView.as_view(self.url_route
+        , pw=self
+        , action_url_form=self.url_route
+        )
     )

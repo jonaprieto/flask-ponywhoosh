@@ -26,9 +26,10 @@ class IndexView(View):
 
   methods = ['POST', 'GET']
 
-  def __init__(self, pw):
-    self._pw   = pw
-    self.debug = self._pw.debug
+  def __init__(self, pw, action_url_form):
+    self._pw              = pw
+    self.debug            = self._pw.debug
+    self.action_url_form  = action_url_form
 
   def dispatch_request(self):
     """ This form is plugeable. That means that all what you need to do is
@@ -91,6 +92,7 @@ class IndexView(View):
       return render_template(
           'ponywhoosh/results.html'
         , entidades=list(self._pw._entities.keys())
+        , action_url_form=self.action_url_form
         , form=form
         , results=results
         , n=results['cant_results']
@@ -100,5 +102,6 @@ class IndexView(View):
     return render_template(
       'ponywhoosh/index.html'
       , form=form
+      , action_url_form=self.action_url_form
       , query=query
     )

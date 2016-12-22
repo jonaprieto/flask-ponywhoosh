@@ -34,12 +34,12 @@ manager.add_command("shell", Shell(use_bpython=True))
 #
 # -----------------------------------------------------------------------------
 
-app.config['PONYWHOOSH_DEBUG'] = True
-app.config['PONYWHOOSH_DIR'] = 'whooshes'
-app.config['PONYWHOOSH_MIN_STRING_LEN'] = 1
-app.config['PONYWHOOSH_URL'] = '/ponywhoosh'
-app.config['PONYWHOOSH_WRITER_TIMEOUT'] = 3
-app.config['SECRET_KEY'] = 'hard to guess string'
+app.config['PONYWHOOSH_DEBUG']              = True
+app.config['PONYWHOOSH_DIR']                = 'whooshes'
+app.config['PONYWHOOSH_MIN_STRING_LEN']     = 1
+app.config['PONYWHOOSH_URL_ROUTE']          = '/'
+app.config['PONYWHOOSH_WRITER_TIMEOUT']     = 3
+app.config['SECRET_KEY']                    = 'hard to guess string'
 
 # -----------------------------------------------------------------------------
 
@@ -238,7 +238,7 @@ def populate_database():
     )
   commit()
 
-@app.route("/")
+@app.route("/database")
 @db_session
 def index():
   return to_json(Student.select())
