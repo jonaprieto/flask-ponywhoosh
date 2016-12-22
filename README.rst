@@ -1,4 +1,4 @@
-.. image:: https://github.com/compiteing/flask-ponywhoosh/blob/develop/docs/_static/logo.png
+.. image:: https://github.com/compiteing/flask-ponywhoosh/blob/master/docs/_static/logo.png?raw=true
    :target: https://pypi.python.org/pypi/Flask-PonyWhoosh
    :scale: 100%
    :align: center
