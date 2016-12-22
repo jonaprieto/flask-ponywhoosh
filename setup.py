@@ -32,14 +32,19 @@ def read(*names, **kwargs):
 
 setup(
     name='Flask-PonyWhoosh'
-  , version="0.2"
-  , url='https://github.com/compiteing/Flask-PonyWhoosh'
-  , license='BSD'
-  , author='Jonathan S. Prieto. & Ivan Felipe Rodriguez'
-  , author_email='prieto.jona@gmail.com'
+  , version="0.2.1"
+  , url='https://github.com/compiteing/flask-ponywhoosh'
+  , license='MIT'
+  , author='Jonathan Prieto-Cubides & Felipe Rodriguez'
+  , author_email='jprieto9@eafit.edu.co'
   , description='Perform your full-text searches on your database. Pony and Whoosh with Flask. All in one.'
   , long_description='%s\n%s' % (
-        read('README.rst'), re.sub(':obj:`~?(.*?)`', r'``\1``', read('CHANGELOG.rst'))),
+      read('README.rst')
+    , re.sub(':obj:`~?(.*?)`'
+      , r'``\1``'
+      , read('CHANGELOG.rst')
+      )
+    )
   , packages =find_packages()
   , zip_safe=False
   , include_package_data=True
@@ -49,7 +54,7 @@ setup(
   ,  classifiers=[
       'Environment :: Web Environment'
     , 'Intended Audience :: Developers'
-    , 'License :: OSI Approved :: BSD License'
+    , 'License :: OSI Approved :: MIT License'
     , 'Operating System :: OS Independent'
     , 'Programming Language :: Python'
     , 'Topic :: Internet :: WWW/HTTP :: Dynamic Content'

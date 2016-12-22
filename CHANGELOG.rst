@@ -2,6 +2,12 @@
 Changelog
 =========
 
+0.2.1 (2016-12-22)
+-----------------------------------------
+* fixed minor bugs
+* README.md updated
+* beautify the source codes
+
 0.1.6x (2015-10-20)
 -----------------------------------------
 * Fixed minor bugs

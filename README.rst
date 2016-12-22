@@ -1,67 +1,95 @@
 Flask-PonyWhoosh
 ================
-|PyPI Package latest release| |PyPI Package monthly downloads| |Test|
+|PyPI Package latest release| |Test|
+
+Install package, import it and start adding what fields of your models in
+your database you want to search.
+We included some templates for the search engine.
 
 
-QUICK START:
-============
+Install:
+-------
 
-Instalation:
-============
 
-.. code:: python
+The easiest way:
 
-    pip install --upgrade flask-ponywhoosh
+.. code:: bash
+
+    $ pip install flask-ponywhoosh
+
+The hard way:
 
 .. code:: bash
 
-    git clone https://github.com/compiteing/Flask-PonyWhoosh.git
+    $ git clone https://github.com/compiteing/flask-ponywhoosh.git
+    $ cd flask-ponywhoosh
+    $ python setup.py install
 
-Requirements:
-=============
+Example:
+--------
 
-You can install the requirements using pip:
+
+Clone this repository in order to run the example or just download the source.
 
 .. code:: bash
+
+    $ git clone https://github.com/compiteing/flask-ponywhoosh.git
+    $ cd flask-ponywhoosh
 
     pip install -r requirements.txt
 
 Example.py:
-===========
 
-Then you can run the example using:
+
+Then, you can run the example using:
 
 .. code:: bash
 
-    python example.py  runserver
+    python example.py runserver
 
-Then open you browser at 127.0.0.1:5000/ponywhoosh To see as demonstrated in the Demo section.
-
-DEMO:
-=====
-Perform full-text searches on your database with Pony ORM powered by Whoosh and Flask. It can be easily pluggable in your flask app. Look at examples folder.
+You will see in the shell outputs about the settings of Flask-PonyWhoosh.
+We provide two urls by default:
 
 
-Easy as you need! Check the documentation on  http://pythonhosted.org/Flask-PonyWhoosh/
-Install package, import and start adding what fields of your models in your database, you want to search.
+    -  `localhost/search` : the form of the search engine
+    -  `localhost/database` : contents of the database for our example
+
+Recall `localhost` is usually `http://127.0.0.1:5000`.
+
+Hacking
+-------
+
+Customize the templates, url routes and other stuffs, please
+checkout the documentation on:
+
+    -  http://pythonhosted.org/Flask-PonyWhoosh/
+    -  https://pypi.python.org/pypi/Flask-PonyWhoosh
+
+
+Screenshots
+-----------
+
+Adding what fields of your models in your database you want to search.
 
 .. image:: https://github.com/compiteing/flask-ponywhoosh/blob/master/images/databaseconfig.gif?raw=true
    :target: https://pypi.python.org/pypi/Flask-PonyWhoosh
-   :scale: 70%
+   :scale: 60%
    :align: center
    :alt: PonyWhoosh
+
 
 
 If you want with flask, you can a server and visit a route by default `/ponywhoosh` to the search engine. (you can change it if you need)
 
-
 .. image:: http://g.recordit.co/6MnvKNod6y.gif
    :target: https://pypi.python.org/pypi/Flask-PonyWhoosh
-   :scale: 30%
+   :scale: 25%
    :align: center
    :alt: PonyWhoosh
 
-Perform full-text searches on your database with Pony ORM powered by Whoosh and Flask. It can be easily pluggable in your flask app. Look at examples' folder.
+
+
+.. |PyPI Package latest release| image:: http://img.shields.io/pypi/v/Flask-PonyWhoosh.png?style=flat
 
 Please take a look to the official documentation up to date:
 

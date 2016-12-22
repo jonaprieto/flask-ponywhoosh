@@ -1,8 +1,6 @@
 graft src
 
 
-include *.komodoproject
-include .bumpversion.cfg
 include .coveragerc
 include .isort.cfg
 include .pylintrc
