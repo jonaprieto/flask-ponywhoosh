@@ -1,9 +1,10 @@
 Flask-PonyWhoosh
 ================
-|PyPI Package latest release| |PyPI Package monthly downloads| |Test|
+|PyPI Package latest release| |Test|
 
 Install package, import it and start adding what fields of your models in
-your database you want to search. Easier than ever.
+your database you want to search.
+We included some templates for the search engine.
 
 Install:
 -------
@@ -36,7 +37,7 @@ Then, you can run the example using:
 
 .. code:: bash
 
-    python example.py  runserver
+    python example.py runserver
 
 You will see in the shell outputs about the settings of Flask-PonyWhoosh.
 We provide two urls by default:
@@ -80,9 +81,6 @@ If you want with flask, you can a server and visit a route by default `/ponywhoo
 
 
 .. |PyPI Package latest release| image:: http://img.shields.io/pypi/v/Flask-PonyWhoosh.png?style=flat
-   :target: https://pypi.python.org/pypi/Flask-PonyWhoosh
-
-.. |PyPI Package monthly downloads| image:: http://img.shields.io/pypi/dm/Flask-PonyWhoosh.png?style=flat
    :target: https://pypi.python.org/pypi/Flask-PonyWhoosh
 
 .. |Test| image:: https://travis-ci.org/compiteing/flask-ponywhoosh.svg?branch=master

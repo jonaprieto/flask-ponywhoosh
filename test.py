@@ -1,3 +1,16 @@
+'''
+
+  flask-ponywhoosh test module
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  Perform full-text searches over your database with Pony ORM and PonyWhoosh,
+  for flask applications.
+
+  :copyright: (c) 2015-2017 by Jonathan Prieto-Cubides & Felipe Rodriguez.
+  :license: MIT (see LICENSE.md)
+
+'''
+
 import os
 from pprint import pprint
 import shutil
