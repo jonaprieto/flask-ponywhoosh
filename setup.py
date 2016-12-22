@@ -32,7 +32,7 @@ def read(*names, **kwargs):
 
 setup(
     name='flask-ponywhoosh'
-  , version="0.2.1"
+  , version="0.2.1.1"
   , url='https://github.com/compiteing/flask-ponywhoosh'
   , license='MIT'
   , author='Jonathan Prieto-Cubides & Felipe Rodriguez'
