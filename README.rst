@@ -34,7 +34,7 @@ The hard way:
 Example
 --------
 
-After install the package. Clone this repository in order to run the
+After installing the package. Clone this repository in order to run the
 example or just download the source.
 
 .. code:: bash
@@ -48,7 +48,7 @@ Then, you can run the example using:
 
     python example.py runserver
 
-You will see in the shell outputs about the settings of Flask-PonyWhoosh.
+You will see in the shell some outputs showing settings of Flask-PonyWhoosh (debug mode is on by default).
 We provide two urls by default:
 
 
@@ -80,7 +80,6 @@ Adding what fields of your models in your database you want to search.
 
 
 
-If you want with flask, you can a server and visit a route by default `/ponywhoosh` to the search engine. (you can change it if you need)
 
 .. image:: http://g.recordit.co/6MnvKNod6y.gif
    :target: https://pypi.python.org/pypi/Flask-PonyWhoosh
