@@ -16,4 +16,5 @@ include README.rst
 
 include tox.ini
 
+recursive-include mypackagename *
 global-exclude *.py[co] __pycache__ *.so *.pyd

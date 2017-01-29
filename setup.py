@@ -38,13 +38,10 @@ setup(
   , author='Jonathan Prieto-Cubides & Felipe Rodriguez'
   , author_email='jprieto9@eafit.edu.co'
   , description='Perform your full-text searches on your database. Pony and Whoosh with Flask. All in one.'
-  , long_description='%s\n%s' % (
+  , long_description='%s' % (
       read('README.rst')
-    , re.sub(':obj:`~?(.*?)`'
-      , r'``\1``'
-      , read('CHANGELOG.rst')
       )
-    )
+    
   , packages=find_packages()
   , zip_safe=False
   , include_package_data=True
