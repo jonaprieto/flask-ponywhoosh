@@ -23,7 +23,7 @@ After that, you could visit the following urls.
 -  ``http://localhost:5000/update`` to perform an update in an entity
    with ``id=1``.
 -  ``http://localhost:5000/`` to see the entities from database.
-- ``http://localhost:500/ponywhoosh`` to load the visual  interface. 
+- ``http://localhost:500/ponywhoosh`` to load the visual  interface.
 
 Running the app example
 ***************************************
@@ -41,15 +41,15 @@ Try something like the following sentences:
     >>> from app import *
     >>> from flask_ponywhoosh import full_search
     >>> full_search(pw,"ch")
-    { 'matched_terms': {'name': ['chuck'], 
-                        'deporte': ['chulo', 'lucha']}, 
-      'runtime': 0.0033812522888183594  
-      'results': {'User': {'items': [User[15], User[8], 
-                    User[1]],     
-      'matched_terms': {'name': ['chuck']}}, 
-      'Attributes': {'items': [Attributes[17], 
-                    Attributes[14],         
-                    Attributes[11], Attributes[8], 
+    { 'matched_terms': {'name': ['chuck'],
+                        'deporte': ['chulo', 'lucha']},
+      'runtime': 0.0033812522888183594
+      'results': {'User': {'items': [User[15], User[8],
+                    User[1]],
+      'matched_terms': {'name': ['chuck']}},
+      'Attributes': {'items': [Attributes[17],
+                    Attributes[14],
+                    Attributes[11], Attributes[8],
                     Attributes[5], Attributes[2]],
      'matched_terms': {'deporte': ['chulo', 'lucha']}}
                  }}

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Flask-PonyWhoosh documentation build configuration file, created by
+# flask-ponywhoosh documentation build configuration file, created by
 # sphinx-quickstart on Tue Jun  1 14:31:57 2010.
 #
 # This file is execfile()d with the current directory set to its containing dir.
@@ -44,16 +44,16 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-roject = u'Flask-PonyWhoosh'
-copyright = u'2015, Jonathan S. Prieto C. & Ivan Felipe Rodriguez'
-author = u'Jonathan S. Prieto C. & Ivan Felipe Rodriguez'
+roject = u'flask-ponywhoosh'
+copyright = u'2015, Jonathan Prieto-Cubides & Felipe Rodriguez'
+author = u'Jonathan Prieto-Cubides & Felipe Rodriguez'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
 # built documents.
 # import pkg_resources
 # try:
-#     release = pkg_resources.get_distribution('Flask-PonyWhoosh').version
+#     release = pkg_resources.get_distribution('flask-ponywhoosh').version
 # except pkg_resources.DistributionNotFound:
 #     print('To build the documentation, The distribution information of')
 #     print('Flask-Ponywhoosh has to be available.  Either install the package')
@@ -182,7 +182,7 @@ html_show_sphinx = False
 #html_file_suffix = ''
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'Flask-PonyWhooshdoc'
+htmlhelp_basename = 'flask-ponywhooshdoc'
 
 
 # -- Options for LaTeX output --------------------------------------------------
@@ -190,8 +190,8 @@ htmlhelp_basename = 'Flask-PonyWhooshdoc'
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  (master_doc, 'Flask-PonyWhoosh.tex', u'Flask-PonyWhoosh Documentation',
-   u'Jonathan S. Prieto C. \\& Ivan Felipe Rodriguez', 'manual'),
+  (master_doc, 'flask-ponywhoosh.tex', u'flask-ponywhoosh Documentation',
+   u'Jonathan Prieto-Cubides \\& Felipe Rodriguez', 'manual'),
 ]
 
 # Documents to append as an appendix to all manuals.
@@ -223,7 +223,7 @@ latex_additional_files = ['flaskstyle.sty', 'logo.pdf']
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'flask-ponywhoosh', u'Flask-PonyWhoosh Documentation',
+    (master_doc, 'flask-ponywhoosh', u'flask-ponywhoosh Documentation',
      [author], 1)
 ]
 
@@ -233,8 +233,8 @@ intersphinx_mapping = {'http://docs.python.org/': None,
                        'http://flask.pocoo.org/docs/': None}
 pygments_style = 'flask_theme_support.FlaskyStyle'
 texinfo_documents = [
-  (master_doc, 'Flask-PonyWhoosh', u'Flask-PonyWhoosh Documentation',
-   author, 'Flask-PonyWhoosh', 'One line description of project.',
+  (master_doc, 'flask-ponywhoosh', u'flask-ponywhoosh Documentation',
+   author, 'flask-ponywhoosh', 'One line description of project.',
    'Miscellaneous'),
 ]
 # fall back if theme is not there

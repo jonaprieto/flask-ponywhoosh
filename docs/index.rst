@@ -1,5 +1,5 @@
 :orphan:
-Welcome to Flask-PonyWhoosh's documentation!
+Welcome to flask-ponywhoosh's documentation!
 ============================================
 
  |PyPI Package latest release| |PyPI Package monthly downloads| |Test|
@@ -8,9 +8,9 @@ Welcome to Flask-PonyWhoosh's documentation!
 
  This package integrate the amazing power of ``Whoosh`` with ``Pony ORM``
  inside ``Flask``. Source code and issue tracking at
- http://github.com/compiteing/Flask-PonyWhoosh.
+ http://github.com/compiteing/flask-ponywhoosh.
 
- 
+
 
  .. Installation
  .. ============
@@ -23,7 +23,7 @@ Welcome to Flask-PonyWhoosh's documentation!
 
  .. .. code:: bash
 
- ..     git clone https://github.com/compiteing/Flask-PonyWhoosh.git
+ ..     git clone https://github.com/compiteing/flask-ponywhoosh.git
 
 
  .. .. _Flask: http://flask.pocoo.org/
@@ -31,12 +31,12 @@ Welcome to Flask-PonyWhoosh's documentation!
 
 .. include:: contents.rst.inc
 
-.. |PyPI Package latest release| image:: http://img.shields.io/pypi/v/Flask-PonyWhoosh.png?style=flat
-   :target: https://pypi.python.org/pypi/Flask-PonyWhoosh
-.. |PyPI Package monthly downloads| image:: http://img.shields.io/pypi/dm/Flask-PonyWhoosh.png?style=flat
-   :target: https://pypi.python.org/pypi/Flask-PonyWhoosh
-.. |Test| image:: https://travis-ci.org/piperod/Flask-PonyWhoosh.svg?branch=master
-    :target: https://travis-ci.org/piperod/Flask-PonyWhoosh   
+.. |PyPI Package latest release| image:: http://img.shields.io/pypi/v/flask-ponywhoosh.png?style=flat
+   :target: https://pypi.python.org/pypi/flask-ponywhoosh
+.. |PyPI Package monthly downloads| image:: http://img.shields.io/pypi/dm/flask-ponywhoosh.png?style=flat
+   :target: https://pypi.python.org/pypi/flask-ponywhoosh
+.. |Test| image:: https://travis-ci.org/piperod/flask-ponywhoosh.svg?branch=master
+    :target: https://travis-ci.org/piperod/flask-ponywhoosh
 .. |database| image:: https://github.com/compiteing/flask-ponywhoosh/blob/master/images/databaseconfig.gif?raw=true
-   :target: https://pypi.python.org/pypi/Flask-PonyWhoosh
+   :target: https://pypi.python.org/pypi/flask-ponywhoosh
 .. |gif| image:: http://g.recordit.co/6MnvKNod6y.gif

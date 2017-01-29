@@ -1,10 +1,10 @@
 .. image:: https://github.com/compiteing/flask-ponywhoosh/blob/master/docs/_static/logo.png?raw=true
-   :target: https://pypi.python.org/pypi/Flask-PonyWhoosh
+   :target: https://pypi.python.org/pypi/flask-ponywhoosh
    :scale: 100%
    :align: center
    :alt: PonyWhoosh
 
-Flask-PonyWhoosh
+flask-ponywhoosh
 ================
 |PyPI Package latest release| |Test|
 
@@ -48,7 +48,7 @@ Then, you can run the example using:
 
     python example.py runserver
 
-You will see in the shell some outputs showing settings of Flask-PonyWhoosh (debug mode is on by default).
+You will see in the shell some outputs showing settings of flask-ponywhoosh (debug mode is on by default).
 We provide two urls by default:
 
 
@@ -63,8 +63,8 @@ Hacking
 Customize the templates, url routes and other stuffs, please
 checkout the documentation on:
 
-    -  http://pythonhosted.org/Flask-PonyWhoosh/
-    -  https://pypi.python.org/pypi/Flask-PonyWhoosh
+    -  http://pythonhosted.org/flask-ponywhoosh/
+    -  https://pypi.python.org/pypi/flask-ponywhoosh
 
 
 Screenshots
@@ -73,7 +73,7 @@ Screenshots
 Adding what fields of your models in your database you want to search.
 
 .. image:: https://github.com/compiteing/flask-ponywhoosh/blob/master/images/databaseconfig.gif?raw=true
-   :target: https://pypi.python.org/pypi/Flask-PonyWhoosh
+   :target: https://pypi.python.org/pypi/flask-ponywhoosh
    :scale: 60%
    :align: center
    :alt: PonyWhoosh
@@ -82,14 +82,14 @@ Adding what fields of your models in your database you want to search.
 
 
 .. image:: http://g.recordit.co/6MnvKNod6y.gif
-   :target: https://pypi.python.org/pypi/Flask-PonyWhoosh
+   :target: https://pypi.python.org/pypi/flask-ponywhoosh
    :scale: 25%
    :align: center
    :alt: PonyWhoosh
 
 
 
-.. |PyPI Package latest release| image:: http://img.shields.io/pypi/v/Flask-PonyWhoosh.png?style=flat
+.. |PyPI Package latest release| image:: http://img.shields.io/pypi/v/flask-ponywhoosh.png?style=flat
 
 .. |Test| image:: https://travis-ci.org/compiteing/flask-ponywhoosh.svg?branch=master
     :target: https://travis-ci.org/compiteing/flask-ponywhoosh
