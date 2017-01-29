@@ -8,5 +8,4 @@ install:
 script:
   - python -m unittest test
   - python setup.py sdist
-  - python setup.py build_sphinx
   - python setup.py install
