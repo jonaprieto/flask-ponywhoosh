@@ -18,11 +18,9 @@ import io
 import os
 import re
 
-from glob         import glob
-from os.path      import basename, dirname, join, relpath, splitext
-from setuptools   import find_packages, setup
-
-
+from glob       import glob
+from os.path    import basename, dirname, join, relpath, splitext
+from setuptools import find_packages, setup
 
 def read(*names, **kwargs):
   return io.open(
@@ -32,16 +30,13 @@ def read(*names, **kwargs):
 
 setup(
     name='flask-ponywhoosh'
-  , version="0.2.1.1"
+  , version="1.0.0"
   , url='https://github.com/compiteing/flask-ponywhoosh'
   , license='MIT'
   , author='Jonathan Prieto-Cubides & Felipe Rodriguez'
   , author_email='jprieto9@eafit.edu.co'
-  , description='Perform your full-text searches on your database. Pony and Whoosh with Flask. All in one.'
-  , long_description='%s' % (
-      read('README.rst')
-      )
-    
+  , description='An search engine for flask using pony ORM.'
+  , long_description='%s' % (read('README.rst'))
   , packages=find_packages()
   , zip_safe=False
   , include_package_data=True

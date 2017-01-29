@@ -13,10 +13,10 @@
 
 import re
 
-from pprint                   import pprint
-from flask                    import render_template
-from flask.views              import View
-from form                     import SearchForm
+from pprint      import pprint
+from flask       import render_template
+from flask.views import View
+from form        import SearchForm
 
 
 class IndexView(View):
@@ -37,11 +37,11 @@ class IndexView(View):
     (You may change it in the config) and get the results.
 
     Returns:
-        Results: The results are sent to the template using bootstrap.
-        They are renderized using whether a grid or a table, depending on what
-        models did you register.
-        By default the first field registered is considered the one that will
-        be contained in the tittle of each searh result.
+      Results: The results are sent to the template using bootstrap.
+      They are renderized using whether a grid or a table, depending on what
+      models did you register.
+      By default the first field registered is considered the one that will
+      be contained in the tittle of each searh result.
     """
 
     ctx           = {'form' : SearchForm()}
