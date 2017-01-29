@@ -99,8 +99,7 @@ db.generate_mapping(create_tables=True)
 
 @db_session
 def populate_database():
-  if select(s for s in Student).count() > 0:
-      return
+  if select(s for s in Student).count() > 0: return
   d1 = Department(name="Department of Computer Science")
   d2 = Department(name="Department of Mathematical Sciences")
   d3 = Department(name="Department of Applied Physics")

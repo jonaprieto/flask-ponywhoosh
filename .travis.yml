@@ -5,4 +5,7 @@ python:
 install:
   - pip install -r requirements.txt
 # command to run tests
-script: python -m unittest test
+script:
+  - python -m unittest test
+  - python setup.py sdist
+  - python setup.py install

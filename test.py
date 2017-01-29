@@ -12,17 +12,17 @@
 '''
 
 import os
-from pprint import pprint
 import shutil
 import tempfile
-from unittest import TestCase
 
-from flask import Flask
+from flask            import Flask
 from flask_ponywhoosh import PonyWhoosh
 from flask_ponywhoosh import search, full_search
-from pony.orm import *
 
-from pprint import pprint
+from pony.orm         import *
+from pprint           import pprint
+from unittest         import TestCase
+
 
 class BaseTestCases(object):
 

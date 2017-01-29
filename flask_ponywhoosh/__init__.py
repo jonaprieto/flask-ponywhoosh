@@ -14,9 +14,9 @@
 import jinja2
 import os
 
-from ponywhoosh             import PonyWhoosh as MyPonyWhoosh
-from ponywhoosh             import search, full_search, delete_field
-from views                  import IndexView
+from ponywhoosh  import PonyWhoosh as MyPonyWhoosh
+from ponywhoosh  import search, full_search, delete_field
+from views       import IndexView
 
 
 __all__     = ['PonyWhoosh', 'search', 'full_search', 'delete_field']
