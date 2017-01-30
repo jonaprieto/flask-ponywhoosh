@@ -35,7 +35,7 @@ setup(
   , license='MIT'
   , author='Jonathan Prieto-Cubides & Felipe Rodriguez'
   , author_email='jprieto9@eafit.edu.co'
-  , description='An search engine for flask using pony ORM.'
+  , description='A search engine for flask framework using pony orm.'
   , long_description='%s' % (read('README.rst'))
   , packages=find_packages()
   , zip_safe=False
