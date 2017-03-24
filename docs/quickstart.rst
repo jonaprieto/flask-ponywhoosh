@@ -249,20 +249,20 @@ use_dict:
 
 If you want that the  items look like a list rather than a dictionary. You can use the option use_dict: this option by default is set True. However if you choose false, results will look something like ('field', 'result')
 
-.. |model| image:: https://github.com/compiteing/flask-ponywhoosh/blob/master/images/modelsearch.gif?raw=true
+.. |model| image:: https://github.com/jonaprieto/flask-ponywhoosh/blob/master/images/modelsearch.gif?raw=true
    :target: https://pypi.python.org/pypi/flask-ponywhoosh
 
-.. |wildcards| image:: https://github.com/compiteing/flask-ponywhoosh/blob/master/images/addwildcards.gif?raw=true
+.. |wildcards| image:: https://github.com/jonaprieto/flask-ponywhoosh/blob/master/images/addwildcards.gif?raw=true
    :target: https://pypi.python.org/pypi/flask-ponywhoosh
 
-.. |byfield| image:: https://github.com/compiteing/flask-ponywhoosh/blob/master/images/searchingbyfield.gif?raw=true
+.. |byfield| image:: https://github.com/jonaprieto/flask-ponywhoosh/blob/master/images/searchingbyfield.gif?raw=true
    :target: https://pypi.python.org/pypi/flask-ponywhoosh
-.. |database| image:: https://github.com/compiteing/flask-ponywhoosh/blob/master/images/databaseconfig.gif?raw=true
-   :target: https://pypi.python.org/pypi/flask-ponywhoosh
-
-.. |usedict| image:: https://github.com/compiteing/flask-ponywhoosh/blob/master/images/use_dict.gif?raw=true
+.. |database| image:: https://github.com/jonaprieto/flask-ponywhoosh/blob/master/images/databaseconfig.gif?raw=true
    :target: https://pypi.python.org/pypi/flask-ponywhoosh
 
-.. |first| image:: https://github.com/compiteing/flask-ponywhoosh/blob/master/images/searchfirsttime.gif?raw=true
+.. |usedict| image:: https://github.com/jonaprieto/flask-ponywhoosh/blob/master/images/use_dict.gif?raw=true
+   :target: https://pypi.python.org/pypi/flask-ponywhoosh
+
+.. |first| image:: https://github.com/jonaprieto/flask-ponywhoosh/blob/master/images/searchfirsttime.gif?raw=true
    :target: https://pypi.python.org/pypi/flask-ponywhoosh
 

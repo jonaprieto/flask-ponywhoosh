@@ -1,4 +1,4 @@
-.. image:: https://github.com/compiteing/flask-ponywhoosh/blob/master/docs/_static/logo.png?raw=true
+.. image:: https://github.com/jonaprieto/flask-ponywhoosh/blob/master/docs/_static/logo.png?raw=true
    :target: https://pypi.python.org/pypi/flask-ponywhoosh
    :scale: 100%
    :align: center
@@ -27,7 +27,7 @@ The hard way:
 
 .. code:: bash
 
-    $ git clone https://github.com/compiteing/flask-ponywhoosh.git
+    $ git clone https://github.com/jonaprieto/flask-ponywhoosh.git
     $ cd flask-ponywhoosh
     $ python setup.py install
 
@@ -39,7 +39,7 @@ example or just download the source.
 
 .. code:: bash
 
-    $ git clone https://github.com/compiteing/flask-ponywhoosh.git
+    $ git clone https://github.com/jonaprieto/flask-ponywhoosh.git
     $ cd flask-ponywhoosh
 
 Then, you can run the example using:
@@ -72,7 +72,7 @@ Screenshots
 
 Adding what fields of your models in your database you want to search.
 
-.. image:: https://github.com/compiteing/flask-ponywhoosh/blob/master/images/databaseconfig.gif?raw=true
+.. image:: https://github.com/jonaprieto/flask-ponywhoosh/blob/master/images/databaseconfig.gif?raw=true
    :target: https://pypi.python.org/pypi/flask-ponywhoosh
    :scale: 60%
    :align: center
@@ -91,7 +91,7 @@ Adding what fields of your models in your database you want to search.
 
 .. |PyPI Package latest release| image:: http://img.shields.io/pypi/v/flask-ponywhoosh.png?style=flat
 
-.. |Test| image:: https://travis-ci.org/compiteing/flask-ponywhoosh.svg?branch=master
-    :target: https://travis-ci.org/compiteing/flask-ponywhoosh
+.. |Test| image:: https://travis-ci.org/jonaprieto/flask-ponywhoosh.svg?branch=master
+    :target: https://travis-ci.org/jonaprieto/flask-ponywhoosh
 
 

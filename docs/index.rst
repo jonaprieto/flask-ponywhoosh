@@ -8,7 +8,7 @@ Welcome to flask-ponywhoosh's documentation!
 
  This package integrate the amazing power of ``Whoosh`` with ``Pony ORM``
  inside ``Flask``. Source code and issue tracking at
- http://github.com/compiteing/flask-ponywhoosh.
+ http://github.com/jonaprieto/flask-ponywhoosh.
 
 
 
@@ -23,7 +23,7 @@ Welcome to flask-ponywhoosh's documentation!
 
  .. .. code:: bash
 
- ..     git clone https://github.com/compiteing/flask-ponywhoosh.git
+ ..     git clone https://github.com/jonaprieto/flask-ponywhoosh.git
 
 
  .. .. _Flask: http://flask.pocoo.org/
@@ -37,6 +37,6 @@ Welcome to flask-ponywhoosh's documentation!
    :target: https://pypi.python.org/pypi/flask-ponywhoosh
 .. |Test| image:: https://travis-ci.org/piperod/flask-ponywhoosh.svg?branch=master
     :target: https://travis-ci.org/piperod/flask-ponywhoosh
-.. |database| image:: https://github.com/compiteing/flask-ponywhoosh/blob/master/images/databaseconfig.gif?raw=true
+.. |database| image:: https://github.com/jonaprieto/flask-ponywhoosh/blob/master/images/databaseconfig.gif?raw=true
    :target: https://pypi.python.org/pypi/flask-ponywhoosh
 .. |gif| image:: http://g.recordit.co/6MnvKNod6y.gif

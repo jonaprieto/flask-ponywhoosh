@@ -84,12 +84,12 @@ Searching: for the first  time
 In the shell view you can search using the "search()" function. Running our example, let us suppose  we are looking for the word "applied" in the model Department. After we run our example.py with the shell, we should follow the following steps:
 
 
-.. |appconfig| image:: https://github.com/compiteing/flask-ponywhoosh/blob/master/images/flaskappconfig.gif?raw=true
+.. |appconfig| image:: https://github.com/jonaprieto/flask-ponywhoosh/blob/master/images/flaskappconfig.gif?raw=true
    :target: https://pypi.python.org/pypi/flask-ponywhoosh
 
-.. |database| image:: https://github.com/compiteing/flask-ponywhoosh/blob/master/images/databaseconfig.gif?raw=true
+.. |database| image:: https://github.com/jonaprieto/flask-ponywhoosh/blob/master/images/databaseconfig.gif?raw=true
    :target: https://pypi.python.org/pypi/flask-ponywhoosh
 
-.. |first| image:: https://github.com/compiteing/flask-ponywhoosh/blob/master/images/searchfirsttime.gif?raw=true
+.. |first| image:: https://github.com/jonaprieto/flask-ponywhoosh/blob/master/images/searchfirsttime.gif?raw=true
    :target: https://pypi.python.org/pypi/flask-ponywhoosh
 

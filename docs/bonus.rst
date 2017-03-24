@@ -52,9 +52,9 @@ Enjoy it!
 
 .. |gif| image:: http://g.recordit.co/6MnvKNod6y.gif
 
-.. |Pony| image:: https://github.com/compiteing/flask-ponywhoosh/blob/master/docs/_static/searchform.png?raw=true
+.. |Pony| image:: https://github.com/jonaprieto/flask-ponywhoosh/blob/master/docs/_static/searchform.png?raw=true
     :target: https://travis-ci.org/piperod/flask-ponywhoosh
-.. |Results| image:: https://github.com/compiteing/flask-ponywhoosh/blob/master/docs/_static/results.png?raw=true
+.. |Results| image:: https://github.com/jonaprieto/flask-ponywhoosh/blob/master/docs/_static/results.png?raw=true
     :target: https://travis-ci.org/piperod/flask-ponywhoosh
-.. |Form| image:: https://github.com/compiteing/flask-ponywhoosh/blob/master/docs/_static/searchformadvanced.png?raw=true
+.. |Form| image:: https://github.com/jonaprieto/flask-ponywhoosh/blob/master/docs/_static/searchformadvanced.png?raw=true
     :target: https://travis-ci.org/piperod/flask-ponywhoosh
