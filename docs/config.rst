@@ -16,7 +16,7 @@ or
 
 .. code:: bash
 
-    git clone https://github.com/piperod/flask-ponywhoosh.git
+    git clone https://github.com/jonaprieto/flask-ponywhoosh.git
 
 
 

@@ -35,8 +35,8 @@ Welcome to flask-ponywhoosh's documentation!
    :target: https://pypi.python.org/pypi/flask-ponywhoosh
 .. |PyPI Package monthly downloads| image:: http://img.shields.io/pypi/dm/flask-ponywhoosh.png?style=flat
    :target: https://pypi.python.org/pypi/flask-ponywhoosh
-.. |Test| image:: https://travis-ci.org/piperod/flask-ponywhoosh.svg?branch=master
-    :target: https://travis-ci.org/piperod/flask-ponywhoosh
+.. |Test| image:: https://travis-ci.org/jonaprieto/flask-ponywhoosh.svg?branch=master
+    :target: https://travis-ci.org/jonaprieto/flask-ponywhoosh
 .. |database| image:: https://github.com/jonaprieto/flask-ponywhoosh/blob/master/images/databaseconfig.gif?raw=true
    :target: https://pypi.python.org/pypi/flask-ponywhoosh
 .. |gif| image:: http://g.recordit.co/6MnvKNod6y.gif
