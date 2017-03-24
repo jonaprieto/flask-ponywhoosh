@@ -18,7 +18,7 @@ import io
 import os
 import re
 
-from glob       import g
+from glob       import glob
 from os.path    import basename, dirname, join, relpath, splitext
 from setuptools import find_packages, setup
 
