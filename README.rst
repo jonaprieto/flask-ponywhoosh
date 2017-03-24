@@ -8,9 +8,8 @@ flask-ponywhoosh
 ================
 |PyPI Package latest release| |Test|
 
-Install package, import it and start adding what fields of your models in
-your database you want to search.
-We included some templates for the search engine.
+Install the package, import it and start adding what fields of your models in
+your database you want to search. We included some templates for the search engine.
 
 
 Install
@@ -34,7 +33,7 @@ The hard way:
 Example
 --------
 
-After installing the package. Clone this repository in order to run the
+After installing the package. You can clone this repository in order to run the
 example or just download the source.
 
 .. code:: bash
@@ -60,7 +59,7 @@ Recall `localhost` is usually `http://127.0.0.1:5000`.
 Hacking
 -------
 
-Customize the templates, url routes and other stuffs, please
+Customize the templates, URL routes and other stuffs, please
 checkout the documentation on:
 
     -  http://pythonhosted.org/flask-ponywhoosh/
@@ -93,5 +92,3 @@ Adding what fields of your models in your database you want to search.
 
 .. |Test| image:: https://travis-ci.org/jonaprieto/flask-ponywhoosh.svg?branch=master
     :target: https://travis-ci.org/jonaprieto/flask-ponywhoosh
-
-

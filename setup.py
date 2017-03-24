@@ -18,7 +18,7 @@ import io
 import os
 import re
 
-from glob       import glob
+from glob       import g
 from os.path    import basename, dirname, join, relpath, splitext
 from setuptools import find_packages, setup
 
@@ -30,7 +30,7 @@ def read(*names, **kwargs):
 
 setup(
     name='flask-ponywhoosh'
-  , version="1.0"
+  , version="1.0.1"
   , url='https://github.com/jonaprieto/flask-ponywhoosh'
   , license='MIT'
   , author='Jonathan Prieto-Cubides & Felipe Rodriguez'
