@@ -8,15 +8,13 @@ flask-ponywhoosh
 ================
 |PyPI Package latest release| |Test|
 
-Install the package, import it and start adding what fields of your models in
-your database you want to search. We included some templates for the search engine.
+Get a search engine in your flask application using Pony ORM and Whoosh. 
+the database you want to search. We included some templates to render the search engine
+in your flask application.
 
 
 Install
 -------
-
-
-The easiest way:
 
 .. code:: bash
 
