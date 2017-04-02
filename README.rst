@@ -9,9 +9,7 @@ flask-ponywhoosh
 |PyPI Package latest release| |Test|
 
 Get a search engine in your flask application using Pony ORM and Whoosh. 
-the database you want to search. We included some templates to render the search engine
-in your flask application.
-
+We included some templates to render the search engine.
 
 Install
 -------
