@@ -79,3 +79,9 @@ setup(
 # python setup.py register -r pypi
 # python setup.py sdist
 # python setup.py build_sphinx
+
+
+# new way:
+# git tav vX.X.X
+# python setup.py sdist
+# python setup.py bdist_wheel --universal
