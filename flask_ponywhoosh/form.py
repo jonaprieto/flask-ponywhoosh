@@ -11,6 +11,10 @@
 
 '''
 
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
 from flask_wtf          import Form
 from wtforms            import StringField, SubmitField
 from wtforms            import BooleanField, SelectField

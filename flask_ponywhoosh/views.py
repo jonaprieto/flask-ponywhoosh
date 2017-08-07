@@ -11,12 +11,16 @@
 
 '''
 
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
 import re
 
 from pprint      import pprint
 from flask       import render_template
 from flask.views import View
-from form        import SearchForm
+from .form       import SearchForm
 
 
 class IndexView(View):
@@ -51,7 +55,7 @@ class IndexView(View):
     form          = SearchForm()
 
     if self.debug:
-      print 'form:'
+      print('form:')
       pprint(form.data)
 
     if form.validate_on_submit():
@@ -75,7 +79,7 @@ class IndexView(View):
       )
 
       if self.debug:
-        print 'form = ',
+        print('form = ')
         pprint({
             'query': query
           , 'add_wildcards': add_wildcards
@@ -86,7 +90,7 @@ class IndexView(View):
           , 'except_fields': except_fields
         })
 
-        print "results = "
+        print("results = ")
         pprint(results)
 
       return render_template(

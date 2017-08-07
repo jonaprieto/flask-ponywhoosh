@@ -11,12 +11,16 @@
 
 '''
 
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
 import jinja2
 import os
 
 from ponywhoosh  import PonyWhoosh as MyPonyWhoosh
 from ponywhoosh  import search, full_search, delete_field
-from views       import IndexView
+from .views      import IndexView
 
 
 __all__     = ['PonyWhoosh', 'search', 'full_search', 'delete_field']
@@ -61,12 +65,12 @@ class PonyWhoosh(MyPonyWhoosh):
     self.template_path  = config.get('PONYWHOOSH_TEMPLATE_PATH', self.template_path)
 
     if self.debug:
-      print 'PONYWHOOSH_DEBUG -> ', self.debug
-      print 'PONYWHOOSH_INDEXES_PATH  -> ', self.indexes_path
-      print 'PONYWHOOSH_MIN_STRING_LEN  -> ', self.search_string_min_len
-      print 'PONYWHOOSH_TEMPLATE_PATH -> ', self.template_path
-      print 'PONYWHOOSH_URL_ROUTE -> ',  self.url_route
-      print 'PONYWHOOSH_WRITER_TIMEOUT -> ', self.writer_timeout
+      print('PONYWHOOSH_DEBUG -> ', self.debug)
+      print('PONYWHOOSH_INDEXES_PATH  -> ', self.indexes_path)
+      print('PONYWHOOSH_MIN_STRING_LEN  -> ', self.search_string_min_len)
+      print('PONYWHOOSH_TEMPLATE_PATH -> ', self.template_path)
+      print('PONYWHOOSH_URL_ROUTE -> ',  self.url_route)
+      print('PONYWHOOSH_WRITER_TIMEOUT -> ', self.writer_timeout)
 
     loader = jinja2.ChoiceLoader([
         app.jinja_loader
