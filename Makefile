@@ -41,3 +41,20 @@ TODO :
 	find . -type d \( -path './.git' -o -path './dist' \) -prune -o -print \
 	| xargs grep -I 'TODO' \
 	| sort
+
+.PHONY : README.rst
+README.rst :
+	pandoc --from=rst --to=rst --output=README.rst README.rst
+
+.PHONY : deploy
+deploy :
+	$(eval VERSION := $(shell bash -c 'read -p "Version: " pwd; echo $$pwd'))
+	echo
+	$(eval MSG := $(shell bash -c 'read -p "Comment: " pwd; echo $$pwd'))
+	git tag v$(VERSION)
+	git commit -am "[ v$(version) ] new version: $(MSG)"
+	python setup.py build
+	python setup.py sdist
+	python setup.py bdist_wheel --universal
+	twine upload dist/*
+	make clean

@@ -1,0 +1,11 @@
+recursive-include flask_ponywhoosh *
+
+include AUTHORS.rst
+include CHANGELOG.rst
+include docs/_build/html *.*
+include example.py
+include LICENSE.md
+include README.md
+include tes.py
+
+global-exclude *.py[co] __pycache__ *.so *.pyd

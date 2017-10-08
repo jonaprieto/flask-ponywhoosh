@@ -30,16 +30,17 @@ def read(*names, **kwargs):
 
 setup(
     name='flask-ponywhoosh'
-  , version="1.0.2"
+  , version="1.0.3"
   , url='https://github.com/jonaprieto/flask-ponywhoosh'
   , license='MIT'
   , author='Jonathan Prieto-Cubides & Felipe Rodriguez'
   , author_email='jprieto9@eafit.edu.co'
   , description='A search engine for flask framework using pony orm.'
   , long_description='%s' % (read('README.rst'))
-  , packages=find_packages()
+  , packages=['flask_ponywhoosh']
   , zip_safe=False
   , include_package_data=True
+  , package_data = {'flask_ponywhoosh': ['README.md', 'example.py', 'test.py']}
   , platforms='any'
   , keywords=
     [ 'elastic'
@@ -72,16 +73,3 @@ setup(
     , 'Topic :: Software Development :: Libraries :: Python Modules'
     ]
 )
-
-# pandoc --from=rst --to=rst --output=README.rst README.rst
-# Pasos para subir a pypi
-# git tag v...
-# python setup.py register -r pypi
-# python setup.py sdist
-# python setup.py build_sphinx
-
-
-# new way:
-# git tav vX.X.X
-# python setup.py sdist
-# python setup.py bdist_wheel --universal
