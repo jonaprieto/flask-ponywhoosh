@@ -51,8 +51,9 @@ deploy :
 	$(eval VERSION := $(shell bash -c 'read -p "Version: " pwd; echo $$pwd'))
 	echo
 	$(eval MSG := $(shell bash -c 'read -p "Comment: " pwd; echo $$pwd'))
+	make clean
 	git tag v$(VERSION)
-	git commit -am "[ v$(version) ] new version: $(MSG)"
+	git commit -am "[ v$(VERSION) ] new version: $(MSG)"
 	python setup.py build
 	python setup.py sdist
 	python setup.py bdist_wheel --universal
