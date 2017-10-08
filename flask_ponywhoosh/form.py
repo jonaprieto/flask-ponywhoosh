@@ -15,7 +15,7 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
-from flask_wtf          import Form
+from flask_wtf          import FlaskForm
 from wtforms            import StringField, SubmitField
 from wtforms            import BooleanField, SelectField
 from wtforms.validators import Required
@@ -35,10 +35,10 @@ class SearchForm(Form):
       wildcards (BooleanField): Checkbox
   """
 
-  add_wildcards   = BooleanField('Add Wildcards', default=True)
-  except_field    = StringField('Except in Fields')
-  fields          = StringField('Fields')
-  models          = StringField('Models')
-  query           = StringField('What are you looking for?')
-  something       = BooleanField('Something')
-  submit          = SubmitField('Submit')
+  add_wildcards = BooleanField('Add Wildcards', default=True)
+  except_field  = StringField('Except in Fields')
+  fields        = StringField('Fields')
+  models        = StringField('Models')
+  query         = StringField('What are you looking for?')
+  something     = BooleanField('Something')
+  submit        = SubmitField('Submit')
