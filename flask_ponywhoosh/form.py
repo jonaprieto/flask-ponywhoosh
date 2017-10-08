@@ -21,7 +21,7 @@ from wtforms            import BooleanField, SelectField
 from wtforms.validators import Required
 
 
-class SearchForm(Form):
+class SearchForm(FlaskForm):
   """This is the searching form that we will be use to make our search
   engine website.
 

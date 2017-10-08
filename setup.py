@@ -30,12 +30,12 @@ def read(*names, **kwargs):
 
 setup(
     name='flask-ponywhoosh'
-  , version="1.0.5"
+  , version="1.0.6"
   , url='https://github.com/jonaprieto/flask-ponywhoosh'
   , license='MIT'
   , author='Jonathan Prieto-Cubides & Felipe Rodriguez'
   , author_email='jprieto9@eafit.edu.co'
-  , description='A search engine for flask framework using pony orm.'
+  , description='A search engine for Flask using Pony ORM and Whoosh.'
   , long_description='%s' % (read('README.rst'))
   , packages=['flask_ponywhoosh']
   , zip_safe=False
@@ -53,6 +53,7 @@ setup(
     , 'ponyorm'
     , 'ponywhoosh'
     , 'search'
+    , 'searchengine'
     , 'searchable'
     , 'sqlite3'
     , 'whoosh'
