@@ -14,7 +14,7 @@ Running the App
     pip install virtualenv
     virtualenv --no-site-packages venv
     source venv/bin/activate
-    pip install -r requirements.txt
+    pip install flask-ponywhoosh
     python example.py runserver
 
 After that, you could visit the following urls.
@@ -22,8 +22,7 @@ After that, you could visit the following urls.
 
 -  ``http://localhost:5000/update`` to perform an update in an entity
    with ``id=1``.
--  ``http://localhost:5000/`` to see the entities from database.
-- ``http://localhost:500/ponywhoosh`` to load the visual  interface.
+- ``http://localhost:500/`` to load the visual  interface.
 
 Running the app example
 ***************************************

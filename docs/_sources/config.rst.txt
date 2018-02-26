@@ -12,13 +12,6 @@ Installation
 
     pip install flask-ponywhoosh
 
-or
-
-.. code:: bash
-
-    git clone https://github.com/jonaprieto/flask-ponywhoosh.git
-
-
 
 Flask-App Configuration
 ***********************
@@ -31,7 +24,7 @@ FlaskPonywhoosh and set up the general configurations.
 .. code :: python
 
 	from flask_ponywhoosh import Ponywhoosh
-	Ponywhoosh(app)
+	pw = Ponywhoosh(app)
 
 .. code:: python
 
@@ -88,7 +81,7 @@ main field for you. In that way when you render the template
 '/ponywhoosh', the cards results would show this field as the main
 one.
 
-Searching: for the first  time
+Searching: for the first time
 ******************************
 
 |first|

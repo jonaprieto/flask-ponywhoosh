@@ -32,6 +32,9 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="changelog.html" title="&lt;no title&gt;"
              accesskey="N">next</a> |</li>
         <li class="right" >
@@ -59,8 +62,50 @@ functions in flask-ponywhoosh.</p>
 <div class="section" id="utils-methods">
 <h2>Utils Methods<a class="headerlink" href="#utils-methods" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="view-method">
-<h2>View method<a class="headerlink" href="#view-method" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-flask_ponywhoosh.views">
+<span id="view-method"></span><h2>View method<a class="headerlink" href="#module-flask_ponywhoosh.views" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="flask-ponywhoosh-views-module">
+<h3>flask_ponywhoosh.views module<a class="headerlink" href="#flask-ponywhoosh-views-module" title="Permalink to this headline">¶</a></h3>
+<p>Perform full-text searches over your database with Pony ORM and PonyWhoosh,
+for flask applications.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">copyright:</th><td class="field-body"><ol class="first loweralpha simple" start="3">
+<li>2015-2018 by Jonathan Prieto-Cubides &amp; Felipe Rodriguez.</li>
+</ol>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">license:</th><td class="field-body"><p class="first last">MIT (see LICENSE.md)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="flask_ponywhoosh.views.IndexView">
+<em class="property">class </em><code class="descclassname">flask_ponywhoosh.views.</code><code class="descname">IndexView</code><span class="sig-paren">(</span><em>pw</em>, <em>action_url_form</em><span class="sig-paren">)</span><a class="headerlink" href="#flask_ponywhoosh.views.IndexView" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is all the setting for the template index.html in the templates folder.
+methods (list): POST and GET</p>
+<dl class="method">
+<dt id="flask_ponywhoosh.views.IndexView.dispatch_request">
+<code class="descname">dispatch_request</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#flask_ponywhoosh.views.IndexView.dispatch_request" title="Permalink to this definition">¶</a></dt>
+<dd><p>This form is plugeable. That means that all what you need to do is
+to install the package and run the url :: /ponywhoosh/
+(You may change it in the config) and get the results.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>Results: The results are sent to the template using bootstrap.
+They are renderized using whether a grid or a table, depending on what
+models did you register.
+By default the first field registered is considered the one that will
+be contained in the tittle of each searh result.</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
 </div>
 </div>
 
@@ -79,7 +124,10 @@ functions in flask-ponywhoosh.</p>
 <li><a class="reference internal" href="#ponywhoosh-class">PonyWhoosh Class</a></li>
 <li><a class="reference internal" href="#ponywhooshindex-class">PonyWhooshIndex Class</a></li>
 <li><a class="reference internal" href="#utils-methods">Utils Methods</a></li>
-<li><a class="reference internal" href="#view-method">View method</a></li>
+<li><a class="reference internal" href="#module-flask_ponywhoosh.views">View method</a><ul>
+<li><a class="reference internal" href="#flask-ponywhoosh-views-module">flask_ponywhoosh.views module</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

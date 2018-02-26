@@ -9,8 +9,8 @@ Welcome to flask-ponywhoosh's documentation!
  It's the easiest way to add a search engine in your flask application
  on the shoulders of Pony ORM and Whoosh. To prove this, we've included
  some templates to render the search engine. Just checkout the example.
- Source code and issue tracking at  http://github.com/jonaprieto/flask-
- ponywhoosh.
+ Source code and issue tracking at
+ http://github.com/jonaprieto/flask-ponywhoosh.
 
 
  .. Installation
@@ -18,14 +18,7 @@ Welcome to flask-ponywhoosh's documentation!
 
  .. .. code:: python
 
- ..     pip install --upgrade flask-ponywhoosh
-
- .. or the last version (maybe unstable version):
-
- .. .. code:: bash
-
- ..     git clone https://github.com/jonaprieto/flask-ponywhoosh.git
-
+ ..     pip install flask-ponywhoosh
 
  .. .. _Flask: http://flask.pocoo.org/
 
