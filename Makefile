@@ -48,6 +48,7 @@ README.rst :
 
 .PHONY : deploy
 deploy :
+	pip install twine
 	$(eval VERSION := $(shell bash -c 'read -p "Version: " pwd; echo $$pwd'))
 	echo
 	$(eval MSG := $(shell bash -c 'read -p "Comment: " pwd; echo $$pwd'))
