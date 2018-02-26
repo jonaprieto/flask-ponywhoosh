@@ -37,7 +37,8 @@ If you are using python 2:
 
     $ make install-py3
 
-A small example --------
+A small example
+---------------
 
 Download the source of this package:
 
@@ -76,13 +77,19 @@ Screenshots
 
 Adding what fields of your models in your database you want to search.
 
-|PonyWhoosh|
+|PonyWhoosh1|
 
-|PonyWhoosh|
+|PonyWhoosh2|
 
-.. |PonyWhoosh| image:: http://g.recordit.co/6MnvKNod6y.gif
+.. |PonyWhoosh| image:: https://github.com/jonaprieto/flask-ponywhoosh/blob/master/docs/_static/logo.png?raw=true
    :class: align-center
    :target: https://pypi.python.org/pypi/flask-ponywhoosh
 .. |PyPI Package latest release| image:: http://img.shields.io/pypi/v/flask-ponywhoosh.png?style=flat
 .. |Test| image:: https://travis-ci.org/jonaprieto/flask-ponywhoosh.svg?branch=master
    :target: https://travis-ci.org/jonaprieto/flask-ponywhoosh
+.. |PonyWhoosh1| image:: https://github.com/jonaprieto/flask-ponywhoosh/blob/master/images/databaseconfig.gif?raw=true
+   :class: align-center
+   :target: https://pypi.python.org/pypi/flask-ponywhoosh
+.. |PonyWhoosh2| image:: http://g.recordit.co/6MnvKNod6y.gif
+   :class: align-center
+   :target: https://pypi.python.org/pypi/flask-ponywhoosh
