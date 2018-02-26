@@ -41,6 +41,9 @@ docs:
 	cd docs/src && make html
 	zip -vr docs/html.zip docs/src/_build/html -x "*.DS_Store"
 	cp -R docs/src/_build/html/* docs/
+	git add docs/*
+	git commit -m "[ docs ] updated to lastest version."
+	git push origin master
 
 .PHONY : TODO
 TODO :
