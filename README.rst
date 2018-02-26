@@ -9,6 +9,8 @@ It's the easiest way to add a search engine in your flask application on
 the shoulders of Pony ORM and Whoosh. To prove this, we've included some
 templates to render the search engine. Just checkout the example.
 
+.. Documentation: http://jonaprieto.github.io/flask-ponywhoosh/
+
 Install
 -------
 
