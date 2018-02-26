@@ -33,14 +33,14 @@ test-py3:
 
 .PHONY : docs
 docs:
-	rm -R docs/src/_build
-	rm -R docs/_sources
-	rm -R docs/_static
+	rm -d -Rf docs/src/_build
+	rm -d -Rf docs/_sources
+	rm -d -Rf docs/_static
 	rm -f docs/*.html docs/*.js .buildinfo *.inv
 	pip install sphinx
 	cd docs/src && make html
-	cd docs/ && zip -vr html.zip _build/html -x "*.DS_Store"
-	cp -R docs/_build/html docs/
+	zip -vr docs/html.zip docs/src/_build/html -x "*.DS_Store"
+	cp -R docs/src/_build/html/* docs/
 
 .PHONY : TODO
 TODO :

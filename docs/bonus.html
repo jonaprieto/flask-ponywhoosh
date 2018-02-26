@@ -1,0 +1,162 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>A Preload View For The Search Engine &#8212; Python  documentation</title>
+    <link rel="stylesheet" href="_static/flasky.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="App Full Example" href="contexts.html" />
+    <link rel="prev" title="Searching" href="quickstart.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head><body>
+  
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="contexts.html" title="App Full Example"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="quickstart.html" title="Searching"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Python  documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="a-preload-view-for-the-search-engine">
+<h1>A Preload View For The Search Engine<a class="headerlink" href="#a-preload-view-for-the-search-engine" title="Permalink to this headline">¶</a></h1>
+<p><img alt="gif" src="http://g.recordit.co/6MnvKNod6y.gif" /></p>
+<p>To run this template, you only have to add to your own route the
+extension <cite>/ponywhoosh</cite>  and it would redirect you to the personalized
+view for your own searches. It is possible to change this
+<cite>/ponywhoosh</cite> route, take a look in the <cite>Flask</cite> settings section.</p>
+<p>So far is possible to limitate the search to those fields and models
+where you want to search and even for those that you want to avoid. As
+well we include check boxes for <cite>add_wildcard</cite> and something
+functions. If there are not results to show the table won’t be
+created.</p>
+<div class="section" id="search-form">
+<h2>Search Form<a class="headerlink" href="#search-form" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://travis-ci.org/jonaprieto/flask-ponywhoosh"><img alt="Pony" src="https://github.com/jonaprieto/flask-ponywhoosh/blob/master/docs/_static/searchform.png?raw=true" /></a></p>
+<p>We aknowledged  that  we could do better rendering  the results, for
+this reason we thought that it would be nice and useful to get ready
+for you a fully interactive and visual interface where you can perform
+the searches for your own website. So  right now is by  default
+available at the route <cite>&lt;your_url&gt;/ponywhoosh</cite>.</p>
+</div>
+<div class="section" id="advanced-search-form">
+<h2>Advanced search form<a class="headerlink" href="#advanced-search-form" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://travis-ci.org/jonaprieto/flask-ponywhoosh"><img alt="Form" src="https://github.com/jonaprieto/flask-ponywhoosh/blob/master/docs/_static/searchformadvanced.png?raw=true" /></a></p>
+<p>In this advanced form you can filter your search using the options
+available from whoosh (query, fields, add wildcards or something, and
+models).</p>
+<blockquote>
+<div><p>The  fields text input is a StringField where you can type,
+separated by commas, all the fields where you want to search. If a
+field is not available the search would be performed as a
+<cite>full_search</cite> one.</p>
+<p>Add_wildcars: Is a checkbox that indicates that you will  perform
+inexact searching.</p>
+<p>Something: A checkbox that let you perform a search using exact
+terms, but if is not able to find anything it would perform a search
+using add_wildcards.</p>
+<p>Models: The models input is a StringField where you can type,
+separated by commas, all the models where you want to search.</p>
+</div></blockquote>
+<p>It is available in the top of the view, like this:</p>
+</div>
+<div class="section" id="results">
+<h2>Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://travis-ci.org/jonaprieto/flask-ponywhoosh"><img alt="Results" src="https://github.com/jonaprieto/flask-ponywhoosh/blob/master/docs/_static/results.png?raw=true" /></a></p>
+<p>The result template renderizes all the results in the following way:</p>
+<blockquote>
+<div><p>In the upper part you will see tabs containing all the Indexes where
+Ponywhoosh found something.</p>
+<p>There are two options to view the resuls. Like a card or like a
+table. In the first one you would see 3 cards by line, showing the
+main results attributes. When you are registering the models, they
+would be the 3 first fields you register.</p>
+</div></blockquote>
+<p>This is how it looks with the new changes.</p>
+<p>Enjoy it!</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><p class="logo"><a href="index.html">
+  <img class="logo" src="_static/logo.png" alt="Logo"
+    style="margin-left: -5px"/>
+</a></p>
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">A Preload View For The Search Engine</a><ul>
+<li><a class="reference internal" href="#search-form">Search Form</a></li>
+<li><a class="reference internal" href="#advanced-search-form">Advanced search form</a></li>
+<li><a class="reference internal" href="#results">Results</a></li>
+</ul>
+</li>
+</ul>
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="quickstart.html" title="previous chapter">Searching</a></li>
+      <li>Next: <a href="contexts.html" title="next chapter">App Full Example</a></li>
+  </ul></li>
+</ul>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/bonus.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  <div class="footer">
+    &copy; Copyright 2018, Jonathan Prieto-Cubides & Felipe Rodriguez.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div>
+  
+  </body>
+</html>
