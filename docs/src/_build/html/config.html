@@ -74,7 +74,11 @@ FlaskPonywhoosh and set up the general configurations.</p>
 <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;WHOOSHEE_URL&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;/ponywhoosh&#39;</span>
 </pre></div>
 </div>
-<p>These configurations set up the default folder to save the Indexes, if you want to activate debug, the minimun lenght of the string in the query, the time out (stop searching if is taking so much) and the route where you might charge the default template for searching (available from version 0.1.5.)</p>
+<p>These configurations set up the default folder to save the Indexes, if
+you want to activate debug, the minimun lenght of the string in the
+query, the time out (stop searching if is taking so much) and the
+route where you might charge the default template for searching
+(available from v0.1.5.)</p>
 </div>
 <div class="section" id="database-configuration">
 <h2>Database Configuration<a class="headerlink" href="#database-configuration" title="Permalink to this headline">¶</a></h2>
@@ -85,7 +89,8 @@ FlaskPonywhoosh and set up the general configurations.</p>
 </pre></div>
 </div>
 <p>For each entity wrap it up with the decorator
-<code class="docutils literal notranslate"><span class="pre">&#64;pw.register_model(*args,**kw)</span></code>. Specifying what attributes would be searcheables. For example:</p>
+<code class="docutils literal notranslate"><span class="pre">&#64;pw.register_model(*args,**kw)</span></code>. Specifying what attributes would
+be searcheables. For example:</p>
 <div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@pw</span><span class="o">.</span><span class="n">register_model</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span><span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="n">sortable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span class="n">stored</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">Entity</span><span class="p">):</span>
     <span class="n">_table_</span> <span class="o">=</span> <span class="s1">&#39;User&#39;</span>
@@ -97,9 +102,16 @@ FlaskPonywhoosh and set up the general configurations.</p>
     <span class="n">attributes</span> <span class="o">=</span> <span class="n">Set</span><span class="p">(</span><span class="s2">&quot;Attributes&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>As you could see in the previous example, you should declare as strings these fields where you want whoosh to store the searcheables (<code class="docutils literal notranslate"><span class="pre">name</span></code>, <code class="docutils literal notranslate"><span class="pre">age</span></code>, etc.). All the parameters from whoosh are available, You just have to listed separating them with commas: sortable, stored, scored, etc. Refer to whoosh documentation for
+<p>As you could see in the previous example, you should declare as
+strings these fields where you want whoosh to store the searcheables
+(<code class="docutils literal notranslate"><span class="pre">name</span></code>, <code class="docutils literal notranslate"><span class="pre">age</span></code>, etc.). All the parameters from whoosh are
+available, You just have to listed separating them with commas:
+sortable, stored, scored, etc. Refer to whoosh documentation for
 further explanations on the application of these parameters.</p>
-<p>The first field you register (in the example, ‘name’), would be the main field for you. In that way when you render the template ‘/ponywhoosh’, the cards results would show this field as the main one.</p>
+<p>The first field you register (in the example, ‘name’), would be the
+main field for you. In that way when you render the template
+‘/ponywhoosh’, the cards results would show this field as the main
+one.</p>
 </div>
 <div class="section" id="searching-for-the-first-time">
 <h2>Searching: for the first  time<a class="headerlink" href="#searching-for-the-first-time" title="Permalink to this headline">¶</a></h2>

@@ -41,7 +41,11 @@ FlaskPonywhoosh and set up the general configurations.
     app.config['WHOOSHEE_WRITER_TIMEOUT'] = 2
     app.config['WHOOSHEE_URL'] = '/ponywhoosh'
 
-These configurations set up the default folder to save the Indexes, if you want to activate debug, the minimun lenght of the string in the query, the time out (stop searching if is taking so much) and the route where you might charge the default template for searching (available from version 0.1.5.)
+These configurations set up the default folder to save the Indexes, if
+you want to activate debug, the minimun lenght of the string in the
+query, the time out (stop searching if is taking so much) and the
+route where you might charge the default template for searching
+(available from v0.1.5.)
 
 
 Database Configuration
@@ -57,7 +61,8 @@ Import the Flask_ponywhoosh library in the file you have the database entities.
     pw = Ponywhoosh()
 
 For each entity wrap it up with the decorator
-``@pw.register_model(*args,**kw)``. Specifying what attributes would be searcheables. For example:
+``@pw.register_model(*args,**kw)``. Specifying what attributes would
+be searcheables. For example:
 
 .. code:: python
 
@@ -71,10 +76,17 @@ For each entity wrap it up with the decorator
         entries = Set("Entry")
         attributes = Set("Attributes")
 
-As you could see in the previous example, you should declare as strings these fields where you want whoosh to store the searcheables (``name``, ``age``, etc.). All the parameters from whoosh are available, You just have to listed separating them with commas: sortable, stored, scored, etc. Refer to whoosh documentation for
+As you could see in the previous example, you should declare as
+strings these fields where you want whoosh to store the searcheables
+(``name``, ``age``, etc.). All the parameters from whoosh are
+available, You just have to listed separating them with commas:
+sortable, stored, scored, etc. Refer to whoosh documentation for
 further explanations on the application of these parameters.
 
-The first field you register (in the example, 'name'), would be the main field for you. In that way when you render the template '/ponywhoosh', the cards results would show this field as the main one.
+The first field you register (in the example, 'name'), would be the
+main field for you. In that way when you render the template
+'/ponywhoosh', the cards results would show this field as the main
+one.
 
 Searching: for the first  time
 ******************************
