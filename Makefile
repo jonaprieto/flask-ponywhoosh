@@ -17,7 +17,7 @@ install-py2:
 	python2.7 setup.py install
 
 .PHONY : test-py2
-test-py2:
+test-py2: install-py2
 	make install-py2
 	python2.7 -m unittest test
 
@@ -27,7 +27,7 @@ install-py3:
 	python3 setup.py install
 
 .PHONY : test-py3
-test-py3:
+test-py3: install-py3
 	make install-py3
 	python3 -m unittest test
 
@@ -52,8 +52,8 @@ TODO :
 README.rst :
 	pandoc --from=rst --to=rst --output=README.rst README.rst
 
-.PHONY : deploy README.rst docs
-deploy :
+.PHONY : deploy 
+deploy : test-py2 test-py3 README.rst docs
 	pip install twine
 	$(eval VERSION := $(shell bash -c 'read -p "Version: " pwd; echo $$pwd'))
 	echo

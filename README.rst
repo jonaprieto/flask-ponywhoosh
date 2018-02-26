@@ -80,15 +80,9 @@ Adding what fields of your models in your database you want to search.
 
 |PonyWhoosh|
 
-.. |PonyWhoosh| image:: https://github.com/jonaprieto/flask-ponywhoosh/blob/master/docs/_static/logo.png?raw=true
+.. |PonyWhoosh| image:: http://g.recordit.co/6MnvKNod6y.gif
    :class: align-center
    :target: https://pypi.python.org/pypi/flask-ponywhoosh
 .. |PyPI Package latest release| image:: http://img.shields.io/pypi/v/flask-ponywhoosh.png?style=flat
 .. |Test| image:: https://travis-ci.org/jonaprieto/flask-ponywhoosh.svg?branch=master
    :target: https://travis-ci.org/jonaprieto/flask-ponywhoosh
-.. |PonyWhoosh| image:: https://github.com/jonaprieto/flask-ponywhoosh/blob/master/images/databaseconfig.gif?raw=true
-   :class: align-center
-   :target: https://pypi.python.org/pypi/flask-ponywhoosh
-.. |PonyWhoosh| image:: http://g.recordit.co/6MnvKNod6y.gif
-   :class: align-center
-   :target: https://pypi.python.org/pypi/flask-ponywhoosh
