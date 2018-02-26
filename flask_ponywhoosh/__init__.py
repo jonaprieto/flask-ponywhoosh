@@ -6,7 +6,7 @@
   Perform full-text searches over your database with Pony ORM and PonyWhoosh,
   for flask applications.
 
-  :copyright: (c) 2015-2017 by Jonathan Prieto-Cubides & Felipe Rodriguez.
+  :copyright: (c) 2015-2018 by Jonathan Prieto-Cubides & Felipe Rodriguez.
   :license: MIT (see LICENSE.md)
 
 '''
@@ -60,24 +60,22 @@ class PonyWhoosh(MyPonyWhoosh):
     self.debug        = config.get('PONYWHOOSH_DEBUG', self.debug)
     self.indexes_path = config.get('PONYWHOOSH_INDEXES_PATH',  self.indexes_path)
     self.search_string_min_len = config.get('PONYWHOOSH_MIN_STRING_LEN', self.search_string_min_len)
-    self.writer_timeout = config.get('PONYWHOOSH_WRITER_TIMEOUT', self.writer_timeout)
-    self.url_route      = config.get('PONYWHOOSH_URL_ROUTE', self.url_route)
     self.template_path  = config.get('PONYWHOOSH_TEMPLATE_PATH', self.template_path)
+    self.url_route      = config.get('PONYWHOOSH_URL_ROUTE', self.url_route)
+    self.writer_timeout = config.get('PONYWHOOSH_WRITER_TIMEOUT', self.writer_timeout)
 
     if self.debug:
-      print('PONYWHOOSH_DEBUG -> ', self.debug)
-      print('PONYWHOOSH_INDEXES_PATH  -> ', self.indexes_path)
-      print('PONYWHOOSH_MIN_STRING_LEN  -> ', self.search_string_min_len)
-      print('PONYWHOOSH_TEMPLATE_PATH -> ', self.template_path)
-      print('PONYWHOOSH_URL_ROUTE -> ',  self.url_route)
-      print('PONYWHOOSH_WRITER_TIMEOUT -> ', self.writer_timeout)
+      print('PONYWHOOSH_DEBUG: ', self.debug)
+      print('PONYWHOOSH_INDEXES_PATH : ', self.indexes_path)
+      print('PONYWHOOSH_MIN_STRING_LEN : ', self.search_string_min_len)
+      print('PONYWHOOSH_TEMPLATE_PATH: ', self.template_path)
+      print('PONYWHOOSH_URL_ROUTE: ',  self.url_route)
+      print('PONYWHOOSH_WRITER_TIMEOUT: ', self.writer_timeout)
 
     loader = jinja2.ChoiceLoader([
         app.jinja_loader
       , jinja2.FileSystemLoader(self.template_path)
     ])
-
-    # indexView = IndexView()
 
     app.jinja_loader = loader
     app.add_url_rule(

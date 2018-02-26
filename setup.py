@@ -6,7 +6,7 @@
   Perform full-text searches over your database with Pony ORM and PonyWhoosh,
   for flask applications.
 
-  :copyright: (c) 2015-2017 by Jonathan Prieto-Cubides & Felipe Rodriguez.
+  :copyright: (c) 2015-2018 by Jonathan Prieto-Cubides & Felipe Rodriguez.
   :license: MIT (see LICENSE.md)
 
 '''
@@ -63,6 +63,7 @@ setup(
     , 'flask-wtf'
     , 'ponywhoosh'
     , 'flask'
+    , 'flask-script'
     ]
   ,  classifiers=
     [ 'Environment :: Web Environment'

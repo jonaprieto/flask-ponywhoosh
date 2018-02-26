@@ -8,49 +8,64 @@ flask-ponywhoosh
 ================
 |PyPI Package latest release| |Test|
 
-Get a search engine in your flask application using Pony ORM and Whoosh. 
-We included some templates to render the search engine.
+It's the easiest way to add a search engine in your flask application on the shoulders
+of Pony ORM and Whoosh. To prove this, we've included some templates to render the
+search engine. Just checkout the example.
 
 Install
 -------
+
+* The natural way:
 
 .. code:: bash
 
     $ pip install flask-ponywhoosh
 
-The hard way:
+* Using the source:
 
 .. code:: bash
 
     $ git clone https://github.com/jonaprieto/flask-ponywhoosh.git
     $ cd flask-ponywhoosh
-    $ python setup.py install
 
-Example
+If you are using python 2:
+
+.. code:: bash
+
+    $ make install-py2
+
+If you are using python 2:
+
+.. code:: bash
+
+    $ make install-py3
+
+
+A small example
 --------
 
-After installing the package. You can clone this repository in order to run the
-example or just download the source.
+Download the source of this package:
 
 .. code:: bash
 
     $ git clone https://github.com/jonaprieto/flask-ponywhoosh.git
     $ cd flask-ponywhoosh
 
-Then, you can run the example using:
+Then, you can run the example running these commands:
 
 .. code:: bash
 
-    python example.py runserver
+    $ pip install -r requirements.txt
+    $ python example.py runserver
 
 You will see in the shell some outputs showing settings of flask-ponywhoosh (debug mode is on by default).
 We provide two urls by default:
 
 
-    -  `localhost/search` : the form of the search engine
-    -  `localhost/database` : contents of the database for our example
+    -  `<localhost>/` : the form of the search engine
+    -  `<localhost>/database` : raw content of the test database
 
-Recall `localhost` is usually `http://127.0.0.1:5000`.
+`<localhost>` is often `http://127.0.0.1:5000`.
 
 Hacking
 -------
@@ -72,8 +87,6 @@ Adding what fields of your models in your database you want to search.
    :scale: 60%
    :align: center
    :alt: PonyWhoosh
-
-
 
 
 .. image:: http://g.recordit.co/6MnvKNod6y.gif
