@@ -46,7 +46,7 @@ TODO :
 README.rst :
 	pandoc --from=rst --to=rst --output=README.rst README.rst
 
-.PHONY : deploy README.rst
+.PHONY : deploy README.rst docs
 deploy :
 	pip install twine
 	$(eval VERSION := $(shell bash -c 'read -p "Version: " pwd; echo $$pwd'))
