@@ -1,12 +1,11 @@
 .. _whatsnew:
 
 =================
-What's new? 1.0
+What's new?
 =================
 
 - PonyModel.search() instead of PonyModel._pw_.search()
 
 
-We hope you like it.
-
-For other updates, see ``CHANGELOG.rst``.
+We hope you like it. Do you want a new feature, open an issue
+and we'll see.

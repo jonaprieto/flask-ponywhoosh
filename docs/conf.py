@@ -45,7 +45,7 @@ master_doc = 'index'
 
 # General information about the project.
 roject = u'flask-ponywhoosh'
-copyright = u'2015, Jonathan Prieto-Cubides & Felipe Rodriguez'
+copyright = u'2018, Jonathan Prieto-Cubides & Felipe Rodriguez'
 author = u'Jonathan Prieto-Cubides & Felipe Rodriguez'
 
 # The version info for the project you're documenting, acts as replacement for
