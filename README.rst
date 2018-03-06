@@ -35,7 +35,7 @@ If you are using python 2:
 
     $ make install-py2
 
-If you are using python 2:
+If you are using python 3:
 
 .. code:: bash
 
