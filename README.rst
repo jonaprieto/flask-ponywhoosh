@@ -5,9 +5,13 @@ flask-ponywhoosh
 
 |PyPI Package latest release| |Test|
 
-It's the easiest way to add a search engine in your flask application on
-the shoulders of Pony ORM and Whoosh. To prove this, we've included some
-templates to render the search engine. Just checkout the example.
+We are looking for enthusiatic and skilled  mantainers for Flask-PonyWhoosh. If you are interested just send an email to `prieto.jona@gmail.com`
+===========================================================================
+
+This package provides the easiest way to add a search engine in your flask application on
+the shoulders of Pony ORM and Whoosh, two amazing pieces of software.
+We've included some templates to render the search engine and we hope you hack it.
+Just see the example below.
 
 
 - Documentation: https://jonaprieto.github.io/flask-ponywhoosh/
